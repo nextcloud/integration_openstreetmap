@@ -21,12 +21,12 @@
 
 <template>
 	<div class="location-reference">
-		<div class="location-wrapper">
-			<strong>
+		<div class="location">
+			<strong class="location--name">
 				{{ richObject.display_name }}
 			</strong>
 			<iframe
-				class="location-frame"
+				class="location--map-frame"
 				frameborder="0"
 				scrolling="no"
 				marginheight="0"
@@ -86,14 +86,18 @@ export default {
 	// padding: 12px;
 	white-space: normal;
 
-	.location-wrapper {
+	.location {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		// in case there is an absolute inside
 		position: relative;
 
-		.location-frame {
+		&--name {
+			padding: 4px;
+		}
+
+		&--map-frame {
 			width: 100%;
 			height: 350px;
 		}
