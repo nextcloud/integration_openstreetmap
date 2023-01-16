@@ -37,7 +37,7 @@ use OCP\IURLGenerator;
 
 class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 
-	private const RICH_OBJECT_TYPE = Application::APP_ID . '_point';
+	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
 	private OsmAPIService $osmAPIService;
 	private ?string $userId;
@@ -127,12 +127,11 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 					$this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg')
 				);
 				$reference->setImageUrl($logoUrl);
-				/*
+
 				$reference->setRichObject(
 					self::RICH_OBJECT_TYPE,
-					$coords,
+					$pointInfo,
 				);
-				*/
 				return $reference;
 			}
 			// fallback to opengraph

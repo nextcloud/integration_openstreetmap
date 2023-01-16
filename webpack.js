@@ -17,7 +17,7 @@ const appId = 'integration_openstreetmap'
 webpackConfig.entry = {
 	personalSettings: { import: path.join(__dirname, 'src', 'personalSettings.js'), filename: appId + '-personalSettings.js' },
 	adminSettings: { import: path.join(__dirname, 'src', 'adminSettings.js'), filename: appId + '-adminSettings.js' },
-	// referenceItem: { import: path.join(__dirname, 'src', 'referenceItem.js'), filename: appId + '-referenceItem.js' },
+	referenceLocation: { import: path.join(__dirname, 'src', 'referenceLocation.js'), filename: appId + '-referenceLocation.js' },
 }
 
 webpackConfig.plugins.push(

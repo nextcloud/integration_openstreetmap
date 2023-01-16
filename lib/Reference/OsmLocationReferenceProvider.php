@@ -146,12 +146,11 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 					$this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg')
 				);
 				$reference->setImageUrl($logoUrl);
-				/*
+
 				$reference->setRichObject(
 					self::RICH_OBJECT_TYPE,
-					$coords,
+					$locationInfo,
 				);
-				*/
 				return $reference;
 			}
 			// fallback to opengraph

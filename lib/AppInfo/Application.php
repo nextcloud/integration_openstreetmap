@@ -13,8 +13,11 @@ namespace OCA\Osm\AppInfo;
 //use OCA\Osm\Reference\OsmReferenceProvider;
 use Closure;
 //use OCP\Collaboration\Reference\RenderReferenceEvent;
+use OCA\Osm\Listener\CSPListener;
+use OCA\Osm\Listener\OsmReferenceListener;
 use OCA\Osm\Reference\OsmLocationReferenceProvider;
 use OCA\Osm\Reference\OsmPointReferenceProvider;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\IConfig;
 
 use OCP\AppFramework\App;
@@ -27,6 +30,7 @@ use OCP\IURLGenerator;
 use OCP\IUserSession;
 
 use OCA\Osm\Search\OsmSearchLocationProvider;
+use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
 class Application extends App implements IBootstrap {
 
@@ -46,7 +50,8 @@ class Application extends App implements IBootstrap {
 
 		$context->registerReferenceProvider(OsmLocationReferenceProvider::class);
 		$context->registerReferenceProvider(OsmPointReferenceProvider::class);
-//		$context->registerEventListener(RenderReferenceEvent::class, OsmReferenceListener::class);
+		$context->registerEventListener(RenderReferenceEvent::class, OsmReferenceListener::class);
+		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CSPListener::class);
 	}
 
 	public function boot(IBootContext $context): void {
