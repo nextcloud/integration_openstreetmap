@@ -118,6 +118,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 			$coords = $this->getCoordinates($referenceText);
 			$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
 			if ($pointInfo !== null && !isset($pointInfo['error'])) {
+				$pointInfo['url'] = $referenceText;
 				$reference = new Reference($referenceText);
 				$geoLink = 'geo:' . $coords['lat'] . ':' . $coords['lon'] . '?z=' . $coords['zoom'];
 				$reference->setTitle($pointInfo['display_name']);

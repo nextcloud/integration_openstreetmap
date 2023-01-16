@@ -22,9 +22,13 @@
 <template>
 	<div class="location-reference">
 		<div class="location">
-			<strong class="location--name">
-				{{ richObject.display_name }}
-			</strong>
+			<a class="location--link"
+				:href="richObject.url"
+				target="_blank">
+				<strong class="location--name">
+					{{ richObject.display_name }}
+				</strong>
+			</a>
 			<iframe
 				class="location--map-frame"
 				frameborder="0"
@@ -93,8 +97,11 @@ export default {
 		// in case there is an absolute inside
 		position: relative;
 
-		&--name {
-			padding: 4px;
+		&--link {
+			padding: 10px;
+			&:hover {
+				color: #58a6ff !important;
+			}
 		}
 
 		&--map-frame {

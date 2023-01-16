@@ -136,6 +136,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 			$locationTypeId = $this->getLocationTypeId($referenceText);
 			$locationInfo = $this->osmAPIService->getLocationInfo($this->userId, $locationTypeId['id'], $locationTypeId['type']);
 			if ($locationInfo !== null) {
+				$locationInfo['url'] = $referenceText;
 				$reference = new Reference($referenceText);
 				$geoLink = $coords === null
 					? ''
