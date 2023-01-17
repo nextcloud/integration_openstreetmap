@@ -16,6 +16,10 @@ class UtilsService {
 	public function __construct (string $appName) {
 	}
 
+	/**
+	 * @param string $sc
+	 * @return array
+	 */
 	public function decodeOsmShortLink(string $sc): array {
 		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_~';
 		$x = 0;

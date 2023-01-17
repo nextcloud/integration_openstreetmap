@@ -23,6 +23,7 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
+use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
@@ -46,6 +47,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 	private IL10N $l10n;
 	private IURLGenerator $urlGenerator;
 	private LinkReferenceProvider $linkReferenceProvider;
+	private UtilsService $utilsService;
 
 	public function __construct(OsmAPIService $osmAPIService,
 								IConfig $config,
@@ -53,6 +55,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 								IURLGenerator $urlGenerator,
 								ReferenceManager $referenceManager,
 								LinkReferenceProvider $linkReferenceProvider,
+								UtilsService $utilsService,
 								?string $userId) {
 		$this->osmAPIService = $osmAPIService;
 		$this->userId = $userId;
@@ -61,6 +64,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 		$this->l10n = $l10n;
 		$this->urlGenerator = $urlGenerator;
 		$this->linkReferenceProvider = $linkReferenceProvider;
+		$this->utilsService = $utilsService;
 	}
 
 	/**
@@ -178,6 +182,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/([0-9a-zA-Z\-]+)\?[a-zA-Z]+=\d+$/i', $url, $matches);
 		if (count($matches) > 1) {
 			$encodedCoords = $matches[1];
+			return $this->utilsService->decodeOsmShortLink($encodedCoords);
 		}
 
 		return null;
