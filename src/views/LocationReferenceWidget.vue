@@ -73,9 +73,12 @@ export default {
 			// https://www.openstreetmap.org/export/embed.html?bbox=4.5333194732666025%2C44.70715721664363%2C4.613656997680665%2C44.74807432587679&amp;layer=mapnik
 			const bb = this.richObject.boundingbox
 			const bbp = [bb[2], bb[0], bb[3], bb[1]].join(',')
+			const pointLatLon = this.richObject.url_coordinates
+				? this.richObject.url_coordinates.lat + ',' + this.richObject.url_coordinates.lon
+				: this.richObject.lat + ',' + this.richObject.lon
 			return 'https://www.openstreetmap.org/export/embed.html?'
 				+ 'bbox=' + encodeURIComponent(bbp)
-				+ '&marker=' + encodeURIComponent(this.richObject.lat + ',' + this.richObject.lon)
+				+ '&marker=' + encodeURIComponent(pointLatLon)
 		},
 	},
 

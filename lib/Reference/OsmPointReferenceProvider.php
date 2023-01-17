@@ -23,6 +23,7 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
+use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
@@ -46,6 +47,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 	private IL10N $l10n;
 	private IURLGenerator $urlGenerator;
 	private LinkReferenceProvider $linkReferenceProvider;
+	private UtilsService $utilsService;
 
 	public function __construct(OsmAPIService $osmAPIService,
 								IConfig $config,
@@ -53,6 +55,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 								IURLGenerator $urlGenerator,
 								ReferenceManager $referenceManager,
 								LinkReferenceProvider $linkReferenceProvider,
+								UtilsService $utilsService,
 								?string $userId) {
 		$this->osmAPIService = $osmAPIService;
 		$this->userId = $userId;
@@ -61,6 +64,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 		$this->l10n = $l10n;
 		$this->urlGenerator = $urlGenerator;
 		$this->linkReferenceProvider = $linkReferenceProvider;
+		$this->utilsService = $utilsService;
 	}
 
 	/**
@@ -106,8 +110,12 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 		// link examples:
 		// https://www.openstreetmap.org/#map=5/47.931/24.829
 		// https://osm.org/go/0IpWx-
+		// https://osmand.net/map#17/43.61599/3.87524
+		// https://osm.org/?mlat=52.51629&mlon=13.37755&zoom=19
 		return preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/[0-9a-zA-Z\-]+$/i', $referenceText) === 1;
+			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/[0-9a-zA-Z\-\~]+$/i', $referenceText) === 1
+			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map#\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
+			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=\d+\.\d+&mlon=\d+\.\d+&zoom=\d+$/i', $referenceText) === 1;
 	}
 
 	/**
@@ -119,6 +127,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 			$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
 			if ($pointInfo !== null && !isset($pointInfo['error'])) {
 				$pointInfo['url'] = $referenceText;
+				$pointInfo['url_coordinates'] = $coords;
 				$reference = new Reference($referenceText);
 				$geoLink = 'geo:' . $coords['lat'] . ':' . $coords['lon'] . '?z=' . $coords['zoom'];
 				$reference->setTitle($pointInfo['display_name']);
@@ -156,9 +165,28 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 			];
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/([0-9a-zA-Z\-]+)$/i', $url, $matches);
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/([0-9a-zA-Z\-\~]+)$/i', $url, $matches);
 		if (count($matches) > 1) {
 			$encodedCoords = $matches[1];
+			return $this->utilsService->decodeOsmShortLink($encodedCoords);
+		}
+
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map#(\d+)\/(\d+\.\d+)\/(\d+\.\d+)$/i', $url, $matches);
+		if (count($matches) > 3) {
+			return [
+				'zoom' => $matches[1],
+				'lat' => $matches[2],
+				'lon' => $matches[3],
+			];
+		}
+
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=(\d+\.\d+)&mlon=(\d+\.\d+)&zoom=(\d+)$/i', $url, $matches);
+		if (count($matches) > 3) {
+			return [
+				'zoom' => $matches[3],
+				'lat' => $matches[1],
+				'lon' => $matches[2],
+			];
 		}
 
 		return null;
