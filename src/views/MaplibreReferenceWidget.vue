@@ -1,7 +1,7 @@
 <!--
   - @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
   -
-  - @author 2022 Julien Veyssier <eneiluj@posteo.net>
+  - @author 2023 Julien Veyssier <eneiluj@posteo.net>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -29,22 +29,24 @@
 					{{ richObject.display_name }}
 				</strong>
 			</a>
-			<iframe
-				class="location--map-frame"
-				frameborder="0"
+			<MaplibreMap
+				class="location--map"
 				scrolling="no"
-				marginheight="0"
-				marginwidth="0"
-				:src="frameUrl" />
+				:marker="markerCoords"
+				:bbox="bbox"
+				:area="richObject.geojson" />
 		</div>
 	</div>
 </template>
 
 <script>
+import MaplibreMap from '../components/map/MaplibreMap.vue'
+
 export default {
-	name: 'LocationReferenceWidget',
+	name: 'MaplibreReferenceWidget',
 
 	components: {
+		MaplibreMap,
 	},
 
 	props: {
@@ -68,17 +70,25 @@ export default {
 	},
 
 	computed: {
-		frameUrl() {
-			// <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=4.5333194732666025%2C44.70715721664363%2C4.613656997680665%2C44.74807432587679&amp;layer=mapnik&amp;marker=44.72761938925528%2C4.573488235473633" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=44.7276&amp;mlon=4.5735#map=14/44.7276/4.5735">Afficher une carte plus grande</a></small>
-			// https://www.openstreetmap.org/export/embed.html?bbox=4.5333194732666025%2C44.70715721664363%2C4.613656997680665%2C44.74807432587679&amp;layer=mapnik
+		bbox() {
 			const bb = this.richObject.boundingbox
-			const bbp = [bb[2], bb[0], bb[3], bb[1]].join(',')
-			const pointLatLon = this.richObject.url_coordinates
-				? this.richObject.url_coordinates.lat + ',' + this.richObject.url_coordinates.lon
-				: this.richObject.lat + ',' + this.richObject.lon
-			return 'https://www.openstreetmap.org/export/embed.html?'
-				+ 'bbox=' + encodeURIComponent(bbp)
-				+ '&marker=' + encodeURIComponent(pointLatLon)
+			return {
+				north: bb[1],
+				south: bb[0],
+				east: bb[3],
+				west: bb[2],
+			}
+		},
+		markerCoords() {
+			return this.richObject.url_coordinates
+				? {
+					lat: this.richObject.url_coordinates.lat,
+					lon: this.richObject.url_coordinates.lon,
+				}
+				: {
+					lat: this.richObject.lat,
+					lon: this.richObject.lon,
+				}
 		},
 	},
 
@@ -90,7 +100,6 @@ export default {
 <style scoped lang="scss">
 .location-reference {
 	width: 100%;
-	// padding: 12px;
 	white-space: normal;
 
 	.location {
@@ -107,7 +116,7 @@ export default {
 			}
 		}
 
-		&--map-frame {
+		&--map {
 			width: 100%;
 			height: 350px;
 		}

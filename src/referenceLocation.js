@@ -26,11 +26,15 @@ import {
 } from '@nextcloud/vue-richtext'
 import './bootstrap.js'
 import Vue from 'vue'
-import LocationReferenceWidget from './views/LocationReferenceWidget.vue'
+// import OsmFrameReferenceWidget from './views/OsmFrameReferenceWidget.vue'
+import MaplibreReferenceWidget from './views/MaplibreReferenceWidget.vue'
 // import LocationCustomPickerElement from './views/LocationCustomPickerElement.vue'
 
+// const referenceWidget = OsmFrameReferenceWidget
+const referenceWidget = MaplibreReferenceWidget
+
 registerWidget('integration_openstreetmap_location', (el, { richObjectType, richObject, accessible }) => {
-	const Widget = Vue.extend(LocationReferenceWidget)
+	const Widget = Vue.extend(referenceWidget)
 	new Widget({
 		propsData: {
 			richObjectType,

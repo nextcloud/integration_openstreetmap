@@ -82,6 +82,7 @@ class OsmAPIService {
 			'addressdetails' => 1,
 			'extratags' => 1,
 			'namedetails' => 1,
+			'polygon_geojson' => 1,
 		];
 		$result = $this->request($userId, 'lookup', $params);
 		if (count($result) === 1) {
@@ -129,6 +130,7 @@ class OsmAPIService {
 			'lat' => $lat,
 			'lon' => $lon,
 			'addressdetails' => 1,
+			'polygon_geojson' => 1,
 		];
 		return $this->request($userId, 'reverse', $params);
 	}
