@@ -3,7 +3,10 @@
 		<h2>
 			{{ t('integration_openstreetmap', 'Map point picker') }}
 		</h2>
-		<a v-if="currentLink" :href="currentLink" target="_blank">
+		<a v-if="currentLink"
+			:href="currentLink"
+			target="_blank"
+			class="preview-link">
 			{{ currentLink }}
 		</a>
 		<MaplibreMap v-if="showMap"
@@ -11,7 +14,10 @@
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
-		<NcButton type="primary" @click="onSubmit">
+		<NcButton
+			class="submit-button"
+			type="primary"
+			@click="onSubmit">
 			{{ t('integration_openstreetmap', 'Submit') }}
 		</NcButton>
 	</div>
@@ -96,8 +102,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	//padding: 16px;
+	// justify-content: center;
+	// padding: 16px;
 
 	h2 {
 		display: flex;
@@ -107,6 +113,15 @@ export default {
 	.point-map {
 		width: 100%;
 		height: 2000px;
+	}
+
+	.preview-link {
+		margin-bottom: 8px;
+	}
+
+	.submit-button {
+		margin-top: 8px;
+		align-self: end;
 	}
 }
 </style>
