@@ -161,18 +161,18 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=(\d+)\/(\d+\.\d+)\/(\d+.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => $matches[1],
-				'lat' => $matches[2],
-				'lon' => $matches[3],
+				'zoom' => (int) $matches[1],
+				'lat' => (float) $matches[2],
+				'lon' => (float) $matches[3],
 			];
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/\?mlat=\d+\.\d+&mlon=\d+\.\d+#map=(\d+)\/(\d+\.\d+)\/(\d+.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => $matches[1],
-				'lat' => $matches[2],
-				'lon' => $matches[3],
+				'zoom' => (int) $matches[1],
+				'lat' => (float) $matches[2],
+				'lon' => (float) $matches[3],
 			];
 		}
 
@@ -185,18 +185,18 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map#(\d+)\/(\d+\.\d+)\/(\d+\.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => $matches[1],
-				'lat' => $matches[2],
-				'lon' => $matches[3],
+				'zoom' => (int) $matches[1],
+				'lat' => (float) $matches[2],
+				'lon' => (float) $matches[3],
 			];
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=(\d+\.\d+)&mlon=(\d+\.\d+)&zoom=(\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => $matches[3],
-				'lat' => $matches[1],
-				'lon' => $matches[2],
+				'zoom' => (int) $matches[3],
+				'lat' => (float) $matches[1],
+				'lon' => (float) $matches[2],
 			];
 		}
 

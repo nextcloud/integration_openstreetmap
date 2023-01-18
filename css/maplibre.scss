@@ -24,6 +24,10 @@
 	&-inner > * {
 		color: var(--color-main-text) !important;
 	}
+	summary {
+		filter: var(--background-invert-if-dark);
+		background-color: unset !important;
+	}
 }
 
 .maplibregl-ctrl-top-left {
@@ -76,10 +80,12 @@
 .mapboxgl-ctrl-geocoder {
 	min-width: 200px;
 	width: 200px;
+	border-radius: var(--border-radius-large) !important;
 	> input {
 		color: var(--color-main-text) !important;
 		height: 36px !important;
 		padding: 6px 35px !important;
+		border-radius: var(--border-radius-large) !important;
 	}
 	&--suggestion {
 		color: var(--color-main-text) !important;
