@@ -78,7 +78,7 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return $this->l10n->t('OpenStreetMap location');
+		return $this->l10n->t('OpenStreetMap location (address)');
 	}
 
 	/**

@@ -22,14 +22,14 @@
 import { loadState } from '@nextcloud/initial-state'
 import {
 	registerWidget,
-	// registerCustomPickerElement,
-	// CustomPickerRenderResult,
+	registerCustomPickerElement,
+	CustomPickerRenderResult,
 } from '@nextcloud/vue-richtext'
 import './bootstrap.js'
 import Vue from 'vue'
 import OsmFrameReferenceWidget from './views/OsmFrameReferenceWidget.vue'
 import MaplibreReferenceWidget from './views/MaplibreReferenceWidget.vue'
-// import LocationCustomPickerElement from './views/LocationCustomPickerElement.vue'
+import PointCustomPickerElement from './views/PointCustomPickerElement.vue'
 
 const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
 const referenceWidget = preferOsmFrame ? OsmFrameReferenceWidget : MaplibreReferenceWidget
@@ -45,9 +45,8 @@ registerWidget('integration_openstreetmap_location', (el, { richObjectType, rich
 	}).$mount(el)
 })
 
-/*
-registerCustomPickerElement('giphy-gif', (el, { providerId, accessible }) => {
-	const Element = Vue.extend(GifCustomPickerElement)
+registerCustomPickerElement('openstreetmap-point', (el, { providerId, accessible }) => {
+	const Element = Vue.extend(PointCustomPickerElement)
 	const vueElement = new Element({
 		propsData: {
 			providerId,
@@ -56,7 +55,6 @@ registerCustomPickerElement('giphy-gif', (el, { providerId, accessible }) => {
 	}).$mount(el)
 	return new CustomPickerRenderResult(vueElement.$el, vueElement)
 }, (el, renderResult) => {
-	console.debug('giphy custom destroy callback. el', el, 'renderResult:', renderResult)
+	console.debug('osm custom destroy callback. el', el, 'renderResult:', renderResult)
 	renderResult.object.$destroy()
 })
-*/

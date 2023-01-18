@@ -52,15 +52,15 @@ export default {
 	props: {
 		useTerrain: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 		marker: {
 			type: Object,
-			required: true,
+			default: null,
 		},
 		bbox: {
 			type: Object,
-			required: true,
+			default: null,
 		},
 		area: {
 			type: Object,
@@ -71,6 +71,10 @@ export default {
 			default: 'metric',
 		},
 		showMousePositionControl: {
+			type: Boolean,
+			default: false,
+		},
+		allMoveEvents: {
 			type: Boolean,
 			default: false,
 		},
@@ -131,8 +135,6 @@ export default {
 			const restoredStyleKey = 'satellite'
 			const restoredStyleObj = this.styles[restoredStyleKey]
 
-			// const bb = this.bbox
-			// const bounds = [bb.west, bb.south, bb.east, bb.north]
 			const mapOptions = {
 				container: this.$refs.mapContainer,
 				style: restoredStyleObj.uri ? restoredStyleObj.uri : restoredStyleObj,
@@ -270,6 +272,16 @@ export default {
 					west: bounds.getWest(),
 				})
 			})
+			if (this.allMoveEvents) {
+				this.map.on('move', () => {
+					const { lng, lat } = this.map.getCenter()
+					this.$emit('map-state-change', {
+						centerLng: lng,
+						centerLat: lat,
+						zoom: this.map.getZoom(),
+					})
+				})
+			}
 		},
 		onZoomOn(nsew) {
 			if (this.map) {

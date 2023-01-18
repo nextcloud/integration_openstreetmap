@@ -109,10 +109,12 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 
 		// link examples:
 		// https://www.openstreetmap.org/#map=5/47.931/24.829
+		// https://www.openstreetmap.org/?mlat=44.7240&mlon=4.6374#map=13/44.7240/4.6374
 		// https://osm.org/go/0IpWx-
 		// https://osmand.net/map#17/43.61599/3.87524
 		// https://osm.org/?mlat=52.51629&mlon=13.37755&zoom=19
 		return preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
+			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/\?mlat=\d+\.\d+&mlon=\d+\.\d+#map=\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
 			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/[0-9a-zA-Z\-\~]+$/i', $referenceText) === 1
 			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map#\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
 			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=\d+\.\d+&mlon=\d+\.\d+&zoom=\d+$/i', $referenceText) === 1;
@@ -157,6 +159,15 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 	 */
 	private function getCoordinates(string $url): ?array {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=(\d+)\/(\d+\.\d+)\/(\d+.\d+)$/i', $url, $matches);
+		if (count($matches) > 3) {
+			return [
+				'zoom' => $matches[1],
+				'lat' => $matches[2],
+				'lon' => $matches[3],
+			];
+		}
+
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/\?mlat=\d+\.\d+&mlon=\d+\.\d+#map=(\d+)\/(\d+\.\d+)\/(\d+.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
 				'zoom' => $matches[1],
