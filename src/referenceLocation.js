@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { loadState } from '@nextcloud/initial-state'
 import {
 	registerWidget,
 	// registerCustomPickerElement,
@@ -26,12 +27,12 @@ import {
 } from '@nextcloud/vue-richtext'
 import './bootstrap.js'
 import Vue from 'vue'
-// import OsmFrameReferenceWidget from './views/OsmFrameReferenceWidget.vue'
+import OsmFrameReferenceWidget from './views/OsmFrameReferenceWidget.vue'
 import MaplibreReferenceWidget from './views/MaplibreReferenceWidget.vue'
 // import LocationCustomPickerElement from './views/LocationCustomPickerElement.vue'
 
-// const referenceWidget = OsmFrameReferenceWidget
-const referenceWidget = MaplibreReferenceWidget
+const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
+const referenceWidget = preferOsmFrame ? OsmFrameReferenceWidget : MaplibreReferenceWidget
 
 registerWidget('integration_openstreetmap_location', (el, { richObjectType, richObject, accessible }) => {
 	const Widget = Vue.extend(referenceWidget)

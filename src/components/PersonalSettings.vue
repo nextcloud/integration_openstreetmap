@@ -21,6 +21,11 @@
 					@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
 					{{ t('integration_openstreetmap', 'Enable OpenStreetMap link previews') }}
 				</NcCheckboxRadioSwitch>
+				<NcCheckboxRadioSwitch v-if="state.link_preview_enabled"
+					:checked="state.prefer_simple_osm_iframe"
+					@update:checked="onCheckboxChanged($event, 'prefer_simple_osm_iframe')">
+					{{ t('integration_openstreetmap', 'Prefer simple OpenStreetMap frame') }}
+				</NcCheckboxRadioSwitch>
 			</div>
 			<NcCheckboxRadioSwitch
 				:checked="state.navigation_enabled"

@@ -34,11 +34,14 @@ class OsmReferenceListener implements IEventListener {
 
 	private IConfig $config;
 	private IInitialState $initialState;
+	private ?string $userId;
 
 	public function __construct(IConfig       $config,
-								IInitialState $initialState) {
+								IInitialState $initialState,
+								?string $userId) {
 		$this->config = $config;
 		$this->initialState = $initialState;
+		$this->userId = $userId;
 	}
 
 	public function handle(Event $event): void {
@@ -53,6 +56,9 @@ class OsmReferenceListener implements IEventListener {
 			'mapbox_api_key' => $mapboxApiKey,
 		];
 		$this->initialState->provideInitialState('api-keys', $userConfig);
+
+		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
+		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
 
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-referenceLocation');
 	}
