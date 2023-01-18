@@ -34,6 +34,7 @@
 				scrolling="no"
 				:marker="markerCoords"
 				:bbox="bbox"
+				:zoom="zoom"
 				:area="richObject.geojson" />
 		</div>
 	</div>
@@ -78,6 +79,9 @@ export default {
 				east: bb[3],
 				west: bb[2],
 			}
+		},
+		zoom() {
+			return this.richObject.url_coordinates?.zoom
 		},
 		markerCoords() {
 			return this.richObject.url_coordinates

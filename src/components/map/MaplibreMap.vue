@@ -62,6 +62,10 @@ export default {
 			type: Object,
 			default: null,
 		},
+		zoom: {
+			type: Number,
+			default: null,
+		},
 		area: {
 			type: Object,
 			default: null,
@@ -154,6 +158,9 @@ export default {
 					maxZoom: 16,
 					animate: false,
 				})
+			}
+			if (this.zoom !== null) {
+				this.map.setZoom(this.zoom)
 			}
 			const navigationControl = new NavigationControl({ visualizePitch: true })
 			this.scaleControl = new ScaleControl({ unit: this.unit })

@@ -106,7 +106,7 @@ export default {
 
 	.point-map {
 		width: 100%;
-		height: 350px;
+		height: 2000px;
 	}
 }
 </style>
