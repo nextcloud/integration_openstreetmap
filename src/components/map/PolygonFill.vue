@@ -33,6 +33,10 @@ export default {
 			type: Number,
 			default: 0.5,
 		},
+		contourLineWidth: {
+			type: Number,
+			default: 4,
+		},
 	},
 
 	data() {
@@ -87,6 +91,9 @@ export default {
 			if (this.map.getLayer(this.layerId)) {
 				this.map.removeLayer(this.layerId)
 			}
+			if (this.map.getLayer(this.layerId + '-contour')) {
+				this.map.removeLayer(this.layerId + '-contour')
+			}
 			if (this.map.getSource(this.layerId)) {
 				this.map.removeSource(this.layerId)
 			}
@@ -101,11 +108,23 @@ export default {
 				type: 'fill',
 				source: this.layerId,
 				id: this.layerId,
-				// layout: {},
 				paint: {
 					'fill-color': this.fillColor,
 					'fill-opacity': this.fillOpacity,
 					'fill-outline-color': this.fillOutlineColor,
+				},
+			})
+			this.map.addLayer({
+				type: 'line',
+				source: this.layerId,
+				id: this.layerId + '-contour',
+				paint: {
+					'line-color': this.fillColor,
+					'line-width': this.contourLineWidth,
+				},
+				layout: {
+					'line-cap': 'round',
+					'line-join': 'round',
 				},
 			})
 

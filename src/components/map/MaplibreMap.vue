@@ -17,7 +17,8 @@
 				<PolygonFill v-if="area"
 					layer-id="target-object"
 					:geojson="area"
-					:map="map" />
+					:map="map"
+					:fill-opacity="0.25" />
 			</div>
 		</div>
 	</div>
@@ -148,7 +149,7 @@ export default {
 				const nsew = this.bbox
 				this.map.fitBounds([[nsew.west, nsew.north], [nsew.east, nsew.south]], {
 					padding: 50,
-					maxZoom: 18,
+					maxZoom: 16,
 					animate: false,
 				})
 			}
@@ -279,6 +280,9 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+@import '../../../css/maplibre.scss';
+</style>
 
 <style scoped lang="scss">
 @import '~maplibre-gl/dist/maplibre-gl.css';
