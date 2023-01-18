@@ -1,4 +1,6 @@
 .mapboxgl-ctrl-geocoder > input,
+.maplibregl-ctrl-fullscreen,
+.maplibregl-ctrl-shrink,
 .maplibregl-ctrl-geolocate,
 .maplibregl-ctrl-compass,
 .maplibregl-ctrl-zoom-in,
@@ -7,6 +9,8 @@
 	border-radius: unset !important;
 }
 
+.maplibregl-ctrl-shrink,
+.maplibregl-ctrl-fullscreen,
 .maplibregl-ctrl-geolocate,
 .maplibregl-ctrl-compass,
 .maplibregl-ctrl-zoom-in,
@@ -120,6 +124,7 @@
 		background-color: var(--color-main-background);
 		color: var(--color-main-text);
 		max-width: 150px;
+		margin: 0 !important;
 	}
 }
 

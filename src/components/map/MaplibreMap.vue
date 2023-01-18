@@ -1,6 +1,6 @@
 <template>
 	<div class="map-wrapper">
-		<a href="https://www.maptiler.com" class="watermark">
+		<a href="https://www.maptiler.com" class="watermark" :class="{ padded: showMousePositionControl }">
 			<img src="https://api.maptiler.com/resources/logo.svg"
 				alt="MapTiler logo">
 		</a>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { Map, NavigationControl, ScaleControl, GeolocateControl } from 'maplibre-gl'
+import { Map, NavigationControl, ScaleControl, GeolocateControl, FullscreenControl } from 'maplibre-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
@@ -52,7 +52,7 @@ export default {
 	props: {
 		useTerrain: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		marker: {
 			type: Object,
@@ -128,7 +128,7 @@ export default {
 				...getVectorStyles(apiKey),
 				...getRasterTileServers(apiKey),
 			}
-			const restoredStyleKey = 'streets'
+			const restoredStyleKey = 'satellite'
 			const restoredStyleObj = this.styles[restoredStyleKey]
 
 			// const bb = this.bbox
@@ -172,6 +172,7 @@ export default {
 					timeout: 10000,
 				},
 			})
+			const fullscreenControl = new FullscreenControl()
 			this.map.addControl(navigationControl, 'bottom-right')
 			this.map.addControl(this.scaleControl, 'top-left')
 			this.map.addControl(geolocateControl, 'top-left')
@@ -193,6 +194,7 @@ export default {
 				this.reRenderLayersAndTerrain()
 			})
 			this.map.addControl(tileControl, 'top-right')
+			this.map.addControl(fullscreenControl, 'top-right')
 
 			this.handleMapEvents()
 
@@ -239,7 +241,7 @@ export default {
 			this.removeTerrain()
 			console.debug('[gpxpod] add terrain')
 
-			const apiKey = this.settings.maptiler_api_key
+			const apiKey = this.apiKeys.maptiler_api_key
 			// terrain for maplibre >= 2.2.0
 			this.map.addSource('terrain', {
 				type: 'raster-dem',
@@ -299,9 +301,12 @@ export default {
 
 	.watermark {
 		position: absolute;
-		left: 10px;
-		bottom: 18px;
 		z-index: 999;
+		left: 10px;
+		bottom: 0;
+		&.padded {
+			bottom: 18px;
+		}
 	}
 }
 </style>
