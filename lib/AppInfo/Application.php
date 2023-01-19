@@ -78,6 +78,7 @@ class Application extends App implements IBootstrap {
 						'href' => self::OSM_URL,
 						'icon' => $urlGenerator->imagePath(self::APP_ID, 'app.svg'),
 						'name' => $navName,
+						'target' => '_blank',
 					];
 				});
 			}
