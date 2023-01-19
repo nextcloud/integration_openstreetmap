@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { Map, NavigationControl, ScaleControl, GeolocateControl, FullscreenControl } from 'maplibre-gl'
+import { Map, NavigationControl, ScaleControl, GeolocateControl, FullscreenControl, TerrainControl } from 'maplibre-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
@@ -91,6 +91,7 @@ export default {
 			mapLoaded: false,
 			mousePositionControl: null,
 			scaleControl: null,
+			terrainControl: null,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
 		}
 	},
@@ -110,12 +111,10 @@ export default {
 			this.scaleControl?.setUnit(newValue)
 		},
 		useTerrain(newValue) {
-			console.debug('change use_terrain', newValue)
-
 			if (newValue) {
-				this.addTerrain()
+				this.terrainControl._toggleTerrain()
 			} else {
-				this.removeTerrain()
+				this.map.setTerrain()
 			}
 		},
 	},
@@ -204,6 +203,11 @@ export default {
 			})
 			this.map.addControl(tileControl, 'top-right')
 			this.map.addControl(fullscreenControl, 'top-right')
+			this.terrainControl = new TerrainControl({
+				source: 'terrain',
+				exaggeration: 2.5,
+			})
+			this.map.addControl(this.terrainControl, 'top-right')
 
 			this.handleMapEvents()
 
@@ -217,8 +221,9 @@ export default {
 					south: bounds.getSouth(),
 					west: bounds.getWest(),
 				})
+				this.addTerrainSource()
 				if (this.useTerrain) {
-					this.addTerrain()
+					this.terrainControl._toggleTerrain()
 				}
 			})
 		},
@@ -232,33 +237,20 @@ export default {
 			}, 500)
 
 			// add the terrain
-			if (this.useTerrain) {
-				setTimeout(() => {
-					this.$nextTick(() => {
-						this.addTerrain()
-					})
-				}, 500)
-			}
+			setTimeout(() => {
+				this.$nextTick(() => {
+					this.addTerrainSource()
+					if (this.useTerrain) {
+						this.terrainControl._toggleTerrain()
+					}
+				})
+			}, 500)
 		},
-		removeTerrain() {
-			console.debug('[gpxpod] remove terrain')
-			if (this.map.getSource('terrain')) {
-				this.map.removeSource('terrain')
-			}
-		},
-		addTerrain() {
-			this.removeTerrain()
-			console.debug('[gpxpod] add terrain')
-
+		addTerrainSource() {
 			const apiKey = this.apiKeys.maptiler_api_key
-			// terrain for maplibre >= 2.2.0
 			this.map.addSource('terrain', {
 				type: 'raster-dem',
 				url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
-			})
-			this.map.setTerrain({
-				source: 'terrain',
-				exaggeration: 2.5,
 			})
 		},
 		handleMapEvents() {
