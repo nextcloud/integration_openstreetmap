@@ -27,11 +27,15 @@ class Admin implements ISettings {
 	 */
 	public function getForm(): TemplateResponse {
 		$nominatimApiKey = $this->config->getAppValue(Application::APP_ID, 'nominatim_api_key');
+		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key');
+		$mapboxApiKey = $this->config->getAppValue(Application::APP_ID, 'mapbox_api_key');
 
-		$userConfig = [
+		$state = [
 			'nominatim_api_key' => $nominatimApiKey,
+			'maptiler_api_key' => $maptilerApiKey,
+			'mapbox_api_key' => $mapboxApiKey,
 		];
-		$this->initialStateService->provideInitialState('admin-config', $userConfig);
+		$this->initialStateService->provideInitialState('admin-config', $state);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');
 	}
 

@@ -16,6 +16,28 @@
 					:placeholder="t('integration_openstreetmap', '...')"
 					@input="onInput">
 			</div>
+			<div class="line">
+				<label for="maptiler-api-key">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_openstreetmap', 'Maptiler API key') }}
+				</label>
+				<input id="maptiler-api-key"
+					v-model="state.maptiler_api_key"
+					type="password"
+					:placeholder="t('integration_openstreetmap', '...')"
+					@input="onInput">
+			</div>
+			<div class="line">
+				<label for="mapbox-api-key">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_openstreetmap', 'Mapbox API key') }}
+				</label>
+				<input id="mapbox-api-key"
+					v-model="state.mapbox_api_key"
+					type="password"
+					:placeholder="t('integration_openstreetmap', '...')"
+					@input="onInput">
+			</div>
 		</div>
 	</div>
 </template>
@@ -63,6 +85,8 @@ export default {
 			delay(() => {
 				this.saveOptions({
 					nominatim_api_key: this.state.nominatim_api_key,
+					maptiler_api_key: this.state.maptiler_api_key,
+					mapbox_api_key: this.state.mapbox_api_key,
 				})
 			}, 2000)()
 		},
