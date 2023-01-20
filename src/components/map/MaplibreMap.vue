@@ -62,9 +62,25 @@ export default {
 			type: Object,
 			default: null,
 		},
+		center: {
+			type: Object,
+			default: null,
+		},
 		zoom: {
 			type: Number,
 			default: null,
+		},
+		pitch: {
+			type: Number,
+			default: null,
+		},
+		bearing: {
+			type: Number,
+			default: null,
+		},
+		mapStyle: {
+			type: String,
+			default: 'streets',
 		},
 		area: {
 			type: Object,
@@ -135,8 +151,9 @@ export default {
 				...getVectorStyles(apiKey),
 				...getRasterTileServers(apiKey),
 			}
-			const restoredStyleKey = 'satellite'
+			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
 			const restoredStyleObj = this.styles[restoredStyleKey]
+			this.$emit('map-state-change', { mapStyle: restoredStyleKey })
 
 			const mapOptions = {
 				container: this.$refs.mapContainer,
@@ -160,6 +177,15 @@ export default {
 			}
 			if (this.zoom !== null) {
 				this.map.setZoom(this.zoom)
+			}
+			if (this.center !== null) {
+				this.map.setCenter(this.center)
+			}
+			if (this.pitch !== null) {
+				this.map.setPitch(this.pitch)
+			}
+			if (this.bearing !== null) {
+				this.map.setBearing(this.bearing)
 			}
 			const navigationControl = new NavigationControl({ visualizePitch: true })
 			this.scaleControl = new ScaleControl({ unit: this.unit })
@@ -214,13 +240,8 @@ export default {
 			this.map.on('load', () => {
 				// tracks are waiting for that to load
 				this.mapLoaded = true
-				const bounds = this.map.getBounds()
-				this.$emit('map-bounds-change', {
-					north: bounds.getNorth(),
-					east: bounds.getEast(),
-					south: bounds.getSouth(),
-					west: bounds.getWest(),
-				})
+				this.emitMapState()
+				this.emitMapBounds()
 				this.addTerrainSource()
 				if (this.useTerrain) {
 					this.terrainControl._toggleTerrain()
@@ -255,32 +276,33 @@ export default {
 		},
 		handleMapEvents() {
 			this.map.on('moveend', () => {
-				const { lng, lat } = this.map.getCenter()
-				this.$emit('map-state-change', {
-					centerLng: lng,
-					centerLat: lat,
-					zoom: this.map.getZoom(),
-					pitch: this.map.getPitch(),
-					bearing: this.map.getBearing(),
-				})
-				const bounds = this.map.getBounds()
-				this.$emit('map-bounds-change', {
-					north: bounds.getNorth(),
-					east: bounds.getEast(),
-					south: bounds.getSouth(),
-					west: bounds.getWest(),
-				})
+				this.emitMapState()
+				this.emitMapBounds()
 			})
 			if (this.allMoveEvents) {
 				this.map.on('move', () => {
-					const { lng, lat } = this.map.getCenter()
-					this.$emit('map-state-change', {
-						centerLng: lng,
-						centerLat: lat,
-						zoom: this.map.getZoom(),
-					})
+					this.emitMapState()
 				})
 			}
+		},
+		emitMapState() {
+			const { lng, lat } = this.map.getCenter()
+			this.$emit('map-state-change', {
+				centerLng: lng,
+				centerLat: lat,
+				zoom: this.map.getZoom(),
+				pitch: this.map.getPitch(),
+				bearing: this.map.getBearing(),
+			})
+		},
+		emitMapBounds() {
+			const bounds = this.map.getBounds()
+			this.$emit('map-bounds-change', {
+				north: bounds.getNorth(),
+				east: bounds.getEast(),
+				south: bounds.getSouth(),
+				west: bounds.getWest(),
+			})
 		},
 		onZoomOn(nsew) {
 			if (this.map) {

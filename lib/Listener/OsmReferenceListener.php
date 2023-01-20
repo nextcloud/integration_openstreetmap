@@ -60,6 +60,24 @@ class OsmReferenceListener implements IEventListener {
 		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
 
+		$lastLat = $this->config->getUserValue($this->userId, Application::APP_ID, 'lat');
+		$lastLon = $this->config->getUserValue($this->userId, Application::APP_ID, 'lon');
+		$lastZoom = $this->config->getUserValue($this->userId, Application::APP_ID, 'zoom');
+		$lastPitch = $this->config->getUserValue($this->userId, Application::APP_ID, 'pitch');
+		$lastBearing = $this->config->getUserValue($this->userId, Application::APP_ID, 'bearing');
+		$lastMapStyle = $this->config->getUserValue($this->userId, Application::APP_ID, 'mapStyle');
+		if ($lastLat !== '' && $lastLon !== '' && $lastZoom !== ''
+			&& $lastPitch !== '' && $lastBearing !== '' && $lastMapStyle !== '') {
+			$this->initialState->provideInitialState('last-map-state', [
+				'lat' => (float) $lastLat,
+				'lon' => (float) $lastLon,
+				'zoom' => (int) $lastZoom,
+				'pitch' => (float) $lastPitch,
+				'bearing' => (float) $lastBearing,
+				'mapStyle' => $lastMapStyle,
+			]);
+		}
+
 		Util::addScript(Application::APP_ID, Application::APP_ID . '-referenceLocation');
 	}
 }

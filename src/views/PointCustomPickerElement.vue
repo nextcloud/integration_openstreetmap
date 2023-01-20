@@ -9,8 +9,16 @@
 			class="preview-link">
 			{{ currentLink }}
 		</a>
+		<span v-else>
+			…
+		</span>
 		<MaplibreMap v-if="showMap"
 			class="point-map"
+			:center="lastCenter"
+			:zoom="lastMapState?.zoom"
+			:pitch="lastMapState?.pitch"
+			:bearing="lastMapState?.bearing"
+			:map-style="lastMapState?.mapStyle"
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
@@ -26,6 +34,8 @@
 <script>
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import MaplibreMap from '../components/map/MaplibreMap.vue'
+
+import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 
 export default {
 	name: 'PointCustomPickerElement',
@@ -50,11 +60,30 @@ export default {
 		return {
 			currentCenter: null,
 			currentZoom: null,
+			currentPitch: null,
+			currentBearing: null,
+			currentMapStyle: null,
 			showMap: false,
+			lastMapState: getLastMapState(),
 		}
 	},
 
 	computed: {
+		lastCenter() {
+			if (this.lastMapState === null) {
+				return null
+			}
+			return {
+				lat: this.lastMapState.lat,
+				lon: this.lastMapState.lon,
+			}
+		},
+		lastZoom() {
+			if (this.lastMapState === null) {
+				return null
+			}
+			return this.lastMapState.zoom
+		},
 		currentMarker() {
 			return this.currentCenter ? this.currentCenter : undefined
 		},
@@ -83,14 +112,34 @@ export default {
 
 	methods: {
 		onSubmit() {
+			const lat = this.currentCenter.lat
+			const lon = this.currentCenter.lon
+			const zoom = this.currentZoom
+			const pitch = this.currentPitch
+			const bearing = this.currentBearing
+			const mapStyle = this.currentMapStyle
+			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle)
 			this.$emit('submit', this.currentLink)
 		},
 		onMapStateChange(e) {
-			this.currentCenter = {
-				lat: parseFloat(e.centerLat.toFixed(6)),
-				lon: parseFloat(e.centerLng.toFixed(6)),
+			if (e.centerLat && e.centerLng) {
+				this.currentCenter = {
+					lat: parseFloat(e.centerLat.toFixed(6)),
+					lon: parseFloat(e.centerLng.toFixed(6)),
+				}
 			}
-			this.currentZoom = Math.floor(e.zoom)
+			if (e.zoom) {
+				this.currentZoom = Math.floor(e.zoom)
+			}
+			if (e.pitch) {
+				this.currentPitch = e.pitch
+			}
+			if (e.bearing) {
+				this.currentBearing = e.bearing
+			}
+			if (e.mapStyle) {
+				this.currentMapStyle = e.mapStyle
+			}
 		},
 	},
 }
@@ -102,8 +151,6 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	// justify-content: center;
-	// padding: 16px;
 
 	h2 {
 		display: flex;
