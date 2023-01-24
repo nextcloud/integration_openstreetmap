@@ -37,48 +37,4 @@ class OsmAPIController extends OCSController {
 		$this->urlGenerator = $urlGenerator;
 		$this->userId = $userId;
 	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 *
-	 * @param string $itemId
-	 * @param string $fallbackName
-	 * @param int $fillHeight
-	 * @param int $fillWidth
-	 * @param int $quality
-	 * @return DataDownloadResponse|RedirectResponse
-	 */
-	public function getMediaImage(string $itemId, string $fallbackName, int $fillHeight = 44, int $fillWidth = 44, int $quality = 96) {
-		$result = $this->osmAPIService->getMediaImage($this->userId, $itemId, $fillHeight, $fillWidth, $quality);
-		if (isset($result['error'])) {
-			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $fallbackName, 'size' => 44]);
-			return new RedirectResponse($fallbackAvatarUrl);
-		} else {
-			$response = new DataDownloadResponse(
-				$result['body'],
-				'',
-				$result['headers']['Content-Type'][0] ?? 'image/jpeg'
-			);
-			$response->cacheFor(60 * 60 * 24);
-			return $response;
-		}
-	}
-
-	/**
-	 * Redirects to the item's download link
-	 *
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 *
-	 * @param string $itemId
-	 * @return DataResponse|RedirectResponse
-	 */
-	public function internalMediaLink(string $itemId) {
-		$downloadLink = $this->osmAPIService->getDownloadLink($itemId);
-		if ($downloadLink === null) {
-			return new DataResponse('', Http::STATUS_FORBIDDEN);
-		}
-		return new RedirectResponse($downloadLink);
-	}
 }

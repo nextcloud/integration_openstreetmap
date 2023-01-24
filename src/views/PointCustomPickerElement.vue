@@ -1,7 +1,7 @@
 <template>
 	<div class="point-picker-content">
 		<h2>
-			{{ t('integration_openstreetmap', 'Map point picker') }}
+			{{ t('integration_openstreetmap', 'Map location (by OpenStreetMap)') }}
 		</h2>
 		<a v-if="currentLink"
 			:href="currentLink"

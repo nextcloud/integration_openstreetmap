@@ -9,10 +9,7 @@
 
 namespace OCA\Osm\AppInfo;
 
-//use OCA\Osm\Listener\OsmReferenceListener;
-//use OCA\Osm\Reference\OsmReferenceProvider;
 use Closure;
-//use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCA\Osm\Listener\CSPListener;
 use OCA\Osm\Listener\OsmReferenceListener;
 use OCA\Osm\Reference\OsmLocationReferenceProvider;

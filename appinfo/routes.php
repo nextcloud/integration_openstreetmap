@@ -13,7 +13,5 @@ return [
 	'routes' => [
 		['name' => 'config#setConfig', 'url' => '/config', 'verb' => 'PUT'],
 		['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
-		['name' => 'osmAPI#getMediaImage', 'url' => '/items/{itemId}/images/primary', 'verb' => 'GET'],
-		['name' => 'osmAPI#internalMediaLink', 'url' => '/i/{itemId}', 'verb' => 'GET'],
 	],
 ];

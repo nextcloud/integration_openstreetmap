@@ -78,7 +78,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return $this->l10n->t('OpenStreetMap point');
+		return $this->l10n->t('Map location (by OpenStreetMap)');
 	}
 
 	/**
