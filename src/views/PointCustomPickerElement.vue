@@ -3,7 +3,7 @@
 		<h2>
 			{{ t('integration_openstreetmap', 'Map location (by OpenStreetMap)') }}
 		</h2>
-		<a v-if="currentLink"
+		<!--a v-if="currentLink"
 			:href="currentLink"
 			target="_blank"
 			class="preview-link">
@@ -11,7 +11,13 @@
 		</a>
 		<span v-else>
 			…
-		</span>
+		</span-->
+		<Search ref="url-input"
+			class="generic-search"
+			:provider="provider"
+			:show-empty-content="false"
+			:search-placeholder="searchPlaceholder"
+			@submit="onSearchSubmit" />
 		<MaplibreMap v-if="showMap"
 			class="point-map"
 			:center="lastCenter"
@@ -25,7 +31,7 @@
 		<NcButton
 			class="submit-button"
 			type="primary"
-			@click="onSubmit">
+			@click="onMapSubmit">
 			{{ t('integration_openstreetmap', 'Submit') }}
 		</NcButton>
 	</div>
@@ -35,6 +41,8 @@
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
+import { getProvider, Search } from '@nextcloud/vue-richtext'
+
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 
 export default {
@@ -43,6 +51,7 @@ export default {
 	components: {
 		MaplibreMap,
 		NcButton,
+		Search,
 	},
 
 	props: {
@@ -58,6 +67,7 @@ export default {
 
 	data() {
 		return {
+			provider: getProvider(this.providerId),
 			currentCenter: null,
 			currentZoom: null,
 			currentPitch: null,
@@ -65,6 +75,7 @@ export default {
 			currentMapStyle: null,
 			showMap: false,
 			lastMapState: getLastMapState(),
+			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
 		}
 	},
 
@@ -108,10 +119,11 @@ export default {
 		this.$nextTick(() => {
 			this.showMap = true
 		})
+		console.debug('my provider is ', this.provider)
 	},
 
 	methods: {
-		onSubmit() {
+		onMapSubmit() {
 			const lat = this.currentCenter.lat
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
@@ -120,6 +132,9 @@ export default {
 			const mapStyle = this.currentMapStyle
 			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle)
 			this.$emit('submit', this.currentLink)
+		},
+		onSearchSubmit(link) {
+			this.$emit('submit', link)
 		},
 		onMapStateChange(e) {
 			if (e.centerLat && e.centerLng) {
@@ -157,9 +172,17 @@ export default {
 		align-items: center;
 	}
 
+	.generic-search {
+		margin-bottom: 12px;
+	}
+
 	.point-map {
 		width: 100%;
 		height: 2000px;
+
+		::v-deep .maplibregl-map {
+			border-radius: var(--border-radius-large);
+		}
 	}
 
 	.preview-link {

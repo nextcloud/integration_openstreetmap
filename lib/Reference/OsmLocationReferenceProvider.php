@@ -24,8 +24,7 @@ namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\Service\UtilsService;
-use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
-use OCP\Collaboration\Reference\ISearchableReferenceProvider;
+use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
@@ -36,7 +35,7 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
+class OsmLocationReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -65,51 +64,6 @@ class OsmLocationReferenceProvider extends ADiscoverableReferenceProvider implem
 		$this->urlGenerator = $urlGenerator;
 		$this->linkReferenceProvider = $linkReferenceProvider;
 		$this->utilsService = $utilsService;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getId(): string	{
-		return 'openstreetmap-location';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle(): string {
-		return $this->l10n->t('OpenStreetMap location (address)');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getOrder(): int	{
-		return 10;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getIconUrl(): string {
-		return $this->urlGenerator->getAbsoluteURL(
-			$this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getSupportedSearchProviderIds(): array {
-		if ($this->userId !== null) {
-			$ids = [];
-			$searchItemsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_location_enabled', '1') === '1';
-			if ($searchItemsEnabled) {
-				$ids[] = 'openstreetmap-search-location';
-			}
-			return $ids;
-		}
-		return ['openstreetmap-search-location'];
 	}
 
 	/**

@@ -36,7 +36,7 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
+class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -95,6 +95,21 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider {
 		return $this->urlGenerator->getAbsoluteURL(
 			$this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')
 		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getSupportedSearchProviderIds(): array {
+		if ($this->userId !== null) {
+			$ids = [];
+			$searchItemsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_location_enabled', '1') === '1';
+			if ($searchItemsEnabled) {
+				$ids[] = 'openstreetmap-search-location';
+			}
+			return $ids;
+		}
+		return ['openstreetmap-search-location'];
 	}
 
 	/**
