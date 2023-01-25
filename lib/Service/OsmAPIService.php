@@ -71,6 +71,8 @@ class OsmAPIService {
 	 * @return array
 	 */
 	public function getLocationInfo(string $userId, int $locationId, string $locationType): ?array {
+		// example:
+		// curl https://nominatim.openstreetmap.org/lookup?osm_ids=R87515&format=json&addressdetails=1&extratags=1&namedetails=1&polygon_geojson=1
 		$prefix = $locationType === 'relation'
 			? 'R'
 			: ($locationType === 'way'
@@ -125,6 +127,8 @@ class OsmAPIService {
 	 * @return array
 	 */
 	public function geocode(string $userId, float $lat, float $lon): array {
+		// example:
+		// curl https://nominatim.openstreetmap.org/reverse?format=json&lat=47.931&lon=24.829&addressdetails=1&polygon_geojson=1
 		$params = [
 			'format' => 'json',
 			'lat' => $lat,

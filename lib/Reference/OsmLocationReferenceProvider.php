@@ -80,7 +80,7 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 		// https://www.openstreetmap.org/relation/87515#map=14/44.7209/4.5877
 		// https://www.openstreetmap.org/relation/87515
 		// https://osm.org/go/xV9hTJVw-?relation=87515
-		return preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=\d+\/\d+\.\d+\/\d+\.\d+$/i', $referenceText) === 1
+		return preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=\d+\/-?\d+\.\d+\/-?\d+\.\d+$/i', $referenceText) === 1
 			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+$/i', $referenceText) === 1
 			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/[0-9a-zA-Z\-]+\?[a-zA-Z]+=\d+$/i', $referenceText) === 1;
 	}
@@ -107,8 +107,16 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 				$reference->setImageUrl($logoUrl);
 
 				if ($coords !== null) {
-					$locationInfo['url_coordinates'] = $coords;
+					$locationInfo['zoom'] = $coords['zoom'];
+					$locationInfo['map_center'] = [
+						'lat' => $coords['lat'],
+						'lon' => $coords['lon'],
+					];
 				}
+				$locationInfo['marker_coordinates'] = [
+					'lat' => $locationInfo['lat'],
+					'lon' => $locationInfo['lon'],
+				];
 				$reference->setRichObject(
 					self::RICH_OBJECT_TYPE,
 					$locationInfo,
@@ -127,12 +135,12 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 	 * @return array|null
 	 */
 	private function getCoordinates(string $url): ?array {
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=(\d+)\/(\d+\.\d+)\/(\d+\.\d+)$/i', $url, $matches);
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => $matches[1],
-				'lat' => $matches[2],
-				'lon' => $matches[3],
+				'zoom' => (int) $matches[1],
+				'lat' => (float) $matches[2],
+				'lon' => (float) $matches[3],
 			];
 		}
 

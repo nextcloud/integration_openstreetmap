@@ -34,6 +34,7 @@
 				scrolling="no"
 				:marker="markerCoords"
 				:bbox="bbox"
+				:center="mapCenter"
 				:zoom="zoom"
 				:area="richObject.geojson" />
 		</div>
@@ -72,6 +73,10 @@ export default {
 
 	computed: {
 		bbox() {
+			// use mapCenter in priority
+			if (this.mapCenter) {
+				return undefined
+			}
 			const bb = this.richObject.boundingbox
 			return {
 				north: bb[1],
@@ -81,18 +86,13 @@ export default {
 			}
 		},
 		zoom() {
-			return this.richObject.url_coordinates?.zoom
+			return this.richObject.zoom
+		},
+		mapCenter() {
+			return this.richObject.map_center
 		},
 		markerCoords() {
-			return this.richObject.url_coordinates
-				? {
-					lat: this.richObject.url_coordinates.lat,
-					lon: this.richObject.url_coordinates.lon,
-				}
-				: {
-					lat: this.richObject.lat,
-					lon: this.richObject.lon,
-				}
+			return this.richObject.marker_coordinates
 		},
 	},
 
