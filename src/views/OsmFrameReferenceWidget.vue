@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { getBBFromCenterZoom } from '../mapUtils.js'
+
 export default {
 	name: 'OsmFrameReferenceWidget',
 
@@ -68,18 +70,24 @@ export default {
 	},
 
 	computed: {
-		// TODO adjust that to clarified info from provider
 		frameUrl() {
+			const center = this.richObject.map_center
+			const zoom = this.richObject.zoom
+			const marker = this.richObject.marker_coordinates
+			const markerLatLon = marker
+				? marker.lat + ',' + marker.lon
+				: null
+
 			// <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=4.5333194732666025%2C44.70715721664363%2C4.613656997680665%2C44.74807432587679&amp;layer=mapnik&amp;marker=44.72761938925528%2C4.573488235473633" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=44.7276&amp;mlon=4.5735#map=14/44.7276/4.5735">Afficher une carte plus grande</a></small>
 			// https://www.openstreetmap.org/export/embed.html?bbox=4.5333194732666025%2C44.70715721664363%2C4.613656997680665%2C44.74807432587679&amp;layer=mapnik
-			const bb = this.richObject.boundingbox
+			const bb = center
+				? getBBFromCenterZoom(center.lat, center.lon, zoom)
+				: this.richObject.boundingbox
+
 			const bbp = [bb[2], bb[0], bb[3], bb[1]].join(',')
-			const pointLatLon = this.richObject.url_coordinates
-				? this.richObject.url_coordinates.lat + ',' + this.richObject.url_coordinates.lon
-				: this.richObject.lat + ',' + this.richObject.lon
 			return 'https://www.openstreetmap.org/export/embed.html?'
 				+ 'bbox=' + encodeURIComponent(bbp)
-				+ '&marker=' + encodeURIComponent(pointLatLon)
+				+ (markerLatLon ? ('&marker=' + encodeURIComponent(markerLatLon)) : '')
 		},
 	},
 
