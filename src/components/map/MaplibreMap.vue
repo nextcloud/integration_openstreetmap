@@ -35,6 +35,7 @@ import {
 	getVectorStyles,
 } from '../../tileServers.js'
 import { MousePositionControl, TileControl } from '../../mapControls.js'
+import { nominatimGeocoder } from '../../mapUtils.js'
 
 import VMarker from './VMarker.vue'
 import PolygonFill from './PolygonFill.vue'
@@ -192,14 +193,12 @@ export default {
 			if (this.apiKeys.mapbox_api_key) {
 				const geocoderControl = new MapboxGeocoder({
 					accessToken: this.apiKeys.mapbox_api_key,
-					// eslint-disable-next-line
-					// mapboxgl: maplibregl,
 					// we don't really care if a marker is not added when searching
 					mapboxgl: null,
+					marker: false,
 					placeholder: t('integration_openstreetmap', 'Search on the map'),
-					// TODO implement local geocoder using nominatim
-					// relevant options: localGeocoder, localGeocoderOnly
 					// https://github.com/mapbox/mapbox-gl-geocoder/blob/main/API.md#mapboxgeocoder
+					externalGeocoder: nominatimGeocoder,
 				})
 				this.map.addControl(geocoderControl, 'top-left')
 			}

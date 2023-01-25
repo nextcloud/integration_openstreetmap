@@ -37,4 +37,20 @@ class OsmAPIController extends OCSController {
 		$this->urlGenerator = $urlGenerator;
 		$this->userId = $userId;
 	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param string $query
+	 * @return DataResponse
+	 */
+	public function nominatimSearch(string $query): DataResponse {
+		$searchResults = $this->osmAPIService->searchLocation($this->userId, $query, 0, 10);
+		if (isset($searchResults['error'])) {
+			return new DataResponse('', Http::STATUS_BAD_REQUEST);
+		}
+		$response = new DataResponse($searchResults);
+		$response->cacheFor(60 * 60 * 24, false, true);
+		return $response;
+	}
 }
