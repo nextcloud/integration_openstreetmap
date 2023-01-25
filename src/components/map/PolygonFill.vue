@@ -46,6 +46,9 @@ export default {
 	},
 
 	computed: {
+		shouldFill() {
+			return this.geojson.type === 'Polygon'
+		},
 	},
 
 	watch: {
@@ -65,19 +68,16 @@ export default {
 			}
 		},
 		geojson() {
-			console.debug('[osm] polygonGeojsonData has changed')
 			this.remove()
 			this.init()
 		},
 	},
 
 	mounted() {
-		console.debug('polygon mounted!!!!!', this.layerId)
 		this.init()
 	},
 
 	destroyed() {
-		console.debug('destroy polygon', this.layerId)
 		this.remove()
 	},
 
@@ -104,16 +104,18 @@ export default {
 				lineMetrics: true,
 				data: this.geojson,
 			})
-			this.map.addLayer({
-				type: 'fill',
-				source: this.layerId,
-				id: this.layerId,
-				paint: {
-					'fill-color': this.fillColor,
-					'fill-opacity': this.fillOpacity,
-					'fill-outline-color': this.fillOutlineColor,
-				},
-			})
+			if (this.shouldFill) {
+				this.map.addLayer({
+					type: 'fill',
+					source: this.layerId,
+					id: this.layerId,
+					paint: {
+						'fill-color': this.fillColor,
+						'fill-opacity': this.fillOpacity,
+						'fill-outline-color': this.fillOutlineColor,
+					},
+				})
+			}
 			this.map.addLayer({
 				type: 'line',
 				source: this.layerId,
