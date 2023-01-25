@@ -28,17 +28,27 @@
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
-		<NcButton
-			class="submit-button"
-			type="primary"
-			@click="onMapSubmit">
-			{{ t('integration_openstreetmap', 'Submit') }}
-		</NcButton>
+		<div class="footer">
+			<NcCheckboxRadioSwitch
+				class="marker-checkbox"
+				:checked.sync="includeMarker">
+				{{ t('integration_openstreetmap', 'Include marker') }}
+			</NcCheckboxRadioSwitch>
+			<div class="spacer" />
+			<NcButton
+				class="submit-button"
+				type="primary"
+				@click="onMapSubmit">
+				{{ t('integration_openstreetmap', 'Submit') }}
+			</NcButton>
+		</div>
 	</div>
 </template>
 
 <script>
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
 import { getProvider, Search } from '@nextcloud/vue-richtext'
@@ -52,6 +62,7 @@ export default {
 		MaplibreMap,
 		NcButton,
 		Search,
+		NcCheckboxRadioSwitch,
 	},
 
 	props: {
@@ -76,6 +87,7 @@ export default {
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
+			includeMarker: true,
 		}
 	},
 
@@ -96,7 +108,7 @@ export default {
 			return this.lastMapState.zoom
 		},
 		currentMarker() {
-			return this.currentCenter ? this.currentCenter : undefined
+			return this.includeMarker && this.currentCenter ? this.currentCenter : undefined
 		},
 		currentLink() {
 			if (this.currentCenter === null) {
@@ -105,10 +117,14 @@ export default {
 			const lat = this.currentCenter.lat
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
-			return 'https://www.openstreetmap.org/'
-				+ '?mlat=' + lat
-				+ '&mlon=' + lon
-				+ '#map=' + zoom + '/' + lat + '/' + lon
+			if (this.includeMarker) {
+				return 'https://www.openstreetmap.org/'
+					+ '?mlat=' + lat
+					+ '&mlon=' + lon
+					+ '#map=' + zoom + '/' + lat + '/' + lon
+			} else {
+				return 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
+			}
 		},
 	},
 
@@ -189,9 +205,22 @@ export default {
 		margin-bottom: 8px;
 	}
 
-	.submit-button {
-		margin-top: 8px;
-		align-self: end;
+	.spacer {
+		flex-grow: 1;
+	}
+
+	.footer {
+		width: 100%;
+		display: flex;
+
+		.marker-checkbox {
+			margin-left: 16px;
+		}
+
+		.submit-button {
+			margin-top: 8px;
+			align-self: end;
+		}
 	}
 }
 </style>
