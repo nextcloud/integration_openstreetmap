@@ -196,6 +196,10 @@ export default {
 					// mapboxgl: maplibregl,
 					// we don't really care if a marker is not added when searching
 					mapboxgl: null,
+					placeholder: t('integration_openstreetmap', 'Search on the map'),
+					// TODO implement local geocoder using nominatim
+					// relevant options: localGeocoder, localGeocoderOnly
+					// https://github.com/mapbox/mapbox-gl-geocoder/blob/main/API.md#mapboxgeocoder
 				})
 				this.map.addControl(geocoderControl, 'top-left')
 			}
