@@ -22,7 +22,8 @@
 <template>
 	<div class="location-reference">
 		<div class="location">
-			<a class="location--link"
+			<a v-if="richObject.display_name"
+				class="location--link"
 				:href="richObject.url"
 				target="_blank">
 				<strong class="location--name">

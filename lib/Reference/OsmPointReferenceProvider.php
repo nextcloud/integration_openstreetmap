@@ -141,14 +141,25 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	public function resolveReference(string $referenceText): ?IReference {
 		if ($this->matchReference($referenceText)) {
 			$coords = $this->getCoordinates($referenceText);
-			$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
+			if (isset($coords['markerLat'], $coords['markerLon'])) {
+				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['markerLat'], $coords['markerLon']);
+			} else {
+				// do not geocode if no marker, the widget will simply show the map centered correctly
+//				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
+				$pointInfo = [];
+			}
 			if ($pointInfo !== null && !isset($pointInfo['error'])) {
 				$pointInfo['url'] = $referenceText;
 				$reference = new Reference($referenceText);
 				$geoLink = 'geo:' . $coords['lat'] . ':' . $coords['lon'] . '?z=' . $coords['zoom'];
-				$reference->setTitle($pointInfo['display_name']);
-				$reference->setDescription($pointInfo['osm_type'] . '/' . $pointInfo['osm_id'] . ' ' . $geoLink);
-				$reference->setUrl($this->osmAPIService->getLinkFromOsmId($pointInfo['osm_id'], $pointInfo['osm_type']));
+				$reference->setTitle($pointInfo['display_name'] ?? $geoLink);
+				if (isset($pointInfo['osm_type'], $pointInfo['osm_id'])) {
+					$reference->setDescription($pointInfo['osm_type'] . '/' . $pointInfo['osm_id'] . ' ' . $geoLink);
+					$reference->setUrl($this->osmAPIService->getLinkFromOsmId($pointInfo['osm_id'], $pointInfo['osm_type']));
+				} else {
+					$reference->setDescription($geoLink);
+					$reference->setUrl($referenceText);
+				}
 				$logoUrl = $this->urlGenerator->getAbsoluteURL(
 					$this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg')
 				);
