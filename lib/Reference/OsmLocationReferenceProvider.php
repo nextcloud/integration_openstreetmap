@@ -106,6 +106,9 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 				);
 				$reference->setImageUrl($logoUrl);
 
+				if ($coords !== null) {
+					$locationInfo['url_coordinates'] = $coords;
+				}
 				$reference->setRichObject(
 					self::RICH_OBJECT_TYPE,
 					$locationInfo,
