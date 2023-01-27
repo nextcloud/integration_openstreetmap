@@ -190,6 +190,7 @@ export default {
 
 	.generic-search {
 		margin-bottom: 12px;
+		width: 100%;
 	}
 
 	.point-map {
