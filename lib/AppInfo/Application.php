@@ -12,6 +12,7 @@ namespace OCA\Osm\AppInfo;
 use Closure;
 use OCA\Osm\Listener\CSPListener;
 use OCA\Osm\Listener\OsmReferenceListener;
+use OCA\Osm\Reference\DuckduckgoReferenceProvider;
 use OCA\Osm\Reference\GoogleMapsReferenceProvider;
 use OCA\Osm\Reference\HereMapsReferenceProvider;
 use OCA\Osm\Reference\OsmLocationReferenceProvider;
@@ -54,6 +55,7 @@ class Application extends App implements IBootstrap {
 		$context->registerReferenceProvider(OsmPointReferenceProvider::class);
 		$context->registerReferenceProvider(GoogleMapsReferenceProvider::class);
 		$context->registerReferenceProvider(HereMapsReferenceProvider::class);
+		$context->registerReferenceProvider(DuckduckgoReferenceProvider::class);
 
 		$context->registerEventListener(RenderReferenceEvent::class, OsmReferenceListener::class);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CSPListener::class);
