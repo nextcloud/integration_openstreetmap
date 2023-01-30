@@ -55,6 +55,9 @@ class CSPListener implements IEventListener {
 		$policy->addAllowedImageDomain('https://*.tile.openstreetmap.org');
 		$policy->addAllowedImageDomain('https://api.maptiler.com');
 
+		$policy->addAllowedConnectDomain('https://*.tile.openstreetmap.org');
+		$policy->addAllowedConnectDomain('https://server.arcgisonline.com');
+		$policy->addAllowedConnectDomain('https://*.tile.stamen.com');
 		$policy->addAllowedConnectDomain('https://api.maptiler.com');
 		$policy->addAllowedConnectDomain('https://api.mapbox.com');
 		$policy->addAllowedConnectDomain('https://events.mapbox.com');

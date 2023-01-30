@@ -1,4 +1,4 @@
-import { generateUrl } from '@nextcloud/router'
+// import { generateUrl } from '@nextcloud/router'
 
 export function getRasterTileServers(apiKey) {
 	return {
@@ -11,7 +11,7 @@ export function getRasterTileServers(apiKey) {
 				'osm-source': {
 					type: 'raster',
 					tiles: [
-						generateUrl('/apps/gpxpod/tiles/osm/') + '{x}/{y}/{z}',
+						'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
 					],
 					tileSize: 256,
 					attribution: 'Map data &copy; 2013 <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -36,7 +36,7 @@ export function getRasterTileServers(apiKey) {
 				'esri-topo-source': {
 					type: 'raster',
 					tiles: [
-						generateUrl('/apps/gpxpod/tiles/esri-topo/') + '{x}/{y}/{z}',
+						'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
 					],
 					tileSize: 256,
 					attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, '
@@ -56,6 +56,9 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 19,
 		},
+		// as watercolor is only accessible via http, we need to proxy it through the server
+		// let's not do that in this app
+		/*
 		waterColor: {
 			title: 'WaterColor',
 			version: 8,
@@ -64,7 +67,7 @@ export function getRasterTileServers(apiKey) {
 				'watercolor-source': {
 					type: 'raster',
 					tiles: [
-						generateUrl('/apps/gpxpod/tiles/watercolor/') + '{x}/{y}/{z}',
+						'https://a.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',
 					],
 					tileSize: 256,
 					attribution: '<a href="https://leafletjs.com" title="A JS library'
@@ -86,6 +89,7 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 18,
 		},
+		*/
 	}
 }
 
