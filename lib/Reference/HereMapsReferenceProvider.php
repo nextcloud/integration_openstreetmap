@@ -35,7 +35,7 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class GoogleMapsReferenceProvider implements IReferenceProvider {
+class HereMapsReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -74,12 +74,13 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 		}
 
 		// link examples:
-		// https://goo.gl/maps/eTvH3TqXvKhU8sqb8
-		// https://www.google.fr/maps/place/44%C2%B044'46.5%22N+4%C2%B033'36.9%22E/@44.746241,4.560248,17z/data=!3m1!4b1!4m4!3m3!8m2!3d44.746241!4d4.560248
-		// https://www.google.fr/maps/search/44.746241,+4.560248?shorturl=1
-		return preg_match('/^(?:https?:\/\/)?(?:www\.)?goo\.gl\/maps\/[0-9a-zA-Z]+$/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/place\/.*\/@[+-]?\d+\.\d+,[+-]?\d+\.\d+,\d+(?:\.\d+)?z/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/search\/[+-]?\d+\.\d+,[+-]?\d+\.\d+/i', $referenceText) === 1;
+		// https://wego.here.com/france/privas/city-town-village/privas--here:cm:namedplace:20047816?map=44.73471,4.59783,14,normal&msg=Privas
+		// https://wego.here.com/?map=44.73471,4.59783,14,normal
+		// https://share.here.com/l/51.8772465,14.3453293?z=13&t=traffic&p=no
+		// https://share.here.com/p/s-YmI9NC41NzAyJTJDNDQuNjk2OTQlMkM0LjYxOTY4JTJDNDQuNzQ1NTg7Yz1jaXR5LXRvd24tdmlsbGFnZTtpZD1oZXJlJTNBY20lM0FuYW1lZHBsYWNlJTNBMjAwNDc4MTY7bGF0PTQ0LjczNDcxO2xvbj00LjU5NzgzO249UHJpdmFzO2g9MmY2NTNm
+		return preg_match('/^(?:https?:\/\/)?(?:www\.)?wego\.here\.com\/.*\?map=[+-]?\d+\.\d+,[+-]?\d+\.\d+,\d+/i', $referenceText) === 1
+			// || preg_match('/^(?:https?:\/\/)?(?:www\.)?share\.here\.com\/p\/[-a-zA-Z]+$/i', $referenceText) === 1
+			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?share\.here\.com\/l\/[+-]?\d+\.\d+,[+-]?\d+\.\d+/i', $referenceText) === 1;
 	}
 
 	/**
@@ -138,35 +139,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 	 * @return array|null
 	 */
 	private function getCoordinates(string $url): ?array {
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?goo\.gl\/maps\/([0-9a-zA-Z]+)$/i', $url, $matches);
-		if (count($matches) > 1) {
-			// we should get redirected to a supported URL
-			$url = $this->utilsService->decodeGoogleMapsShortLink($matches[1]);
-			if ($url !== null) {
-				// example
-				// https://maps.google.com/maps/api/staticmap?center=44.746241%2C4.560248&zoom=15&size=200x200&markers=44.746241%2C4.560248&sensor=false&client=google-maps-frontend&signature=c-Efll2S5GIhQbsP2KiHp-R82Js'
-				preg_match('/^(?:https?:\/\/)?(?:www\.)?maps\.google\.com\/maps\/api\/staticmap\?center=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)&zoom=(\d+).*&markers=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)/i', $url, $matches);
-				if (count($matches) > 5) {
-					return [
-						'lat' => (float) $matches[1],
-						'lon' => (float) $matches[2],
-						'zoom' => (int) $matches[3],
-						'markerLat' => (float) $matches[4],
-						'markerLon' => (float) $matches[5],
-					];
-				}
-				preg_match('/^(?:https?:\/\/)?(?:www\.)?maps\.google\.com\/maps\/api\/staticmap\?center=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)&zoom=(\d+)/i', $url, $matches);
-				if (count($matches) > 3) {
-					return [
-						'zoom' => (int) $matches[3],
-						'lat' => (float) $matches[1],
-						'lon' => (float) $matches[2],
-					];
-				}
-			}
-		}
-
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/place\/.*\/@([+-]?\d+\.\d+),([+-]?\d+\.\d+),(\d+(?:\.\d+)?)z/i', $url, $matches);
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?wego\.here\.com\/.*\?map=([+-]?\d+\.\d+),([+-]?\d+\.\d+),(\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
 				'lat' => (float) $matches[1],
@@ -175,12 +148,23 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 			];
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/search\/([+-]?\d+\.\d+),([+-]?\d+\.\d+)/i', $url, $matches);
+		// https://share.here.com/l/51.8772465,14.3453293?z=13&t=traffic&p=no
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?share\.here\.com\/l\/([+-]?\d+\.\d+),([+-]?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 2) {
-			return [
+			$coords = [
 				'lat' => (float) $matches[1],
 				'lon' => (float) $matches[2],
 			];
+			preg_match('/z=(\d+)/i', $url, $matches);
+			if (count($matches) > 1) {
+				$coords['zoom'] = (int) $matches[1];
+			}
+			preg_match('/(p=yes)/i', $url, $matches);
+			if (count($matches) > 1) {
+				$coords['markerLat'] = $coords['lat'];
+				$coords['markerLon'] = $coords['lon'];
+			}
+			return $coords;
 		}
 
 		return null;
