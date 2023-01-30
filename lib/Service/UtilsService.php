@@ -11,9 +11,24 @@
 
 namespace OCA\Osm\Service;
 
+use DOMDocument;
+use DOMXPath;
+use Exception;
+use OCA\Osm\AppInfo\Application;
+use OCP\Http\Client\IClientService;
+use Psr\Log\LoggerInterface;
+use Throwable;
+
 class UtilsService {
 
-	public function __construct (string $appName) {
+	private IClientService $clientService;
+	private LoggerInterface $logger;
+
+	public function __construct (string         $appName,
+								 LoggerInterface $logger,
+								 IClientService $clientService) {
+		$this->clientService = $clientService;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -55,5 +70,33 @@ class UtilsService {
 			'lon' => $x,
 			'zoom' => $z,
 		];
+	}
+
+	/**
+	 * @param string $hash
+	 * @return array|null
+	 */
+	public function decodeGoogleMapsShortLink(string $hash): ?string {
+		$client = $this->clientService->newClient();
+		$url = 'https://goo.gl/maps/' . $hash;
+		$options = [];
+		try {
+			$response = $client->get($url, $options);
+			$respCode = $response->getStatusCode();
+			if ($respCode < 400) {
+				$body = $response->getBody();
+				$dom = new DomDocument();
+				$dom->loadHTML($body);
+				$xpath = new DOMXpath($dom);
+				$elements = $xpath->query("//head/meta[@itemprop='image']");
+				if (!empty($elements) && isset($elements[0])) {
+					return $elements[0]->getAttribute('content');
+				}
+			}
+		} catch (Exception | Throwable $e) {
+			$this->logger->warning('Google short link redirect error: ' . $e->getMessage(), ['app' => Application::APP_ID]);
+		}
+
+		return null;
 	}
 }
