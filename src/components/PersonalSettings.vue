@@ -14,7 +14,7 @@
 				<br>
 				<p v-if="state.search_location_enabled" class="settings-hint">
 					<InformationOutlineIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Warning, everything you type in the search bar will be sent to OpenStreetMap.') }}
+					{{ t('integration_openstreetmap', 'Warning, everything you type in the search bar will be sent to OpenStreetMap\'s Nominatim.') }}
 				</p>
 				<NcCheckboxRadioSwitch
 					:checked="state.link_preview_enabled"

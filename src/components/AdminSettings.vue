@@ -6,17 +6,6 @@
 		</h2>
 		<div id="osm-content">
 			<div class="line">
-				<label for="nominatim-api-key">
-					<KeyIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Nominatim API key') }}
-				</label>
-				<input id="nominatim-api-key"
-					v-model="state.nominatim_api_key"
-					type="password"
-					:placeholder="t('integration_openstreetmap', '...')"
-					@input="onInput">
-			</div>
-			<div class="line">
 				<label for="maptiler-api-key">
 					<KeyIcon :size="20" class="icon" />
 					{{ t('integration_openstreetmap', 'Maptiler API key') }}
@@ -84,7 +73,6 @@ export default {
 			this.loading = true
 			delay(() => {
 				this.saveOptions({
-					nominatim_api_key: this.state.nominatim_api_key,
 					maptiler_api_key: this.state.maptiler_api_key,
 					mapbox_api_key: this.state.mapbox_api_key,
 				})
