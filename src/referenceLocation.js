@@ -19,23 +19,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { loadState } from '@nextcloud/initial-state'
 import {
 	registerWidget,
 	registerCustomPickerElement,
 	CustomPickerRenderResult,
 } from '@nextcloud/vue-richtext'
-import './bootstrap.js'
-import Vue from 'vue'
-import OsmFrameReferenceWidget from './views/OsmFrameReferenceWidget.vue'
-import MaplibreReferenceWidget from './views/MaplibreReferenceWidget.vue'
-import PointCustomPickerElement from './views/PointCustomPickerElement.vue'
 
-const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
-const referenceWidget = preferOsmFrame ? OsmFrameReferenceWidget : MaplibreReferenceWidget
+__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_public_path__ = OC.linkTo('integration_openstreetmap', 'js/') // eslint-disable-line
 
-registerWidget('integration_openstreetmap_location', (el, { richObjectType, richObject, accessible }) => {
-	const Widget = Vue.extend(referenceWidget)
+registerWidget('integration_openstreetmap_location', async (el, { richObjectType, richObject, accessible }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
+	Vue.mixin({ methods: { t, n } })
+	const { loadState } = await import(/* webpackChunkName: "reference-lazy" */'@nextcloud/initial-state')
+	const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
+	let ReferenceWidgetComponent
+	if (preferOsmFrame) {
+		const { default: OsmFrameReferenceWidget } = await import(/* webpackChunkName: "reference-frame-lazy" */'./views/OsmFrameReferenceWidget.vue')
+		ReferenceWidgetComponent = OsmFrameReferenceWidget
+	} else {
+		const { default: MaplibreReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreReferenceWidget.vue')
+		ReferenceWidgetComponent = MaplibreReferenceWidget
+	}
+
+	const Widget = Vue.extend(ReferenceWidgetComponent)
 	new Widget({
 		propsData: {
 			richObjectType,
@@ -45,7 +52,11 @@ registerWidget('integration_openstreetmap_location', (el, { richObjectType, rich
 	}).$mount(el)
 })
 
-registerCustomPickerElement('openstreetmap-point', (el, { providerId, accessible }) => {
+registerCustomPickerElement('openstreetmap-point', async (el, { providerId, accessible }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "reference-picker-lazy" */'vue')
+	const { default: PointCustomPickerElement } = await import(/* webpackChunkName: "reference-picker-lazy" */'./views/PointCustomPickerElement.vue')
+	Vue.mixin({ methods: { t, n } })
+
 	const Element = Vue.extend(PointCustomPickerElement)
 	const vueElement = new Element({
 		propsData: {
@@ -55,6 +66,5 @@ registerCustomPickerElement('openstreetmap-point', (el, { providerId, accessible
 	}).$mount(el)
 	return new CustomPickerRenderResult(vueElement.$el, vueElement)
 }, (el, renderResult) => {
-	console.debug('osm custom destroy callback. el', el, 'renderResult:', renderResult)
 	renderResult.object.$destroy()
 })
