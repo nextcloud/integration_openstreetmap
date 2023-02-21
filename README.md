@@ -1,14 +1,14 @@
 # OpenStreetMap integration in Nextcloud
 
 This app adds:
-* a search provider for locations using Nominatim
+* a search provider for locations using Nominatim (OpenStreetMap)
 * reference providers to resolve map links. It supports:
     * OpenStreetMap
     * Google maps
     * Here maps
     * Bing maps
     * Duckduckgo maps
-* a custom link picker to generate OpenStreetMap location links
+* a custom link picker component to generate OpenStreetMap location links
 * 2 reference widgets to render map links:
     * a basic one embedding OpenStreetMap
     * a custom one showing an awesome Maplibre map with 3D terrain, embedded search, vector tiles and more...
