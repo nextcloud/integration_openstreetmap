@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.1 – 2023-02-22
+### Changed
+- lazy load reference stuff
+
 ## 1.0.0 – 2022-12-19
 ### Added
 * the app
