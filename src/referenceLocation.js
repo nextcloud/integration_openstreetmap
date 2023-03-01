@@ -22,8 +22,8 @@
 import {
 	registerWidget,
 	registerCustomPickerElement,
-	CustomPickerRenderResult,
-} from '@nextcloud/vue-richtext'
+	NcCustomPickerRenderResult,
+} from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('integration_openstreetmap', 'js/') // eslint-disable-line
@@ -64,7 +64,7 @@ registerCustomPickerElement('openstreetmap-point', async (el, { providerId, acce
 			accessible,
 		},
 	}).$mount(el)
-	return new CustomPickerRenderResult(vueElement.$el, vueElement)
+	return new NcCustomPickerRenderResult(vueElement.$el, vueElement)
 }, (el, renderResult) => {
 	renderResult.object.$destroy()
 })

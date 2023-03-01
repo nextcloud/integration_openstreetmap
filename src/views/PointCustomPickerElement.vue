@@ -12,7 +12,7 @@
 		<span v-else>
 			…
 		</span-->
-		<Search ref="url-input"
+		<NcSearch ref="url-input"
 			class="generic-search"
 			:provider="provider"
 			:show-empty-content="false"
@@ -51,7 +51,7 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
-import { getProvider, Search } from '@nextcloud/vue-richtext'
+import { getProvider, NcSearch } from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 
@@ -61,7 +61,7 @@ export default {
 	components: {
 		MaplibreMap,
 		NcButton,
-		Search,
+		NcSearch,
 		NcCheckboxRadioSwitch,
 	},
 
