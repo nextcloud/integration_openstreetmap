@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.2 – 2023-03-03
+### Changed
+- use richtext stuff from @nextcloud/vue 7.8.0
+
 ## 1.0.1 – 2023-02-22
 ### Changed
 - lazy load reference stuff
