@@ -241,14 +241,15 @@ export default {
 			this.handleMapEvents()
 
 			this.map.on('load', () => {
-				// tracks are waiting for that to load
 				this.mapLoaded = true
-				this.emitMapState()
-				this.emitMapBounds()
 				this.addTerrainSource()
 				if (this.useTerrain) {
 					this.terrainControl._toggleTerrain()
 				}
+				setTimeout(() => {
+					this.emitMapState()
+					this.emitMapBounds()
+				}, 300)
 			})
 		},
 		reRenderLayersAndTerrain() {
