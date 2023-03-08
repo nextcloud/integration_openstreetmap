@@ -90,6 +90,7 @@ export default {
 			currentPitch: null,
 			currentBearing: null,
 			currentMapStyle: null,
+			currentMapTerrain: false,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
@@ -145,6 +146,9 @@ export default {
 			if (this.currentMapStyle !== 'streets') {
 				link += '&style=' + encodeURIComponent(this.currentMapStyle)
 			}
+			if (this.currentMapTerrain) {
+				link += '&terrain'
+			}
 			return link
 		},
 	},
@@ -156,7 +160,6 @@ export default {
 		this.$nextTick(() => {
 			this.showMap = true
 		})
-		console.debug('my provider is ', this.provider)
 	},
 
 	methods: {
@@ -174,23 +177,26 @@ export default {
 			this.$emit('submit', link)
 		},
 		onMapStateChange(e) {
-			if (e.centerLat && e.centerLng) {
+			if (e.centerLat !== undefined && e.centerLng !== undefined) {
 				this.currentCenter = {
 					lat: parseFloat(e.centerLat.toFixed(6)),
 					lon: parseFloat(e.centerLng.toFixed(6)),
 				}
 			}
-			if (e.zoom) {
+			if (e.zoom !== undefined) {
 				this.currentZoom = Math.floor(e.zoom)
 			}
-			if (e.pitch) {
+			if (e.pitch !== undefined) {
 				this.currentPitch = e.pitch
 			}
-			if (e.bearing) {
+			if (e.bearing !== undefined) {
 				this.currentBearing = e.bearing
 			}
-			if (e.mapStyle) {
+			if (e.mapStyle !== undefined) {
 				this.currentMapStyle = e.mapStyle
+			}
+			if ([true, false].includes(e.terrain)) {
+				this.currentMapTerrain = e.terrain
 			}
 		},
 	},

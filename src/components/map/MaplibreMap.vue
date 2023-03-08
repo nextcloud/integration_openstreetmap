@@ -243,6 +243,9 @@ export default {
 				exaggeration: 2.5,
 			})
 			this.map.addControl(this.terrainControl, 'top-right')
+			this.terrainControl._terrainButton.addEventListener('click', () => {
+				this.$emit('map-state-change', { terrain: !!this.map.getTerrain() })
+			})
 
 			this.handleMapEvents()
 

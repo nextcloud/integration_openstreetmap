@@ -40,6 +40,7 @@
 				:pitch="pitch"
 				:bearing="bearing"
 				:map-style="style"
+				:use-terrain="useTerrain"
 				:area="richObject.geojson" />
 		</div>
 	</div>
@@ -100,6 +101,9 @@ export default {
 		},
 		style() {
 			return this.richObject.style ?? undefined
+		},
+		useTerrain() {
+			return this.richObject.terrain ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

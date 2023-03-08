@@ -159,6 +159,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				$pointInfo['pitch'] = $coords['pitch'] ?? null;
 				$pointInfo['bearing'] = $coords['bearing'] ?? null;
 				$pointInfo['style'] = $coords['style'] ?? null;
+				if (isset($coords['terrain'])) {
+					$pointInfo['terrain'] = $coords['terrain'];
+				}
 				$pointInfo['map_center'] = [
 					'lat' => $coords['lat'],
 					'lon' => $coords['lon'],
@@ -261,6 +264,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		}
 		if (isset($params['style'])) {
 			$urlInfo['style'] = $params['style'];
+		}
+		if (isset($params['terrain'])) {
+			$urlInfo['terrain'] = true;
 		}
 		return $urlInfo;
 	}
