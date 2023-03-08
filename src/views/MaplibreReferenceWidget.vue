@@ -37,6 +37,8 @@
 				:bbox="bbox"
 				:center="mapCenter"
 				:zoom="zoom"
+				:pitch="pitch"
+				:bearing="bearing"
 				:area="richObject.geojson" />
 		</div>
 	</div>
@@ -88,6 +90,12 @@ export default {
 		},
 		zoom() {
 			return this.richObject.zoom
+		},
+		pitch() {
+			return this.richObject.pitch
+		},
+		bearing() {
+			return this.richObject.bearing
 		},
 		mapCenter() {
 			return this.richObject.map_center

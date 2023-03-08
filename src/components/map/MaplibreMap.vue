@@ -134,6 +134,12 @@ export default {
 				this.map.setTerrain()
 			}
 		},
+		pitch(newValue) {
+			this.map.setPitch(newValue)
+		},
+		bearing(newValue) {
+			this.map.setBearing(newValue)
+		},
 	},
 
 	mounted() {
@@ -291,6 +297,8 @@ export default {
 		},
 		emitMapState() {
 			const { lng, lat } = this.map.getCenter()
+			console.debug('emit pitch', this.map.getPitch())
+			console.debug('emit bearing', this.map.getBearing())
 			this.$emit('map-state-change', {
 				centerLng: lng,
 				centerLat: lat,

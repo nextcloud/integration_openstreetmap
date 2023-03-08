@@ -127,14 +127,22 @@ export default {
 			const lat = this.currentCenter.lat
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
+			let link
 			if (this.includeMarker) {
-				return 'https://www.openstreetmap.org/'
+				link = 'https://www.openstreetmap.org/'
 					+ '?mlat=' + lat
 					+ '&mlon=' + lon
 					+ '#map=' + zoom + '/' + lat + '/' + lon
 			} else {
-				return 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
+				link = 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
 			}
+			if (parseInt(this.currentPitch) !== 0) {
+				link += '&pitch=' + parseInt(this.currentPitch)
+			}
+			if (parseInt(this.currentBearing) !== 0) {
+				link += '&bearing=' + parseInt(this.currentBearing)
+			}
+			return link
 		},
 	},
 
