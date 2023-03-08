@@ -108,7 +108,11 @@ export default {
 			return this.lastMapState.zoom
 		},
 		currentMarker() {
-			return this.includeMarker && this.currentCenter ? this.currentCenter : undefined
+			return this.includeMarker
+				? this.currentCenter
+					? this.currentCenter
+					: this.lastCenter
+				: undefined
 		},
 		currentLink() {
 			if (this.currentCenter === null) {
