@@ -142,6 +142,9 @@ export default {
 			if (parseInt(this.currentBearing) !== 0) {
 				link += '&bearing=' + parseInt(this.currentBearing)
 			}
+			if (this.currentMapStyle !== 'streets') {
+				link += '&style=' + encodeURIComponent(this.currentMapStyle)
+			}
 			return link
 		},
 	},

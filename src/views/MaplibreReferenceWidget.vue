@@ -39,6 +39,7 @@
 				:zoom="zoom"
 				:pitch="pitch"
 				:bearing="bearing"
+				:map-style="style"
 				:area="richObject.geojson" />
 		</div>
 	</div>
@@ -96,6 +97,9 @@ export default {
 		},
 		bearing() {
 			return this.richObject.bearing
+		},
+		style() {
+			return this.richObject.style ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

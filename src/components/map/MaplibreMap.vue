@@ -297,8 +297,6 @@ export default {
 		},
 		emitMapState() {
 			const { lng, lat } = this.map.getCenter()
-			console.debug('emit pitch', this.map.getPitch())
-			console.debug('emit bearing', this.map.getBearing())
 			this.$emit('map-state-change', {
 				centerLng: lng,
 				centerLat: lat,

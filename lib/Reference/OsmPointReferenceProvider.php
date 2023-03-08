@@ -158,6 +158,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				$pointInfo['zoom'] = $coords['zoom'] ?? 15;
 				$pointInfo['pitch'] = $coords['pitch'] ?? null;
 				$pointInfo['bearing'] = $coords['bearing'] ?? null;
+				$pointInfo['style'] = $coords['style'] ?? null;
 				$pointInfo['map_center'] = [
 					'lat' => $coords['lat'],
 					'lon' => $coords['lon'],
@@ -257,6 +258,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		}
 		if (isset($params['bearing'])) {
 			$urlInfo['bearing'] = (int) $params['bearing'];
+		}
+		if (isset($params['style'])) {
+			$urlInfo['style'] = $params['style'];
 		}
 		return $urlInfo;
 	}
