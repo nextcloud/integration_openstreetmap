@@ -39,13 +39,18 @@
 				class="submit-button"
 				type="primary"
 				@click="onMapSubmit">
-				{{ t('integration_openstreetmap', 'Submit') }}
+				{{ t('integration_openstreetmap', 'Generate point link') }}
+				<template #icon>
+					<ArrowRightIcon />
+				</template>
 			</NcButton>
 		</div>
 	</div>
 </template>
 
 <script>
+import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
+
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
@@ -63,6 +68,7 @@ export default {
 		NcButton,
 		NcSearch,
 		NcCheckboxRadioSwitch,
+		ArrowRightIcon,
 	},
 
 	props: {
@@ -217,14 +223,11 @@ export default {
 	.footer {
 		width: 100%;
 		display: flex;
+		margin-top: 8px;
+		align-items: center;
 
 		.marker-checkbox {
 			margin-left: 16px;
-		}
-
-		.submit-button {
-			margin-top: 8px;
-			align-self: end;
 		}
 	}
 }
