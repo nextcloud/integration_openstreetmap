@@ -41,7 +41,7 @@
 				type="primary"
 				:disabled="currentCenter === null"
 				@click="onMapSubmit">
-				{{ t('integration_openstreetmap', 'Generate point link') }}
+				{{ t('integration_openstreetmap', 'Generate location link') }}
 				<template #icon>
 					<ArrowRightIcon />
 				</template>
