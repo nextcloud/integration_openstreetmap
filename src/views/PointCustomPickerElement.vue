@@ -25,6 +25,7 @@
 			:pitch="lastMapState?.pitch"
 			:bearing="lastMapState?.bearing"
 			:map-style="lastMapState?.mapStyle"
+			:use-terrain="!!lastMapState?.terrain"
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
@@ -38,6 +39,7 @@
 			<NcButton
 				class="submit-button"
 				type="primary"
+				:disabled="currentCenter === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate point link') }}
 				<template #icon>
@@ -87,10 +89,10 @@ export default {
 			provider: getProvider(this.providerId),
 			currentCenter: null,
 			currentZoom: null,
-			currentPitch: null,
-			currentBearing: null,
-			currentMapStyle: null,
-			currentMapTerrain: false,
+			currentPitch: getLastMapState()?.pitch ?? null,
+			currentBearing: getLastMapState()?.bearing ?? null,
+			currentMapStyle: getLastMapState()?.mapStyle ?? null,
+			currentMapTerrain: !!getLastMapState()?.terrain,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
@@ -170,7 +172,8 @@ export default {
 			const pitch = this.currentPitch
 			const bearing = this.currentBearing
 			const mapStyle = this.currentMapStyle
-			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle)
+			const terrain = this.currentMapTerrain ? '1' : ''
+			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain)
 			this.$emit('submit', this.currentLink)
 		},
 		onSearchSubmit(link) {
