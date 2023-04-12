@@ -95,9 +95,14 @@ class OsmSearchLocationProvider implements IProvider {
 		$offset = $query->getCursor();
 		$offset = $offset ? intval($offset) : 0;
 
-		$searchLocationEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_location_enabled', '1') === '1';
-		if (!$searchLocationEnabled) {
-			return SearchResult::paginated($this->getName(), [], 0);
+		$routeFrom = $query->getRoute();
+		$requestedFromSmartPicker = $routeFrom === '' || $routeFrom === 'smart-picker';
+
+		if (!$requestedFromSmartPicker) {
+			$searchLocationEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_location_enabled', '1') === '1';
+			if (!$searchLocationEnabled) {
+				return SearchResult::paginated($this->getName(), [], 0);
+			}
 		}
 
 		$searchResult = $this->osmAPIService->searchLocation($user->getUID(), $term, $offset, $limit);
