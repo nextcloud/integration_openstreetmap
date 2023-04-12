@@ -99,8 +99,8 @@ class OsmSearchLocationProvider implements IProvider {
 		$requestedFromSmartPicker = $routeFrom === '' || $routeFrom === 'smart-picker';
 
 		if (!$requestedFromSmartPicker) {
-			$adminSearchLocationEnabled = $this->config->getAppValue(Application::APP_ID, 'search_location_enabled', '1') === '1';
-			$searchLocationEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_location_enabled', '1') === '1';
+			$adminSearchLocationEnabled = $this->config->getAppValue(Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
+			$searchLocationEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
 			if (!$adminSearchLocationEnabled || !$searchLocationEnabled) {
 				return SearchResult::paginated($this->getName(), [], 0);
 			}
