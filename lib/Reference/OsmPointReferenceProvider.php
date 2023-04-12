@@ -101,14 +101,6 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	 * @inheritDoc
 	 */
 	public function getSupportedSearchProviderIds(): array {
-		if ($this->userId !== null) {
-			$ids = [];
-			$searchItemsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_location_enabled', '1') === '1';
-			if ($searchItemsEnabled) {
-				$ids[] = 'openstreetmap-search-location';
-			}
-			return $ids;
-		}
 		return ['openstreetmap-search-location'];
 	}
 

@@ -34,6 +34,7 @@ use OCP\IUser;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
+use OCP\Search\SearchResultEntry;
 
 class OsmSearchLocationProvider implements IProvider {
 
@@ -106,13 +107,13 @@ class OsmSearchLocationProvider implements IProvider {
 			$items = $searchResult;
 		}
 
-		$formattedResults = array_map(function (array $entry): OsmSearchResultEntry {
-			return new OsmSearchResultEntry(
+		$formattedResults = array_map(function (array $entry): SearchResultEntry {
+			return new SearchResultEntry(
 				$this->getThumbnailUrl($entry),
 				$this->getMainText($entry),
 				$this->getSubline($entry),
 				$this->getLink($entry),
-				$this->getIconUrl($entry),
+				'',
 				false
 			);
 		}, $items);
@@ -135,10 +136,6 @@ class OsmSearchLocationProvider implements IProvider {
 	protected function getLink(array $entry): string {
 //		return $this->osmAPIService->getLinkFromCoordinates((float) $entry['lat'], (float) $entry['lon']);
 		return $this->osmAPIService->getLinkFromOsmId($entry['osm_id'], $entry['osm_type']);
-	}
-
-	protected function getIconUrl(array $entry): string {
-		return $this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg');
 	}
 
 	protected function getThumbnailUrl(array $entry): string {
