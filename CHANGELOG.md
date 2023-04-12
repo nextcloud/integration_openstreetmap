@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.4 – 2023-04-12
+### Added
+- admin switch to toggle the unified search provider
+
+### Fixed
+- search toggle being ignored
+- allow searching in the smart picker even if the unified search provider is disabled
+
 ## 1.0.3 – 2023-03-20
 ### Changed
 - include pitch, bearing, style and useTerrain in generated links, use those values in the widget's map
