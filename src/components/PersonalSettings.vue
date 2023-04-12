@@ -7,14 +7,19 @@
 		<div id="osm-content">
 			<div id="osm-search-block">
 				<NcCheckboxRadioSwitch
-					:checked="state.search_location_enabled"
+					:checked="state.search_location_enabled && state.admin_search_location_enabled"
+					:disabled="!state.admin_search_location_enabled"
 					@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
 					{{ t('integration_openstreetmap', 'Enable searching for locations') }}
 				</NcCheckboxRadioSwitch>
 				<br>
-				<p v-if="state.search_location_enabled" class="settings-hint">
+				<p v-if="state.search_location_enabled && state.admin_search_location_enabled" class="settings-hint">
 					<InformationOutlineIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Warning, everything you type in the search bar will be sent to OpenStreetMap\'s Nominatim.') }}
+					{{ t('integration_openstreetmap', 'Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap\'s Nominatim service.') }}
+				</p>
+				<p v-if="state.admin_search_location_enabled === false" class="settings-hint">
+					<InformationOutlineIcon :size="20" class="icon" />
+					{{ t('integration_tmdb', 'A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider') }}
 				</p>
 				<NcCheckboxRadioSwitch
 					:checked="state.link_preview_enabled"
@@ -41,12 +46,12 @@ import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline
 
 import OsmIcon from './icons/OsmIcon.vue'
 
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import { showSuccess, showError } from '@nextcloud/dialogs'
-
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 export default {
 	name: 'PersonalSettings',

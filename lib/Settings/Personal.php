@@ -27,11 +27,13 @@ class Personal implements ISettings {
 	 */
 	public function getForm(): TemplateResponse {
 		$searchLocationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_location_enabled', '1') === '1';
+		$adminSearchLocationEnabled = $this->config->getAppValue(Application::APP_ID, 'search_location_enabled', '1') === '1';
 		$navigationEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'navigation_enabled', '0') === '1';
 		$linkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 
 		$userConfig = [
+			'admin_search_location_enabled' => $adminSearchLocationEnabled,
 			'search_location_enabled' => $searchLocationEnabled,
 			'navigation_enabled' => $navigationEnabled ,
 			'link_preview_enabled' => $linkPreviewEnabled,

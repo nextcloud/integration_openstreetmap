@@ -27,6 +27,11 @@
 					:placeholder="t('integration_openstreetmap', '...')"
 					@input="onInput">
 			</div>
+			<NcCheckboxRadioSwitch
+				:checked="state.search_location_enabled"
+				@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
+				{{ t('integration_openstreetmap', 'Enable searching for locations') }}
+			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>
@@ -35,6 +40,8 @@
 import KeyIcon from 'vue-material-design-icons/Key.vue'
 
 import OsmIcon from './icons/OsmIcon.vue'
+
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
@@ -48,6 +55,7 @@ export default {
 	components: {
 		OsmIcon,
 		KeyIcon,
+		NcCheckboxRadioSwitch,
 	},
 
 	props: [],
@@ -69,6 +77,10 @@ export default {
 	},
 
 	methods: {
+		onCheckboxChanged(newValue, key) {
+			this.state[key] = newValue
+			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
+		},
 		onInput() {
 			this.loading = true
 			delay(() => {
