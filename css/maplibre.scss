@@ -1,4 +1,4 @@
-.mapboxgl-ctrl-geocoder > input,
+.maplibregl-ctrl-geocoder > input,
 .maplibregl-ctrl-fullscreen,
 .maplibregl-ctrl-shrink,
 .maplibregl-ctrl-terrain,
@@ -81,9 +81,9 @@
 	padding: 0 2px;
 }
 
-.mapboxgl-ctrl-geocoder {
+.maplibregl-ctrl-geocoder {
 	min-width: 200px;
-	width: 350px;
+	width: 350px !important;
 	border-radius: var(--border-radius-large) !important;
 	> input {
 		color: var(--color-main-text) !important;
@@ -91,7 +91,7 @@
 		padding: 6px 35px !important;
 		border-radius: var(--border-radius-large) !important;
 	}
-	&--suggestion {
+	&--result {
 		color: var(--color-main-text) !important;
 	}
 	.suggestions {
@@ -115,11 +115,11 @@
 	}
 }
 
-.mapboxgl-ctrl-group,
 .maplibregl-ctrl-group {
 	filter: var(--background-invert-if-dark);
 }
 
+/*
 .mapboxgl-style-list > button {
 	color: var(--color-text-maxcontrast);
 	font-weight: unset;
@@ -128,6 +128,7 @@
 		color: black;
 	}
 }
+*/
 
 .my-custom-tile-control {
 	select {
@@ -138,10 +139,43 @@
 	}
 }
 
-.maplibregl-popup {
-	&.photo-persistent-popup {
-		a {
-			text-decoration: underline;
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+	border-right-color: var(--color-main-background) !important;
+}
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+	border-left-color: var(--color-main-background) !important;
+}
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+	border-bottom-color: var(--color-main-background) !important;
+}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+	border-top-color: var(--color-main-background) !important;
+}
+.maplibregl-popup-content {
+	color: var(--color-main-text) !important;
+	background: var(--color-main-background) !important;
+	padding: 0 !important;
+	word-wrap: break-word !important;
+	> div {
+		padding: 4px;
+		&.with-button {
+			padding: 4px 32px 4px 4px;
+		}
+		border: 3px solid;
+		border-radius: var(--border-radius);
+	}
+	.maplibregl-popup-close-button {
+		width: 32px;
+		height: 32px;
+		min-height: 32px;
+		padding: 0 0 2px 0;
+		margin: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--color-background-dark);
+		&:hover {
+			background-color: var(--color-background-hover);
 		}
 	}
 }

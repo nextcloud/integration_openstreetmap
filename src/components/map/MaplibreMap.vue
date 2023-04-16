@@ -25,9 +25,12 @@
 </template>
 
 <script>
-import { Map, NavigationControl, ScaleControl, GeolocateControl, FullscreenControl, TerrainControl } from 'maplibre-gl'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import maplibregl, {
+	Map, NavigationControl, ScaleControl, GeolocateControl,
+	FullscreenControl, TerrainControl,
+} from 'maplibre-gl'
+import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
+import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
 
 import { loadState } from '@nextcloud/initial-state'
 import {
@@ -35,7 +38,7 @@ import {
 	getVectorStyles,
 } from '../../tileServers.js'
 import { MousePositionControl, TileControl } from '../../mapControls.js'
-import { nominatimGeocoder } from '../../mapUtils.js'
+import { maplibreForwardGeocode } from '../../mapUtils.js'
 
 import VMarker from './VMarker.vue'
 import PolygonFill from './PolygonFill.vue'
@@ -196,18 +199,19 @@ export default {
 			}
 			const navigationControl = new NavigationControl({ visualizePitch: true })
 			this.scaleControl = new ScaleControl({ unit: this.unit })
-			if (this.apiKeys.mapbox_api_key) {
-				const geocoderControl = new MapboxGeocoder({
-					accessToken: this.apiKeys.mapbox_api_key,
-					// we don't really care if a marker is not added when searching
-					mapboxgl: null,
-					marker: false,
+
+			this.map.addControl(
+				new MaplibreGeocoder({ forwardGeocode: maplibreForwardGeocode }, {
+					maplibregl,
 					placeholder: t('integration_openstreetmap', 'Search on the map'),
-					// https://github.com/mapbox/mapbox-gl-geocoder/blob/main/API.md#mapboxgeocoder
-					externalGeocoder: nominatimGeocoder,
-				})
-				this.map.addControl(geocoderControl, 'top-left')
-			}
+					minLength: 4,
+					debounceSearch: 400,
+					popup: true,
+					showResultsWhileTyping: true,
+				}),
+				'top-left'
+			)
+
 			const geolocateControl = new GeolocateControl({
 				trackUserLocation: true,
 				positionOptions: {

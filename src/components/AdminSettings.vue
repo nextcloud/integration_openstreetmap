@@ -16,17 +16,6 @@
 					:placeholder="t('integration_openstreetmap', '...')"
 					@input="onInput">
 			</div>
-			<div class="line">
-				<label for="mapbox-api-key">
-					<KeyIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Mapbox API key') }}
-				</label>
-				<input id="mapbox-api-key"
-					v-model="state.mapbox_api_key"
-					type="password"
-					:placeholder="t('integration_openstreetmap', '...')"
-					@input="onInput">
-			</div>
 			<NcCheckboxRadioSwitch
 				:checked="state.search_location_enabled"
 				@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
@@ -86,7 +75,6 @@ export default {
 			delay(() => {
 				this.saveOptions({
 					maptiler_api_key: this.state.maptiler_api_key,
-					mapbox_api_key: this.state.mapbox_api_key,
 				})
 			}, 2000)()
 		},

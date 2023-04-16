@@ -23,7 +23,5 @@ set the user specific settings.
 ### Admin settings
 
 There is a "Connected accounts" **admin** settings section to manage your API keys.
-Both Mapbox and Maptiler API keys have default values.
-* The Mapbox API key is used by the embedded map search. The default key has a very large quota.
-* The Maptiler API is used to get vector map tiles.
-  The default key is very limited. You can get a free API key on https://www.maptiler.com .
+The Maptiler API key has a default value.
+It is used to get vector map tiles. The default key is very limited. You can get a free API key on https://www.maptiler.com .

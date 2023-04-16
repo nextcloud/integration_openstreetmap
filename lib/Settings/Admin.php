@@ -28,12 +28,10 @@ class Admin implements ISettings {
 	public function getForm(): TemplateResponse {
 		$searchLocationEnabled = $this->config->getAppValue(Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
 		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key');
-		$mapboxApiKey = $this->config->getAppValue(Application::APP_ID, 'mapbox_api_key');
 
 		$state = [
 			'search_location_enabled' => $searchLocationEnabled,
 			'maptiler_api_key' => $maptilerApiKey,
-			'mapbox_api_key' => $mapboxApiKey,
 		];
 		$this->initialStateService->provideInitialState('admin-config', $state);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');

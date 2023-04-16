@@ -50,10 +50,8 @@ class OsmReferenceListener implements IEventListener {
 		}
 
 		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key', Application::DEFAULT_MAPTILER_API_KEY) ?: Application::DEFAULT_MAPTILER_API_KEY;
-		$mapboxApiKey = $this->config->getAppValue(Application::APP_ID, 'mapbox_api_key', Application::DEFAULT_MAPBOX_API_KEY) ?: Application::DEFAULT_MAPBOX_API_KEY;
 		$userConfig = [
 			'maptiler_api_key' => $maptilerApiKey,
-			'mapbox_api_key' => $mapboxApiKey,
 		];
 		$this->initialState->provideInitialState('api-keys', $userConfig);
 
