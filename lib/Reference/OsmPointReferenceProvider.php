@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2023 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -40,31 +40,14 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	private OsmAPIService $osmAPIService;
-	private ?string $userId;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private IL10N $l10n;
-	private IURLGenerator $urlGenerator;
-	private LinkReferenceProvider $linkReferenceProvider;
-	private UtilsService $utilsService;
-
-	public function __construct(OsmAPIService $osmAPIService,
-								IConfig $config,
-								IL10N $l10n,
-								IURLGenerator $urlGenerator,
-								ReferenceManager $referenceManager,
-								LinkReferenceProvider $linkReferenceProvider,
-								UtilsService $utilsService,
-								?string $userId) {
-		$this->osmAPIService = $osmAPIService;
-		$this->userId = $userId;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->l10n = $l10n;
-		$this->urlGenerator = $urlGenerator;
-		$this->linkReferenceProvider = $linkReferenceProvider;
-		$this->utilsService = $utilsService;
+	public function __construct(private OsmAPIService $osmAPIService,
+								private IConfig $config,
+								private IL10N $l10n,
+								private IURLGenerator $urlGenerator,
+								private ReferenceManager $referenceManager,
+								private LinkReferenceProvider $linkReferenceProvider,
+								private UtilsService $utilsService,
+								private ?string $userId) {
 	}
 
 	/**

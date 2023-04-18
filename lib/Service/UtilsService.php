@@ -21,14 +21,9 @@ use Throwable;
 
 class UtilsService {
 
-	private IClientService $clientService;
-	private LoggerInterface $logger;
-
 	public function __construct (string         $appName,
-								 LoggerInterface $logger,
-								 IClientService $clientService) {
-		$this->clientService = $clientService;
-		$this->logger = $logger;
+								 private LoggerInterface $logger,
+								 private IClientService $clientService) {
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2023 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -23,44 +23,21 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
-use OCA\Osm\Service\OsmAPIService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\IConfig;
-use OCP\IL10N;
-
-use OCP\IURLGenerator;
 
 class BingReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	private OsmAPIService $osmAPIService;
-	private ?string $userId;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private IURLGenerator $urlGenerator;
-	private LinkReferenceProvider $linkReferenceProvider;
-	private UtilsService $utilsService;
-
-	public function __construct(OsmAPIService $osmAPIService,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								ReferenceManager $referenceManager,
-								LinkReferenceProvider $linkReferenceProvider,
-								UtilsService $utilsService,
-								?string $userId) {
-		$this->osmAPIService = $osmAPIService;
-		$this->userId = $userId;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->urlGenerator = $urlGenerator;
-		$this->linkReferenceProvider = $linkReferenceProvider;
-		$this->utilsService = $utilsService;
+	public function __construct(private IConfig $config,
+								private ReferenceManager $referenceManager,
+								private LinkReferenceProvider $linkReferenceProvider,
+								private ?string $userId) {
 	}
 
 	/**
@@ -73,13 +50,7 @@ class BingReferenceProvider implements IReferenceProvider {
 			return false;
 		}
 
-		// link examples:
-		// https://www.bing.com/maps/?cp=43.622486%7E3.864137&lvl=16.4
-		// https://www.bing.com/maps/?cp=43.622486~3.864137&lvl=16.4
-		// https://www.bing.com/maps?osid=f8b7dd22-67bd-4402-be5d-711d01f1b13c&cp=44.722467~4.568366&lvl=14.68&pi=0&imgid=5d256382-55b8-4bb9-a0b9-74773be9bfc9&v=2&sV=2&form=S00027
-		return preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/\?cp=[+-]?\d+\.\d+%7E[+-]?\d+\.\d+&lvl=\d+\.\d+/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/\?cp=[+-]?\d+\.\d+~[+-]?\d+\.\d+&lvl=\d+\.\d+/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/?\?osid=[-a-z0-9]+&cp=[+-]?\d+\.\d+~[+-]?\d+\.\d+&lvl=\d+\.\d+/i', $referenceText) === 1;
+		return $this->getCoordinates($referenceText) !== null;
 	}
 
 	/**
@@ -121,6 +92,11 @@ class BingReferenceProvider implements IReferenceProvider {
 	 * @return array|null
 	 */
 	private function getCoordinates(string $url): ?array {
+		// supported link examples:
+		// https://www.bing.com/maps/?cp=43.622486%7E3.864137&lvl=16.4
+		// https://www.bing.com/maps/?cp=43.622486~3.864137&lvl=16.4
+		// https://www.bing.com/maps?osid=f8b7dd22-67bd-4402-be5d-711d01f1b13c&cp=44.722467~4.568366&lvl=14.68&pi=0&imgid=5d256382-55b8-4bb9-a0b9-74773be9bfc9&v=2&sV=2&form=S00027
+
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/\?cp=([+-]?\d+\.\d+)%7E([+-]?\d+\.\d+)&lvl=(\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [

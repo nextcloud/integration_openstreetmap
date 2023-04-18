@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2023 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -32,16 +32,9 @@ use OCP\Util;
 
 class OsmReferenceListener implements IEventListener {
 
-	private IConfig $config;
-	private IInitialState $initialState;
-	private ?string $userId;
-
-	public function __construct(IConfig       $config,
-								IInitialState $initialState,
-								?string $userId) {
-		$this->config = $config;
-		$this->initialState = $initialState;
-		$this->userId = $userId;
+	public function __construct(private IConfig       $config,
+								private IInitialState $initialState,
+								private ?string $userId) {
 	}
 
 	public function handle(Event $event): void {

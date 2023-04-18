@@ -26,18 +26,12 @@ namespace OCA\Osm\Listener;
 use OCP\AppFramework\Http\EmptyContentSecurityPolicy;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
 class CSPListener implements IEventListener {
-	private $request;
 
-	public function __construct(IRequest $request,
-								IConfig $config
-	) {
-		$this->request = $request;
-		$this->config = $config;
+	public function __construct(private IRequest $request) {
 	}
 
 	public function handle(Event $event): void {

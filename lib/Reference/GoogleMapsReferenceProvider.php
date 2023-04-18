@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2023 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -31,7 +31,6 @@ use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\IConfig;
-use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
@@ -39,28 +38,13 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	private OsmAPIService $osmAPIService;
-	private ?string $userId;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private IURLGenerator $urlGenerator;
-	private LinkReferenceProvider $linkReferenceProvider;
-	private UtilsService $utilsService;
-
-	public function __construct(OsmAPIService $osmAPIService,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								ReferenceManager $referenceManager,
-								LinkReferenceProvider $linkReferenceProvider,
-								UtilsService $utilsService,
-								?string $userId) {
-		$this->osmAPIService = $osmAPIService;
-		$this->userId = $userId;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->urlGenerator = $urlGenerator;
-		$this->linkReferenceProvider = $linkReferenceProvider;
-		$this->utilsService = $utilsService;
+	public function __construct(private OsmAPIService $osmAPIService,
+								private IConfig $config,
+								private IURLGenerator $urlGenerator,
+								private ReferenceManager $referenceManager,
+								private LinkReferenceProvider $linkReferenceProvider,
+								private UtilsService $utilsService,
+								private ?string $userId) {
 	}
 
 	/**
@@ -73,13 +57,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 			return false;
 		}
 
-		// link examples:
-		// https://goo.gl/maps/eTvH3TqXvKhU8sqb8
-		// https://www.google.fr/maps/place/44%C2%B044'46.5%22N+4%C2%B033'36.9%22E/@44.746241,4.560248,17z/data=!3m1!4b1!4m4!3m3!8m2!3d44.746241!4d4.560248
-		// https://www.google.fr/maps/search/44.746241,+4.560248?shorturl=1
-		return preg_match('/^(?:https?:\/\/)?(?:www\.)?goo\.gl\/maps\/[0-9a-zA-Z]+$/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/place\/.*\/@[+-]?\d+\.\d+,[+-]?\d+\.\d+,\d+(?:\.\d+)?z/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/search\/[+-]?\d+\.\d+,[+-]?\d+\.\d+/i', $referenceText) === 1;
+		return $this->getCoordinates($referenceText) !== null;
 	}
 
 	/**
@@ -138,6 +116,11 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 	 * @return array|null
 	 */
 	private function getCoordinates(string $url): ?array {
+		// supported link examples:
+		// https://goo.gl/maps/eTvH3TqXvKhU8sqb8
+		// https://www.google.fr/maps/place/44%C2%B044'46.5%22N+4%C2%B033'36.9%22E/@44.746241,4.560248,17z/data=!3m1!4b1!4m4!3m3!8m2!3d44.746241!4d4.560248
+		// https://www.google.fr/maps/search/44.746241,+4.560248?shorturl=1
+
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?goo\.gl\/maps\/([0-9a-zA-Z]+)$/i', $url, $matches);
 		if (count($matches) > 1) {
 			// we should get redirected to a supported URL

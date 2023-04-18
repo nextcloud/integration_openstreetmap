@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2023 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2023 Julien Veyssier <julien-nc@posteo.net>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -31,7 +31,6 @@ use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\IConfig;
-use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
@@ -39,31 +38,13 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	private OsmAPIService $osmAPIService;
-	private ?string $userId;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private IL10N $l10n;
-	private IURLGenerator $urlGenerator;
-	private LinkReferenceProvider $linkReferenceProvider;
-	private UtilsService $utilsService;
-
-	public function __construct(OsmAPIService $osmAPIService,
-								IConfig $config,
-								IL10N $l10n,
-								IURLGenerator $urlGenerator,
-								ReferenceManager $referenceManager,
-								LinkReferenceProvider $linkReferenceProvider,
-								UtilsService $utilsService,
-								?string $userId) {
-		$this->osmAPIService = $osmAPIService;
-		$this->userId = $userId;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->l10n = $l10n;
-		$this->urlGenerator = $urlGenerator;
-		$this->linkReferenceProvider = $linkReferenceProvider;
-		$this->utilsService = $utilsService;
+	public function __construct(private OsmAPIService $osmAPIService,
+								private IConfig $config,
+								private IURLGenerator $urlGenerator,
+								private ReferenceManager $referenceManager,
+								private LinkReferenceProvider $linkReferenceProvider,
+								private UtilsService $utilsService,
+								private ?string $userId) {
 	}
 
 	/**
@@ -76,13 +57,7 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 			return false;
 		}
 
-		// link examples:
-		// https://www.openstreetmap.org/relation/87515#map=14/44.7209/4.5877
-		// https://www.openstreetmap.org/relation/87515
-		// https://osm.org/go/xV9hTJVw-?relation=87515
-		return preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=\d+\/-?\d+\.\d+\/-?\d+\.\d+$/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+$/i', $referenceText) === 1
-			|| preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/[0-9a-zA-Z\-]+\?[a-zA-Z]+=\d+$/i', $referenceText) === 1;
+		return $this->getCoordinates($referenceText) !== null || $this->getLocationTypeId($referenceText) !== null;
 	}
 
 	/**
@@ -135,6 +110,11 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 	 * @return array|null
 	 */
 	private function getCoordinates(string $url): ?array {
+		// supported link examples:
+		// https://www.openstreetmap.org/relation/87515#map=14/44.7209/4.5877
+		// https://www.openstreetmap.org/relation/87515
+		// https://osm.org/go/xV9hTJVw-?relation=87515
+
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
