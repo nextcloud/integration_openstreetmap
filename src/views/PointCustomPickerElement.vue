@@ -212,6 +212,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 12px 16px 12px 16px;
 
 	h2 {
 		display: flex;
