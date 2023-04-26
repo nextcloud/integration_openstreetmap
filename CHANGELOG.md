@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.5 – 2023-04-26
+
+### Changed
+
+- add padding to the picker component as the one of the picker will be removed @julien-nc
+- update npm pkgs @julien-nc
+- get rid of `@nextcloud/vue-richtext` dependency as the build bug has been fixed in nextcloud webpack config @julien-nc
+- get rid of Mapbox dependencies and use their Maplibre equivalent, only use Nominatim for in-map search
+
 ## 1.0.4 – 2023-04-12
 ### Added
 - admin switch to toggle the unified search provider
