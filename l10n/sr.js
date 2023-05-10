@@ -1,10 +1,28 @@
 OC.L10N.register(
     "integration_openstreetmap",
     {
+    "OpenStreetMap" : "OpenStreetMap",
+    "Map location (by OpenStreetMap)" : "Локација мапе (пружа OpenStreetMap)",
+    "OpenStreetMap locations" : "OpenStreetMap локације",
     "Bad HTTP method" : "Лоша HTTP метода",
     "Bad credentials" : "Лоши креденцијали",
     "Connected accounts" : "Повезани налози",
+    "OpenStreetMap integration" : "OpenStreetMap интеграција",
+    "Integration of OpenStreetMap" : "Интеграција OpenStreetMap сервиса",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap интеграција обезбеђује пружаоца услуге претраге локација, референтог\nпружаоца за приказивање линкова локације из различитих серивиса мапа (OpenStreetMap, Google мапе...) и компоненту бирача произвољног линка\nкојим се брзо умеће линк локације претрагом или избором тачке на (изврсној) интерактивној мапи.",
+    "Maptiler API key" : "Maptiler API кључ",
     "..." : "...",
-    "Enable navigation link" : "Укључи линк за навигацију"
+    "Enable searching for locations" : "Укључи претрагу локација",
+    "OpenStreetMap options saved" : "Сачуване су OpenStreetMap опције",
+    "Failed to save OpenStreetMap options" : "Није успело чување OpenStreetMap опција",
+    "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Упозорење, све што куцате у менију Обједињене претраге се шаље OpenStreetMap Nominatim сервису.",
+    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Nextcloud администратор је искључио OpenStreetMap пружаоца Обједињене претраге",
+    "Enable OpenStreetMap link previews" : "Укључи OpenStreetMap прегледе линкова",
+    "Prefer simple OpenStreetMap frame" : "Преферирај прости OpenStreetMap оквир",
+    "Enable navigation link" : "Укључи линк за навигацију",
+    "Search on the map" : "Претражи на мапи",
+    "Include marker" : "Укључи и маркер",
+    "Generate location link" : "Генериши линк на локацију",
+    "Search with Nominatim to get an OpenStreetMap link" : "Претражите са Nominatim да бисте добили OpenStreetMap линк"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
