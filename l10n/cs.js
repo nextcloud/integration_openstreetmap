@@ -5,6 +5,8 @@ OC.L10N.register(
     "Bad credentials" : "Nesprávné přihlašovací údaje",
     "Connected accounts" : "Propojené účty",
     "..." : "...",
+    "OpenStreetMap options saved" : "Předvolby pro OpenStreetMap uloženy",
+    "Failed to save OpenStreetMap options" : "Nepodařilo se uložit předvolby pro OpenStreetMap",
     "Enable navigation link" : "Zapnout navigační odkaz",
     "Search on the map" : "Hledat na mapě",
     "Include marker" : "Včetně popisovače",
