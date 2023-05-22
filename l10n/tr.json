@@ -1,8 +1,11 @@
 { "translations": {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
     "Connected accounts" : "Bağlı hesaplar",
     "..." : "...",
+    "OpenStreetMap options saved" : "OpenStreetMap ayarları kullanıldı",
+    "Failed to save OpenStreetMap options" : "OpenStreetMap ayarları kaydedilemedi",
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

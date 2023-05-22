@@ -1,8 +1,26 @@
 { "translations": {
+    "OpenStreetMap" : "Приложение OpenStreetMap",
+    "Map location (by OpenStreetMap)" : "Местоположение на картата (от OpenStreetMap)",
+    "OpenStreetMap locations" : "Местоположения в OpenStreetMap",
     "Bad HTTP method" : "Лош HTTP метод",
     "Bad credentials" : "Лоши идентификационни данни",
     "Connected accounts" : "Свързани профили",
+    "OpenStreetMap integration" : "OpenStreetMap интеграция",
+    "Integration of OpenStreetMap" : "Интеграция на OpenStreetMap",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap интеграцията, осигурява доставчик на търсене на местоположения, доставчик на референции\n за рендериране /визуализиране/ на връзки към местоположенията от различни картографски услуги (OpenStreetMap, Google maps...) и персонализиран компонент на приложението за избор\n на връзки, за бързо вмъкване на връзка към местоположенията, чрез търсене или избор на точка на (страхотна) интерактивна карта.",
+    "Maptiler API key" : "Ключ за API на Maptiler",
     "..." : "...",
-    "Enable navigation link" : "Активиране на връзка за навигация"
+    "Enable searching for locations" : "Активиране на търсенето на местоположения",
+    "OpenStreetMap options saved" : "Опциите на OpenStreetMap са записани",
+    "Failed to save OpenStreetMap options" : "Неуспешно записване на опциите на OpenStreetMap",
+    "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Предупреждение, всичко, което въведете в менюто Unified Search /Унифицирано търсене/, ще бъде изпратено до услугата Nominatim на OpenStreetMap.",
+    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Администратор на Nextcloud е деактивирал доставчика на OpenStreetMap Unified Search",
+    "Enable OpenStreetMap link previews" : "Активиране на визуализации на връзките в OpenStreetMap",
+    "Prefer simple OpenStreetMap frame" : "Предпочитание за проста рамка на OpenStreetMap",
+    "Enable navigation link" : "Активиране на връзка за навигация",
+    "Search on the map" : "Търсене в/на/ картата",
+    "Include marker" : "Включване на маркер",
+    "Generate location link" : "Генериране на връзка към местоположение",
+    "Search with Nominatim to get an OpenStreetMap link" : "Търсене с Nominatim, за получаване на връзка към OpenStreetMap"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
