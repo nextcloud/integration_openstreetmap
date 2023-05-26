@@ -1,10 +1,28 @@
 OC.L10N.register(
     "integration_openstreetmap",
     {
+    "OpenStreetMap" : "OpenStreetMap",
+    "Map location (by OpenStreetMap)" : "Localização do mapa (por OpenStreetMap)",
+    "OpenStreetMap locations" : "Localização no OpenStreetMap",
     "Bad HTTP method" : "Método HTTP incorreto",
     "Bad credentials" : "Credenciais inválidas",
     "Connected accounts" : "Contas conectadas",
+    "OpenStreetMap integration" : "Integração OpenStreetMap",
+    "Integration of OpenStreetMap" : "Integração do OpenStreetMap",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "A integração do OpenStreetMap fornece um provedor de pesquisa para locais, uma referência\nprovedor para renderizar links de localização de vários serviços de mapa (OpenStreetMap, mapas do Google...) e um seletor de link personalizado\ncomponente para inserir rapidamente um link de localização pesquisando ou selecionando um ponto em um (incrível) mapa interativo.",
+    "Maptiler API key" : "Chave de API do Maptiler",
     "..." : "...",
-    "Enable navigation link" : "Ativar link de navegação"
+    "Enable searching for locations" : "Ativar pesquisa de locais",
+    "OpenStreetMap options saved" : "Opções do OpenStreetMap salvas",
+    "Failed to save OpenStreetMap options" : "Falha ao salvar as opções do OpenStreetMap",
+    "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Atenção, tudo que você digitar no menu Pesquisa Unificada será enviado para o serviço Nominatim do OpenStreetMap.",
+    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Um administrador do Nextcloud desativou o provedor OpenStreetMap Pesquisa Unificada",
+    "Enable OpenStreetMap link previews" : "Ativar visualizações de link no OpenStreetMap",
+    "Prefer simple OpenStreetMap frame" : "Prefira o quadro simples do OpenStreetMap",
+    "Enable navigation link" : "Ativar link de navegação",
+    "Search on the map" : "Pesquisar no mapa",
+    "Include marker" : "Incluir marcador",
+    "Generate location link" : "Gerar link de localização",
+    "Search with Nominatim to get an OpenStreetMap link" : "Pesquise com o Nominatim para obter um link do OpenStreetMap"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
