@@ -13,10 +13,12 @@ OC.L10N.register(
     "..." : "...",
     "Enable searching for locations" : "Käytä sijaintien etsimistä",
     "OpenStreetMap options saved" : "OpenStreetMap-asetukset tallennettu",
+    "Failed to save OpenStreetMap options" : "OpenStreetMap-asetusten tallentaminen epäonnistui",
     "Enable OpenStreetMap link previews" : "Käytä OpenStreetMap-linkkien esikatselua",
     "Enable navigation link" : "Näytä navigointipalkissa",
     "Search on the map" : "Etsi kartalta",
     "Include marker" : "Sisällytä merkki",
-    "Generate location link" : "Luo sijaintilinkki"
+    "Generate location link" : "Luo sijaintilinkki",
+    "Search with Nominatim to get an OpenStreetMap link" : "Etsi Nominatimilla saadaksesi OpenStreetMap-linkin"
 },
 "nplurals=2; plural=(n != 1);");
