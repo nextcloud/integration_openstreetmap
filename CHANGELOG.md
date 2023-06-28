@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.6 – 2023-06-28
+
+### Changed
+
+- update maplibre-gl which brings better performance and fixes glitches and zoom issues when 3D terrain is on
+- remove OSM vector (broken)
+- add WaterColor raster
+
+### Fixed
+
+- terrain management (when switching layers or toggling terrain)
+
 ## 1.0.5 – 2023-04-26
 
 ### Changed
