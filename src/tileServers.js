@@ -56,9 +56,6 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 19,
 		},
-		// as watercolor is only accessible via http, we need to proxy it through the server
-		// let's not do that in this app
-		/*
 		waterColor: {
 			title: 'WaterColor',
 			version: 8,
@@ -67,12 +64,11 @@ export function getRasterTileServers(apiKey) {
 				'watercolor-source': {
 					type: 'raster',
 					tiles: [
-						'https://a.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',
+						'https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg',
 					],
 					tileSize: 256,
-					attribution: '<a href="https://leafletjs.com" title="A JS library'
-						+ ' for interactive maps">Leaflet</a> | © Map tiles by <a href="https://stamen'
-						+ '.com">Stamen Design</a>, under <a href="https://creativecommons.org/license'
+					attribution: 'Map tiles by <a href="https://stamen.com">Stamen Design</a>'
+						+ ', under <a href="https://creativecommons.org/license'
 						+ 's/by/3.0">CC BY 3.0</a>, Data by <a href="https://openstreetmap.org">OpenSt'
 						+ 'reetMap</a>, under <a href="https://creativecommons.org/licenses/by-sa/3.0"'
 						+ '>CC BY SA</a>.',
@@ -89,7 +85,6 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 18,
 		},
-		*/
 	}
 }
 

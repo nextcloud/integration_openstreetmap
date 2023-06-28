@@ -44,15 +44,13 @@ class CSPListener implements IEventListener {
 		}
 
 		$policy = new EmptyContentSecurityPolicy();
-		$policy->addAllowedFrameDomain('https://www.openstreetmap.org');
-
-		$policy->addAllowedImageDomain('https://*.tile.openstreetmap.org');
-		$policy->addAllowedImageDomain('https://api.maptiler.com');
-
-		$policy->addAllowedConnectDomain('https://*.tile.openstreetmap.org');
-		$policy->addAllowedConnectDomain('https://server.arcgisonline.com');
-		$policy->addAllowedConnectDomain('https://*.tile.stamen.com');
-		$policy->addAllowedConnectDomain('https://api.maptiler.com');
+		$policy->addAllowedFrameDomain('https://www.openstreetmap.org')
+			->addAllowedImageDomain('https://*.tile.openstreetmap.org')
+			->addAllowedImageDomain('https://api.maptiler.com')
+			->addAllowedConnectDomain('https://*.tile.openstreetmap.org')
+			->addAllowedConnectDomain('https://server.arcgisonline.com')
+			->addAllowedConnectDomain('https://stamen-tiles.a.ssl.fastly.net')
+			->addAllowedConnectDomain('https://api.maptiler.com');
 
 		$event->addPolicy($policy);
 	}
