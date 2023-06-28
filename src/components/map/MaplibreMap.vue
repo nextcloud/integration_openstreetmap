@@ -277,19 +277,20 @@ export default {
 			// add the terrain
 			setTimeout(() => {
 				this.$nextTick(() => {
+					// terrain is not disabled anymore by maplibre when switching tile layers
+					// it is still needed to add the source as it goes away when switching from a vector to a raster one
 					this.addTerrainSource()
-					if (this.useTerrain) {
-						this.terrainControl._toggleTerrain()
-					}
 				})
 			}, 500)
 		},
 		addTerrainSource() {
 			const apiKey = this.apiKeys.maptiler_api_key
-			this.map.addSource('terrain', {
-				type: 'raster-dem',
-				url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
-			})
+			if (!this.map.getSource('terrain')) {
+				this.map.addSource('terrain', {
+					type: 'raster-dem',
+					url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
+				})
+			}
 		},
 		handleMapEvents() {
 			this.map.on('moveend', () => {
