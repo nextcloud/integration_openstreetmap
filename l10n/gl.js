@@ -9,7 +9,7 @@ OC.L10N.register(
     "Connected accounts" : "Contas conectadas",
     "OpenStreetMap integration" : "Integración de OpenStreetMap",
     "Integration of OpenStreetMap" : "Integración de OpenStreetMap",
-    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "A integración de OpenStreetMap fornece un provedor de busca de localizacións, un provedor de referencia para\nrepresentar ligazóns de localización de varios servizos de mapas (OpenStreetMap, Google maps...) e un compoñente personalizado de selección\nde ligazóns para inserir rapidamente unha ligazón de localización buscando ou seleccionando un punto nun (impresionante) mapa interactivo.",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "A integración de OpenStreetMap fornece un provedor de busca de localizacións, un provedor de referencia para\nrepresentar ligazóns de localización de varios servizos de mapas (OpenStreetMap, Google maps…) e un compoñente personalizado de selección\nde ligazóns para inserir rapidamente unha ligazón de localización buscando ou seleccionando un punto nun (impresionante) mapa interactivo.",
     "Maptiler API key" : "Chave da API de Maptiler",
     "..." : "…",
     "Enable searching for locations" : "Activar a busca de localizacións",
