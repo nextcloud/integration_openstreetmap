@@ -30,6 +30,12 @@
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
 		<div class="footer">
+			<NcSelect
+				:value="selectedLinkType"
+				:options="linkTypesArray"
+				:placeholder="t('integration_openstreetmap', 'Link type')"
+				input-id="extension-select"
+				@input="onLinkTypeSelect" />
 			<NcCheckboxRadioSwitch
 				class="marker-checkbox"
 				:checked.sync="includeMarker">
@@ -55,12 +61,25 @@ import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
 
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
 import { getProvider, NcSearch } from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
+
+const linkTypes = {
+	osm: {
+		id: 'osm',
+		label: t('integration_openstreetmap', 'OpenStreetMap'),
+	},
+	osmand: {
+		id: 'osmand',
+		label: t('integration_openstreetmap', 'OsmAnd'),
+	},
+}
+const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
 
 export default {
 	name: 'PointCustomPickerElement',
@@ -69,6 +88,7 @@ export default {
 		MaplibreMap,
 		NcButton,
 		NcSearch,
+		NcSelect,
 		NcCheckboxRadioSwitch,
 		ArrowRightIcon,
 	},
@@ -93,14 +113,19 @@ export default {
 			currentBearing: getLastMapState()?.bearing ?? null,
 			currentMapStyle: getLastMapState()?.mapStyle ?? null,
 			currentMapTerrain: !!getLastMapState()?.terrain,
+			selectedLinkTypeId: getLastMapState()?.linkType ?? null,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
 			includeMarker: true,
+			linkTypesArray,
 		}
 	},
 
 	computed: {
+		selectedLinkType() {
+			return linkTypes[this.selectedLinkTypeId] ?? null
+		},
 		lastCenter() {
 			if (this.lastMapState === null) {
 				return null
@@ -130,15 +155,27 @@ export default {
 			const lat = this.currentCenter.lat
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
+
 			let link
-			if (this.includeMarker) {
-				link = 'https://www.openstreetmap.org/'
-					+ '?mlat=' + lat
-					+ '&mlon=' + lon
-					+ '#map=' + zoom + '/' + lat + '/' + lon
-			} else {
-				link = 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
+			if (this.selectedLinkTypeId === 'osm') {
+				if (this.includeMarker) {
+					link = 'https://www.openstreetmap.org/'
+						+ '?mlat=' + lat
+						+ '&mlon=' + lon
+						+ '#map=' + zoom + '/' + lat + '/' + lon
+				} else {
+					link = 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
+				}
+			} else if (this.selectedLinkTypeId === 'osmand') {
+				if (this.includeMarker) {
+					link = 'https://osmand.net/map/'
+						+ '?pin=' + lat + ',' + lon
+						+ '#' + zoom + '/' + lat + '/' + lon
+				} else {
+					link = 'https://osmand.net/map/#' + zoom + '/' + lat + '/' + lon
+				}
 			}
+
 			if (parseInt(this.currentPitch) !== 0) {
 				link += '&pitch=' + parseInt(this.currentPitch)
 			}
@@ -151,6 +188,7 @@ export default {
 			if (this.currentMapTerrain) {
 				link += '&terrain'
 			}
+
 			return link
 		},
 	},
@@ -165,6 +203,9 @@ export default {
 	},
 
 	methods: {
+		onLinkTypeSelect(selected) {
+			this.selectedLinkTypeId = selected?.id ?? null
+		},
 		onMapSubmit() {
 			const lat = this.currentCenter.lat
 			const lon = this.currentCenter.lon
@@ -173,7 +214,8 @@ export default {
 			const bearing = this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
-			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain)
+			const linkType = this.selectedLinkTypeId
+			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType)
 			this.$emit('submit', this.currentLink)
 		},
 		onSearchSubmit(link) {
@@ -246,6 +288,7 @@ export default {
 		display: flex;
 		margin-top: 8px;
 		align-items: center;
+		gap: 8px;
 
 		.marker-checkbox {
 			margin-left: 16px;

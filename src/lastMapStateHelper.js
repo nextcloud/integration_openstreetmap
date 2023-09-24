@@ -10,7 +10,7 @@ export function getLastMapState() {
 	return window._osm_last_map_state
 }
 
-export function setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain) {
+export function setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType) {
 	window._osm_last_map_state = {
 		lat,
 		lon,
@@ -19,6 +19,7 @@ export function setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrai
 		bearing,
 		mapStyle,
 		terrain,
+		linkType,
 	}
 	const req = {
 		values: window._osm_last_map_state,

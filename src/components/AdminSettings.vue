@@ -88,7 +88,7 @@ export default {
 			}).catch((error) => {
 				showError(
 					t('integration_openstreetmap', 'Failed to save OpenStreetMap options')
-					+ ': ' + (error.response?.data?.error ?? '')
+					+ ': ' + (error.response?.data?.error ?? ''),
 				)
 				console.error(error)
 			}).then(() => {

@@ -201,24 +201,26 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 			return $this->utilsService->decodeOsmShortLink($encodedCoords);
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\?pin=(-?\d+\.\d+),(-?\d+\.\d+)#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)$/i', $url, $matches);
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?\?pin=(-?\d+\.\d+),(-?\d+\.\d+)#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 5) {
-			return [
+			$result = [
 				'zoom' => (int) $matches[3],
 				'lat' => (float) $matches[4],
 				'lon' => (float) $matches[5],
 				'markerLat' => (float) $matches[1],
 				'markerLon' => (float) $matches[2],
 			];
+			return $this->getFragmentInfo($url, $result);
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)$/i', $url, $matches);
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
-			return [
+			$result = [
 				'zoom' => (int) $matches[1],
 				'lat' => (float) $matches[2],
 				'lon' => (float) $matches[3],
 			];
+			return $this->getFragmentInfo($url, $result);
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=(-?\d+\.\d+)&mlon=(-?\d+\.\d+)&zoom=(\d+)$/i', $url, $matches);
