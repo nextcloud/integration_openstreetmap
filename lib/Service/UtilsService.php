@@ -94,4 +94,25 @@ class UtilsService {
 
 		return null;
 	}
+
+	/**
+	 * @param string $hash
+	 * @return string|null
+	 */
+	public function decodeGoogleMapsAppShortLink(string $hash): ?string {
+		$client = $this->clientService->newClient();
+		$url = 'https://maps.app.goo.gl/' . $hash;
+		$options = ['allow_redirects' => false];
+		try {
+			$response = $client->get($url, $options);
+			$respCode = $response->getStatusCode();
+			if ($respCode < 400 && $response->getHeader('Location')) {
+				return $response->getHeader('Location');
+			}
+		} catch (Exception | Throwable $e) {
+			$this->logger->warning('Google short link decode error: ' . $e->getMessage(), ['app' => Application::APP_ID]);
+		}
+
+		return null;
+	}
 }
