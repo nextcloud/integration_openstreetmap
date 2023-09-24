@@ -78,6 +78,10 @@ const linkTypes = {
 		id: 'osmand',
 		label: t('integration_openstreetmap', 'OsmAnd'),
 	},
+	google: {
+		id: 'google',
+		label: t('integration_openstreetmap', 'Google maps'),
+	},
 }
 const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
 
@@ -157,36 +161,48 @@ export default {
 			const zoom = this.currentZoom
 
 			let link
+			const fragments = []
+			const queryParams = []
 			if (this.selectedLinkTypeId === 'osm') {
+				link = 'https://www.openstreetmap.org/'
 				if (this.includeMarker) {
-					link = 'https://www.openstreetmap.org/'
-						+ '?mlat=' + lat
-						+ '&mlon=' + lon
-						+ '#map=' + zoom + '/' + lat + '/' + lon
-				} else {
-					link = 'https://www.openstreetmap.org/#map=' + zoom + '/' + lat + '/' + lon
+					queryParams.push('mlat=' + lat)
+					queryParams.push('mlon=' + lon)
 				}
+				fragments.push('map=' + zoom + '/' + lat + '/' + lon)
 			} else if (this.selectedLinkTypeId === 'osmand') {
+				link = 'https://osmand.net/map/'
 				if (this.includeMarker) {
-					link = 'https://osmand.net/map/'
-						+ '?pin=' + lat + ',' + lon
-						+ '#' + zoom + '/' + lat + '/' + lon
-				} else {
-					link = 'https://osmand.net/map/#' + zoom + '/' + lat + '/' + lon
+					queryParams.push('pin=' + lat + ',' + lon)
 				}
+				fragments.push(zoom + '/' + lat + '/' + lon)
+			} else if (this.selectedLinkTypeId === 'google') {
+				link = 'https://maps.google.com/maps'
+				if (this.includeMarker) {
+					queryParams.push('q=' + lat + ',' + lon)
+				}
+				queryParams.push('ll=' + lat + ',' + lon)
+				queryParams.push('z=' + zoom)
 			}
 
 			if (parseInt(this.currentPitch) !== 0) {
-				link += '&pitch=' + parseInt(this.currentPitch)
+				fragments.push('pitch=' + parseInt(this.currentPitch))
 			}
 			if (parseInt(this.currentBearing) !== 0) {
-				link += '&bearing=' + parseInt(this.currentBearing)
+				fragments.push('bearing=' + parseInt(this.currentBearing))
 			}
 			if (this.currentMapStyle !== 'streets') {
-				link += '&style=' + encodeURIComponent(this.currentMapStyle)
+				fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
 			}
 			if (this.currentMapTerrain) {
-				link += '&terrain'
+				fragments.push('terrain')
+			}
+
+			if (queryParams.length > 0) {
+				link += '?' + queryParams.join('&')
+			}
+			if (fragments.length > 0) {
+				link += '#' + fragments.join('&')
 			}
 
 			return link

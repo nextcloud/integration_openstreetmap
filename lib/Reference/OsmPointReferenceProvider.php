@@ -242,7 +242,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	 * @param array $urlInfo
 	 * @return array
 	 */
-	private function getFragmentInfo(string $url, array $urlInfo): array {
+	public static function getFragmentInfo(string $url, array $urlInfo): array {
 		$fragment = parse_url($url, PHP_URL_FRAGMENT);
 		parse_str($fragment, $params);
 		if (isset($params['pitch'])) {

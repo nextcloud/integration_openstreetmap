@@ -86,6 +86,12 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 					$reference->setImageUrl($logoUrl);
 
 					$pointInfo['zoom'] = $coords['zoom'] ?? 14;
+					$pointInfo['pitch'] = $coords['pitch'] ?? null;
+					$pointInfo['bearing'] = $coords['bearing'] ?? null;
+					$pointInfo['style'] = $coords['style'] ?? null;
+					if (isset($coords['terrain'])) {
+						$pointInfo['terrain'] = $coords['terrain'];
+					}
 					$pointInfo['map_center'] = [
 						'lat' => $coords['lat'],
 						'lon' => $coords['lon'],
@@ -117,9 +123,46 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 	 */
 	private function getCoordinates(string $url): ?array {
 		// supported link examples:
+		// https://maps.google.com/maps?q=24.197611,120.780512&ll=24.197611,121.780512&z=5
 		// https://goo.gl/maps/eTvH3TqXvKhU8sqb8
 		// https://www.google.fr/maps/place/44%C2%B044'46.5%22N+4%C2%B033'36.9%22E/@44.746241,4.560248,17z/data=!3m1!4b1!4m4!3m3!8m2!3d44.746241!4d4.560248
 		// https://www.google.fr/maps/search/44.746241,+4.560248?shorturl=1
+
+		// https://maps.google.com/maps?q=24.197611,120.780512&ll=24.197611,121.780512&z=5
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?maps\.google\.[a-z]+\/maps\?/i', $url, $matches);
+		if (count($matches) > 0) {
+			$result = [];
+			$query = parse_url($url, PHP_URL_QUERY);
+			parse_str($query, $params);
+
+			if (isset($params['z'])) {
+				$result['zoom'] = (int)$params['z'];
+			}
+			if (isset($params['ll'])) {
+				$coords = explode(',', $params['ll']);
+				if (count($coords) >= 2 && is_numeric($coords[0]) && is_numeric($coords[1])) {
+					$result['lat'] = (float)$coords[0];
+					$result['lon'] = (float)$coords[1];
+				}
+			}
+			if (isset($params['q'])) {
+				$coords = explode(',', $params['q']);
+				if (count($coords) >= 2 && is_numeric($coords[0]) && is_numeric($coords[1])) {
+					// center map on marker only if no map center provided as 'll' link query param
+					if (!isset($result['lat'], $result['lon'])) {
+						$result['lat'] = (float)$coords[0];
+						$result['lon'] = (float)$coords[1];
+					}
+					$result['markerLat'] = (float)$coords[0];
+					$result['markerLon'] = (float)$coords[1];
+				}
+			}
+			// one of 'q' and 'll' must be set
+			if (isset($params['q']) || isset($params['ll'])) {
+				return OsmPointReferenceProvider::getFragmentInfo($url, $result);
+			}
+			return null;
+		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?goo\.gl\/maps\/([0-9a-zA-Z]+)$/i', $url, $matches);
 		if (count($matches) > 1) {
