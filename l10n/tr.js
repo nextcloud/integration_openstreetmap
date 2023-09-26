@@ -21,8 +21,11 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "Basit OpenStreetMap çerçevesi kullanılsın",
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "Search on the map" : "Harita üzerinde ara",
+    "Link type" : "Bağlantı türü",
     "Include marker" : "İşaretleyici eklensin",
     "Generate location link" : "Konum bağlantısı oluştur",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google haritalar",
     "Search with Nominatim to get an OpenStreetMap link" : "Bir OpenStreetMap bağlantısı almak için Nominatim ile arayın"
 },
 "nplurals=2; plural=(n > 1);");

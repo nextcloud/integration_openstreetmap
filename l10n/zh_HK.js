@@ -20,8 +20,11 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "偏好簡單的 OpenStreetMap 框架",
     "Enable navigation link" : "啟用導覽連結",
     "Search on the map" : "在地圖上搜尋",
+    "Link type" : "連結類型",
     "Include marker" : "包含標記",
     "Generate location link" : "產生位置連結",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google 地圖",
     "Search with Nominatim to get an OpenStreetMap link" : "使用 Nominatim 搜尋以取得 OpenStreetMap 連結"
 },
 "nplurals=1; plural=0;");

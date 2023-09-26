@@ -21,8 +21,11 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "تفضيل إطار \"أوبت ستريت ماب\" البسيط",
     "Enable navigation link" : "تميكن رابط التنقُّل",
     "Search on the map" : "البحث على الخريطة",
+    "Link type" : "نوع الرابط",
     "Include marker" : "تضمين العلامة marker",
     "Generate location link" : "توليد رابط الموقع",
+    "OsmAnd" : "تطبيق الرحّال \"أوسماند\" OsmAnd",
+    "Google maps" : "تطبيق \"خرائط قوقل\" Google maps",
     "Search with Nominatim to get an OpenStreetMap link" : "البحث في خدمة Nominatim للحصول على رابط \"أوبن ستريت ماب\""
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
