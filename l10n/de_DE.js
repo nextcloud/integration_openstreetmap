@@ -24,7 +24,7 @@ OC.L10N.register(
     "Link type" : "Linktyp",
     "Include marker" : "Markierung einfügen",
     "Generate location link" : "Standortlink generieren",
-    "OsmAnd" : "OsmAnd",
+    "OsmAnd" : "OSM und",
     "Google maps" : "Google Maps",
     "Search with Nominatim to get an OpenStreetMap link" : "Suchen Sie mit Nominatim, um einen OpenStreetMap-Link zu erhalten"
 },
