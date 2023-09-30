@@ -21,8 +21,11 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "Prefira o quadro simples do OpenStreetMap",
     "Enable navigation link" : "Ativar link de navegação",
     "Search on the map" : "Pesquisar no mapa",
+    "Link type" : "Tipo de link",
     "Include marker" : "Incluir marcador",
     "Generate location link" : "Gerar link de localização",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Mapas do Google",
     "Search with Nominatim to get an OpenStreetMap link" : "Pesquise com o Nominatim para obter um link do OpenStreetMap"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
