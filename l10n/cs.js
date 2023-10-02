@@ -21,8 +21,11 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "Upřednostňovat jednoduchý rámeček s OpenStreetMap",
     "Enable navigation link" : "Zapnout navigační odkaz",
     "Search on the map" : "Hledat na mapě",
+    "Link type" : "Typ odkazu",
     "Include marker" : "Včetně popisovače",
     "Generate location link" : "Vytvořit odkaz na umístění",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Mapy Google",
     "Search with Nominatim to get an OpenStreetMap link" : "Hledat pomocí Nominatim a získat tak odkaz do OpenStreetMap"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
