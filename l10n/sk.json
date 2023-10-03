@@ -1,4 +1,5 @@
 { "translations": {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "Zlá metóda HTTP",
     "Bad credentials" : "Nesprávne prihlasovacie údaje",
     "Connected accounts" : "Prepojené účty",
