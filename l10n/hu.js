@@ -18,6 +18,7 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "Egyszerű OpenStreetMap keret előnyben",
     "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "Search on the map" : "Keresés a térképen",
-    "Generate location link" : "Helyinformációs hivatkozás létrehozása"
+    "Generate location link" : "Helyinformációs hivatkozás létrehozása",
+    "Google maps" : "Google térkép"
 },
 "nplurals=2; plural=(n != 1);");
