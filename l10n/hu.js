@@ -18,6 +18,8 @@ OC.L10N.register(
     "Prefer simple OpenStreetMap frame" : "Egyszerű OpenStreetMap keret előnyben",
     "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "Search on the map" : "Keresés a térképen",
+    "Link type" : "Hivatkozás tipus",
+    "Include marker" : "Jelölő hozzáadása",
     "Generate location link" : "Helyinformációs hivatkozás létrehozása",
     "Google maps" : "Google térkép"
 },
