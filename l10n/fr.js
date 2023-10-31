@@ -25,7 +25,7 @@ OC.L10N.register(
     "Include marker" : "Inclure le marqueur",
     "Generate location link" : "Générer un lien de localisation",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
+    "Google maps" : "Google Maps",
     "Search with Nominatim to get an OpenStreetMap link" : "Rechercher avec Nominatim pour obtenir un lien OpenStreetMap"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
