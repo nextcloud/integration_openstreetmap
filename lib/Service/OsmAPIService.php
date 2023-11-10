@@ -95,13 +95,14 @@ class OsmAPIService {
 		// no pagination...
 		$limitParam = $offset + $limit;
 		$params = [
+			'q' => $query,
 			'format' => 'json',
 			'addressdetails' => 1,
 			'extratags' => 1,
 			'namedetails' => 1,
 			'limit' => $limitParam,
 		];
-		$result = $this->request($userId, 'search/' . urlencode($query), $params);
+		$result = $this->request($userId, 'search', $params);
 		if (!isset($result['error'])) {
 			return array_slice($result, $offset, $limit);
 		}
