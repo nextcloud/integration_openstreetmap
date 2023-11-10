@@ -40,12 +40,12 @@ class Application extends App implements IBootstrap {
 
 	public const DEFAULT_MAPTILER_API_KEY = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
 	public const DEFAULT_SEARCH_LOCATION_ENABLED_VALUE = '0';
+	private IConfig $config;
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
 
 		$container = $this->getContainer();
-		$this->container = $container;
 		$this->config = $container->query(IConfig::class);
 	}
 

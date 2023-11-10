@@ -27,10 +27,11 @@ use Throwable;
 class OsmAPIService {
 	private IClient $client;
 
-	public function __construct (string $appName,
-								private LoggerInterface $logger,
-								private IL10N $l10n,
-								IClientService $clientService) {
+	public function __construct(
+		private LoggerInterface $logger,
+		private IL10N $l10n,
+		IClientService $clientService
+	) {
 		$this->client = $clientService->newClient();
 	}
 
@@ -43,9 +44,9 @@ class OsmAPIService {
 	 */
 	public function getLinkFromCoordinates(float $lat, float $lon, int $zoom = 12, bool $includeMarker = true): string {
 		if ($includeMarker) {
-			return 'https://www.openstreetmap.org/?mlat=' . $lat . '&mlon=' . $lon . '#map=11/' . $lat . '/' . $lon;
+			return 'https://www.openstreetmap.org/?mlat=' . $lat . '&mlon=' . $lon . '#map=' . $zoom . '/' . $lat . '/' . $lon;
 		}
-		return 'https://www.openstreetmap.org/#map=11/' . $lat . '/' . $lon;
+		return 'https://www.openstreetmap.org/#map=' . $zoom . '/' . $lat . '/' . $lon;
 	}
 
 	public function getLinkFromOsmId(int $osmId, string $osmType): string {
