@@ -13,7 +13,7 @@
 				<input id="maptiler-api-key"
 					v-model="state.maptiler_api_key"
 					type="password"
-					:placeholder="t('integration_openstreetmap', '...')"
+					placeholder="…"
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
