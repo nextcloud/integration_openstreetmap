@@ -9,7 +9,6 @@ OC.L10N.register(
     "Connected accounts" : "Konektatutako kontuak",
     "OpenStreetMap integration" : "Integrazioa OpenStreetMap-ekin",
     "Integration of OpenStreetMap" : "OpenStreetMap-en integrazioa",
-    "..." : "...",
     "OpenStreetMap options saved" : "OpenStreetMap aukerak gorde dira ",
     "Failed to save OpenStreetMap options" : "Ezin izan dira OpenStreetMap aukerak gorde",
     "Enable navigation link" : "Gaitu nabigazio esteka",

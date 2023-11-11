@@ -11,7 +11,6 @@ OC.L10N.register(
     "Integration of OpenStreetMap" : "OpenStreetMap 整合",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap 整合提供了位置的搜尋提供者、來自許多地圖服務（OpenStreetMap、Google 地圖等）的用來呈現位置連結的參照提供者，以及自訂連結挑選器元件，透過在（超棒的）互動地圖上搜尋或選取一個點來快速插入位置連結。",
     "Maptiler API key" : "Maptiler API 金鑰",
-    "..." : "...",
     "Enable searching for locations" : "啟用位置搜尋",
     "OpenStreetMap options saved" : "OpenStreetMap 選項已儲存",
     "Failed to save OpenStreetMap options" : "儲存 OpenStreetMap 選項失敗",

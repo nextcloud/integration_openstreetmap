@@ -2,7 +2,6 @@
     "Bad HTTP method" : "Foute HTTP methode",
     "Bad credentials" : "Foute inloggegevens",
     "Connected accounts" : "Verbonden accounts",
-    "..." : "...",
     "Enable navigation link" : "Inschakelen navigatielink"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

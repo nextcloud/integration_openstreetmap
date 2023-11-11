@@ -9,7 +9,6 @@ OC.L10N.register(
     "Connected accounts" : "Anslutna konton",
     "OpenStreetMap integration" : "OpenStreetMap integration",
     "Integration of OpenStreetMap" : "Integrering av OpenStreetMap",
-    "..." : "...",
     "Enable searching for locations" : "Aktivera sökning efter platser",
     "OpenStreetMap options saved" : "OpenStreetMap-alternativ sparade",
     "Failed to save OpenStreetMap options" : "Det gick inte att spara OpenStreetMap-alternativ",

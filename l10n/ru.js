@@ -4,7 +4,6 @@ OC.L10N.register(
     "Bad HTTP method" : "Неверный метод HTTP",
     "Bad credentials" : "Неверные учетные данные",
     "Connected accounts" : "Подключённые учётные записи",
-    "..." : "...",
     "OpenStreetMap options saved" : "Параметры OpenStreetMap сохранены",
     "Failed to save OpenStreetMap options" : "Не удалось сохранить параметры OpenStreetMap",
     "Enable navigation link" : "Включить ссылку для навигации"

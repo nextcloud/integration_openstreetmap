@@ -9,7 +9,6 @@
     "Integration of OpenStreetMap" : "Intégration d'OpenStreetMap",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap integration apporte un fournisseur de recherche de lieux, un fournisseur de référence pour afficher les liens de localisation à partir de divers services cartographiques (OpenStreetMap, Google maps...) et un composant de sélection de lien personnalisé pour insérer rapidement un lien de localisation en recherchant ou en sélectionnant un point sur une (superbe) carte interactive.",
     "Maptiler API key" : "Clé API Maptiler",
-    "..." : "…",
     "Enable searching for locations" : "Permettre la recherche de lieux",
     "OpenStreetMap options saved" : "Options d'OpenStreetMap sauvegardées",
     "Failed to save OpenStreetMap options" : "Échec de la sauvegarde des options d'OpenStreetMap",

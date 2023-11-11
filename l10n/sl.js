@@ -7,7 +7,6 @@ OC.L10N.register(
     "Bad credentials" : "Neustrezna poverila",
     "Connected accounts" : "Povezani računi",
     "OpenStreetMap integration" : "Združevalnik OpenStreetMap",
-    "..." : "...",
     "Enable searching for locations" : "Omogoči iskanje mest na zemljevidu",
     "OpenStreetMap options saved" : "Nastavitve OpenStreetMap so shranjene",
     "Failed to save OpenStreetMap options" : "Shranjevanje nastavitev OpenStreetMap je spodletelo",

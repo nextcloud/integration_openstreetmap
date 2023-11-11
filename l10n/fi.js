@@ -10,7 +10,6 @@ OC.L10N.register(
     "OpenStreetMap integration" : "OpenStreetMap-integraatio",
     "Integration of OpenStreetMap" : "OpenStreetMapin integraatio",
     "Maptiler API key" : "Maptilerin API-avain",
-    "..." : "...",
     "Enable searching for locations" : "Käytä sijaintien etsimistä",
     "OpenStreetMap options saved" : "OpenStreetMap-asetukset tallennettu",
     "Failed to save OpenStreetMap options" : "OpenStreetMap-asetusten tallentaminen epäonnistui",

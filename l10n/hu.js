@@ -10,7 +10,6 @@ OC.L10N.register(
     "OpenStreetMap integration" : "OpenStreetMap integráció",
     "Integration of OpenStreetMap" : "OpenStreetMap integráció",
     "Maptiler API key" : "Maptiler API kulcs",
-    "..." : "...",
     "Enable searching for locations" : "Helyadatok keresésének az engedélyezése",
     "OpenStreetMap options saved" : "OpenStreetMap beállításai mentve",
     "Failed to save OpenStreetMap options" : "Az OpenStreetMap beállításainak mentése sikertelen",

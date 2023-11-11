@@ -11,7 +11,6 @@ OC.L10N.register(
     "Integration of OpenStreetMap" : "Integración de OpenStreetMap",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "La integración de OpenStreetMap proporciona un proveedor de búsqueda para ubicaciones, un proveedor de referencia \n      para mostrar enlaces de ubicación desde varios servicios de mapas (OpenStreetMap, Google Maps, entre otros) y un componente \n      personalizado de selección de enlaces para insertar rápidamente un enlace de ubicación mediante búsqueda o selección de un punto en un mapa interactivo (increíble).",
     "Maptiler API key" : "Clave de API de Maptiler",
-    "..." : "...",
     "Enable searching for locations" : "Habilitar búsqueda de ubicaciones",
     "OpenStreetMap options saved" : "Opciones de OpenStreetMap guardadas",
     "Failed to save OpenStreetMap options" : "Error al guardar las opciones de OpenStreetMap",
