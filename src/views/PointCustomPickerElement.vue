@@ -117,7 +117,7 @@ export default {
 			currentBearing: getLastMapState()?.bearing ?? null,
 			currentMapStyle: getLastMapState()?.mapStyle ?? null,
 			currentMapTerrain: !!getLastMapState()?.terrain,
-			selectedLinkTypeId: getLastMapState()?.linkType ?? null,
+			selectedLinkTypeId: getLastMapState()?.linkType ?? linkTypes.osm.id,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
@@ -163,20 +163,20 @@ export default {
 			let link
 			const fragments = []
 			const queryParams = []
-			if (this.selectedLinkTypeId === 'osm') {
+			if (this.selectedLinkTypeId === null || this.selectedLinkTypeId === linkTypes.osm.id) {
 				link = 'https://www.openstreetmap.org/'
 				if (this.includeMarker) {
 					queryParams.push('mlat=' + lat)
 					queryParams.push('mlon=' + lon)
 				}
 				fragments.push('map=' + zoom + '/' + lat + '/' + lon)
-			} else if (this.selectedLinkTypeId === 'osmand') {
+			} else if (this.selectedLinkTypeId === linkTypes.osmand.id) {
 				link = 'https://osmand.net/map/'
 				if (this.includeMarker) {
 					queryParams.push('pin=' + lat + ',' + lon)
 				}
 				fragments.push(zoom + '/' + lat + '/' + lon)
-			} else if (this.selectedLinkTypeId === 'google') {
+			} else if (this.selectedLinkTypeId === linkTypes.google.id) {
 				link = 'https://maps.google.com/maps'
 				if (this.includeMarker) {
 					queryParams.push('q=' + lat + ',' + lon)
