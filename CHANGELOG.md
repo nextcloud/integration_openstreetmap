@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.8 – 2023-11-21
+
+### Fixed
+
+- default result link type value
+
 ## 1.0.7 – 2023-11-21
 
 ### Added
