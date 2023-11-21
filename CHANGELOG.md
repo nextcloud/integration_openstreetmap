@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.7 – 2023-11-21
+
+### Added
+
+- support for osmand link with marker
+- new picker option to choose link type (OSM, OsmAnd, Google)
+
+### Changed
+
+- use @nextcloud/vue 8
+- update MapLibre
+
+### Fixed
+
+- adjust Nominatim search URL that was deprecated
+- fix picker modal height for 28
+
 ## 1.0.6 – 2023-06-28
 
 ### Changed
