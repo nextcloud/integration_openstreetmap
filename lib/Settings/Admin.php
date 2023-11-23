@@ -10,9 +10,11 @@ use OCA\Osm\AppInfo\Application;
 
 class Admin implements ISettings {
 
-	public function __construct(private IConfig $config,
-								private IInitialState $initialStateService,
-								?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private IInitialState $initialStateService,
+		?string $userId
+	) {
 	}
 
 	/**

@@ -40,14 +40,16 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	public function __construct(private OsmAPIService $osmAPIService,
-								private IConfig $config,
-								private IL10N $l10n,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private LinkReferenceProvider $linkReferenceProvider,
-								private UtilsService $utilsService,
-								private ?string $userId) {
+	public function __construct(
+		private OsmAPIService $osmAPIService,
+		private IConfig $config,
+		private IL10N $l10n,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private UtilsService $utilsService,
+		private ?string $userId
+	) {
 	}
 
 	/**

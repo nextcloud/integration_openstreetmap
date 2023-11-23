@@ -34,10 +34,12 @@ class BingReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	public function __construct(private IConfig $config,
-								private ReferenceManager $referenceManager,
-								private LinkReferenceProvider $linkReferenceProvider,
-								private ?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private ReferenceManager $referenceManager,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private ?string $userId
+	) {
 	}
 
 	/**

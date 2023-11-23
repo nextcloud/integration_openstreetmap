@@ -38,13 +38,15 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	public function __construct(private OsmAPIService $osmAPIService,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private LinkReferenceProvider $linkReferenceProvider,
-								private UtilsService $utilsService,
-								private ?string $userId) {
+	public function __construct(
+		private OsmAPIService $osmAPIService,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private UtilsService $utilsService,
+		private ?string $userId
+	) {
 	}
 
 	/**

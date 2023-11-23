@@ -32,9 +32,11 @@ use OCP\Util;
 
 class OsmReferenceListener implements IEventListener {
 
-	public function __construct(private IConfig       $config,
-								private IInitialState $initialState,
-								private ?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private IInitialState $initialState,
+		private ?string $userId
+	) {
 	}
 
 	public function handle(Event $event): void {

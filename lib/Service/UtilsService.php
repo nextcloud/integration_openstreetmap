@@ -21,9 +21,11 @@ use Throwable;
 
 class UtilsService {
 
-	public function __construct (string         $appName,
-								 private LoggerInterface $logger,
-								 private IClientService $clientService) {
+	public function __construct(
+		string $appName,
+		private LoggerInterface $logger,
+		private IClientService $clientService
+	) {
 	}
 
 	/**
