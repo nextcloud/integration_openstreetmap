@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.9 – 2023-11-23
+
+### Changed
+
+- reset pitch when flying on the map to a search result
+- keep map style in link generated with pure search (not from map)
+- save map style when submitting a search result
+- proxy nominatim search through the server
+- update maplibre to 3.6.2
+
+### Fixed
+
+- style of map search suggestions
+
 ## 1.0.8 – 2023-11-21
 
 ### Fixed
