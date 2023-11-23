@@ -38,13 +38,15 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
-	public function __construct(private OsmAPIService $osmAPIService,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private LinkReferenceProvider $linkReferenceProvider,
-								private UtilsService $utilsService,
-								private ?string $userId) {
+	public function __construct(
+		private OsmAPIService $osmAPIService,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private UtilsService $utilsService,
+		private ?string $userId
+	) {
 	}
 
 	/**
@@ -81,12 +83,18 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 				);
 				$reference->setImageUrl($logoUrl);
 
+				$locationInfo = OsmPointReferenceProvider::getFragmentInfo($referenceText, $locationInfo);
+
 				if ($coords !== null) {
-					$locationInfo['zoom'] = $coords['zoom'];
-					$locationInfo['map_center'] = [
-						'lat' => $coords['lat'],
-						'lon' => $coords['lon'],
-					];
+					if (isset($coords['lat'], $coords['lon'])) {
+						$locationInfo['map_center'] = [
+							'lat' => $coords['lat'],
+							'lon' => $coords['lon'],
+						];
+					}
+					if (isset($coords['zoom'])) {
+						$locationInfo['zoom'] = $coords['zoom'];
+					}
 				}
 				$locationInfo['marker_coordinates'] = [
 					'lat' => $locationInfo['lat'],

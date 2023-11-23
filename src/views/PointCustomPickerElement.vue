@@ -235,7 +235,10 @@ export default {
 			this.$emit('submit', this.currentLink)
 		},
 		onSearchSubmit(link) {
-			this.$emit('submit', link)
+			const fragments = []
+			fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
+			const finalLink = link + '#' + fragments.join('&')
+			this.$emit('submit', finalLink)
 		},
 		onMapStateChange(e) {
 			if (e.centerLat !== undefined && e.centerLng !== undefined) {
