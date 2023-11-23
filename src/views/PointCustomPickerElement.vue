@@ -231,10 +231,11 @@ export default {
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const linkType = this.selectedLinkTypeId
-			setLastMapState(lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType)
+			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType })
 			this.$emit('submit', this.currentLink)
 		},
 		onSearchSubmit(link) {
+			setLastMapState({ mapStyle: this.currentMapStyle })
 			const fragments = []
 			fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
 			const finalLink = link + '#' + fragments.join('&')
