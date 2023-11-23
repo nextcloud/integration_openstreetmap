@@ -44,7 +44,8 @@ class CSPListener implements IEventListener {
 		}
 
 		$policy = new EmptyContentSecurityPolicy();
-		$policy->addAllowedFrameDomain('https://www.openstreetmap.org')
+		$policy
+			->addAllowedFrameDomain('https://www.openstreetmap.org')
 			->addAllowedImageDomain('https://*.tile.openstreetmap.org')
 			->addAllowedImageDomain('https://api.maptiler.com')
 			->addAllowedConnectDomain('https://*.tile.openstreetmap.org')

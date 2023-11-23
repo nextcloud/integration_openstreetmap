@@ -57,15 +57,18 @@ export async function maplibreForwardGeocode(config) {
 		const req = {
 			params: {
 				q: config.query,
-				format: 'geojson',
+				// the controller fails saying "No responder registered for format geojson!"
+				// format: 'geojson',
+				rformat: 'geojson',
 				polygon_geojson: 1,
 				addressdetails: 1,
 				limit: config.limit,
 			},
 		}
-		const url = 'https://nominatim.openstreetmap.org/search'
+		// const url = 'https://nominatim.openstreetmap.org/search'
+		const url = generateUrl('/apps/integration_openstreetmap/search')
 		const response = await axios.get(url, req)
-		const geojson = response.data
+		const geojson = response.data.ocs.data
 		for (const feature of geojson.features) {
 			const center = [
 				feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,

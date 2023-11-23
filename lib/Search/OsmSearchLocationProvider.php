@@ -95,7 +95,12 @@ class OsmSearchLocationProvider implements IProvider {
 			}
 		}
 
-		$searchResult = $this->osmAPIService->searchLocation($user->getUID(), $term, $offset, $limit);
+		$extraParams = [
+			'addressdetails' => 1,
+			'extratags' => 1,
+			'namedetails' => 1,
+		];
+		$searchResult = $this->osmAPIService->searchLocation($user->getUID(), $term, 'json', $extraParams, $offset, $limit);
 		if (isset($searchResult['error'])) {
 			$items = [];
 		} else {

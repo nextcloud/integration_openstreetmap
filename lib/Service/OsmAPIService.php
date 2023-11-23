@@ -88,21 +88,26 @@ class OsmAPIService {
 	 *
 	 * @param string $userId
 	 * @param string $query
+	 * @param string $format
+	 * @param array $extraParams
 	 * @param int $offset
 	 * @param int $limit
 	 * @return array request result
 	 */
-	public function searchLocation(string $userId, string $query, int $offset = 0, int $limit = 5): array {
+	public function searchLocation(string $userId, string $query, string $format, array $extraParams = [],
+								   int $offset = 0, int $limit = 5): array {
 		// no pagination...
 		$limitParam = $offset + $limit;
 		$params = [
 			'q' => $query,
-			'format' => 'json',
-			'addressdetails' => 1,
-			'extratags' => 1,
-			'namedetails' => 1,
+			'format' => $format,
 			'limit' => $limitParam,
 		];
+		foreach ($extraParams as $k => $v) {
+			if ($v !== null) {
+				$params[$k] = $v;
+			}
+		}
 		$result = $this->request($userId, 'search', $params);
 		if (!isset($result['error'])) {
 			return array_slice($result, $offset, $limit);

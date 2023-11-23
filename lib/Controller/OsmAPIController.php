@@ -12,6 +12,7 @@
 namespace OCA\Osm\Controller;
 
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\IRequest;
@@ -20,21 +21,37 @@ use OCA\Osm\Service\OsmAPIService;
 
 class OsmAPIController extends OCSController {
 
-	public function __construct(string          $appName,
-								IRequest        $request,
-								private OsmAPIService   $osmAPIService,
-								private ?string         $userId) {
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private OsmAPIService $osmAPIService,
+		private ?string $userId
+	) {
 		parent::__construct($appName, $request);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
-	 * @param string $query
+	 * @param string $q
+	 * @param int $limit
+	 * @param string $rformat
+	 * @param int|null $polygon_geojson
+	 * @param int|null $addressdetails
+	 * @param int|null $namedetails
+	 * @param int|null $extratags
 	 * @return DataResponse
 	 */
-	public function nominatimSearch(string $query): DataResponse {
-		$searchResults = $this->osmAPIService->searchLocation($this->userId, $query, 0, 10);
+	#[NoAdminRequired]
+	public function nominatimSearch(
+		string $q, int $limit = 10, string $rformat = 'json',
+		?int $polygon_geojson = null, ?int $addressdetails = null, ?int $namedetails = null, ?int $extratags = null
+	): DataResponse {
+		$extraParams = [
+			'polygon_geojson' => $polygon_geojson,
+			'addressdetails' => $addressdetails,
+			'namedetails' => $namedetails,
+			'extratags' => $extratags,
+		];
+		$searchResults = $this->osmAPIService->searchLocation($this->userId, $q, $rformat, $extraParams, 0, $limit);
 		if (isset($searchResults['error'])) {
 			return new DataResponse('', Http::STATUS_BAD_REQUEST);
 		}
