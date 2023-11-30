@@ -270,7 +270,7 @@ export default {
 
 <style lang="scss">
 // TODO fix this in nc/vue
-.reference-picker-modal--content {
+.modal-container__content .reference-picker-modal--content {
 	height: 100%;
 }
 </style>
