@@ -36,6 +36,31 @@ class OsmAPIService {
 	}
 
 	/**
+	 * @param string $service
+	 * @param string $prefix
+	 * @param int $x
+	 * @param int $y
+	 * @param int $z
+	 * @return string|null
+	 * @throws Exception
+	 */
+	public function getRasterTile(string $service, string $prefix, int $x, int $y, int $z): ?string {
+		if ($service === 'osm') {
+			$url = 'https://' . $prefix . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+		} elseif ($service === 'osm-highres') {
+			$url = 'https://tile.osmand.net/hd/' . $z . '/' . $x . '/' . $y . '.png';
+		} elseif ($service === 'esri-topo') {
+			$url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/' . $z . '/' . $y . '/' . $x;
+		} elseif ($service === 'watercolor') {
+//			$url = 'https://stamen-tiles.' . $prefix . '.ssl.fastly.net/watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
+			$url = 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/' . $z . '/' . $y . '/' . $x . '.jpg';
+		} else {
+			$url = 'https://' . $prefix . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+		}
+		return $this->client->get($url)->getBody();
+	}
+
+	/**
 	 * @param float $lat
 	 * @param float $lon
 	 * @param int $zoom

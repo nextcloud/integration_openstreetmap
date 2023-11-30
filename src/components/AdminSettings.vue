@@ -21,6 +21,11 @@
 				@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
 				{{ t('integration_openstreetmap', 'Enable searching for locations') }}
 			</NcCheckboxRadioSwitch>
+			<NcCheckboxRadioSwitch
+				:checked="state.proxy_osm"
+				@update:checked="onCheckboxChanged($event, 'proxy_osm')">
+				{{ t('integration_openstreetmap', 'Proxy OpenStreetMap requests via Nextcloud') }}
+			</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>

@@ -11,13 +11,18 @@
 
 namespace OCA\Osm\Controller;
 
+use Exception;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\IRequest;
 
 use OCA\Osm\Service\OsmAPIService;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
 class OsmAPIController extends OCSController {
 
@@ -25,6 +30,7 @@ class OsmAPIController extends OCSController {
 		string $appName,
 		IRequest $request,
 		private OsmAPIService $osmAPIService,
+		private LoggerInterface $logger,
 		private ?string $userId
 	) {
 		parent::__construct($appName, $request);
@@ -58,5 +64,26 @@ class OsmAPIController extends OCSController {
 		$response = new DataResponse($searchResults);
 		$response->cacheFor(60 * 60 * 24, false, true);
 		return $response;
+	}
+
+	/**
+	 * @param string $service
+	 * @param string $prefix
+	 * @param int $x
+	 * @param int $y
+	 * @param int $z
+	 * @return DataDisplayResponse
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function getRasterTile(string $service, string $prefix, int $x, int $y, int $z): DataDisplayResponse {
+		try {
+			$response = new DataDisplayResponse($this->osmAPIService->getRasterTile($service, $prefix, $x, $y, $z));
+			$response->cacheFor(60 * 60 * 24);
+			return $response;
+		} catch (Exception | Throwable $e) {
+			$this->logger->debug('Raster tile not found', ['exception' => $e]);
+			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+		}
 	}
 }

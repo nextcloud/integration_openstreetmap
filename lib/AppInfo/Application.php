@@ -40,6 +40,7 @@ class Application extends App implements IBootstrap {
 
 	public const DEFAULT_MAPTILER_API_KEY = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
 	public const DEFAULT_SEARCH_LOCATION_ENABLED_VALUE = '0';
+	public const DEFAULT_PROXY_OSM_VALUE = '1';
 	private IConfig $config;
 
 	public function __construct(array $urlParams = []) {
