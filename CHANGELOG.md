@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.10 – 2023-11-30
+
+### Changed
+
+- optionally proxy osm tiles through the server
+
+### Fixed
+
+- avoid breaking the style with nc/vue v7
+
 ## 1.0.9 – 2023-11-23
 
 ### Changed
