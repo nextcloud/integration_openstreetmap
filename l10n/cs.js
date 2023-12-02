@@ -12,6 +12,7 @@ OC.L10N.register(
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "Napojení na OpenStreetMap poskytuje poskytovatele do hledání pro umístění,\nposkytovatele do referencí pro vykreslování odkazů na různé mapové služby (OpenStreetMap, Google maps…) a uživatelsky\nurčenou součást pro rychlé vkládání odkazů na umístění vyhledáním nebo výběrem bodu na (úžasné) interaktivní mapě. ",
     "Maptiler API key" : "Klíč k Maptiler API",
     "Enable searching for locations" : "Zapnout vyhledávání v umístěních",
+    "Proxy OpenStreetMap requests via Nextcloud" : "Zprostředkovávat požadavky na OpenStreetMap přes Nextcloud",
     "OpenStreetMap options saved" : "Předvolby pro OpenStreetMap uloženy",
     "Failed to save OpenStreetMap options" : "Nepodařilo se uložit předvolby pro OpenStreetMap",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Varování: vše co napíšete do kolonky sjednoceného vyhledávání v rámci Nextcloud, bude odesíláno i do služby OpenStreetMap Nominatim",

@@ -12,6 +12,7 @@ OC.L10N.register(
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap интеграција обезбеђује пружаоца услуге претраге локација, референтог\nпружаоца за приказивање линкова локације из различитих серивиса мапа (OpenStreetMap, Google мапе...) и компоненту бирача произвољног линка\nкојим се брзо умеће линк локације претрагом или избором тачке на (изврсној) интерактивној мапи.",
     "Maptiler API key" : "Maptiler API кључ",
     "Enable searching for locations" : "Укључи претрагу локација",
+    "Proxy OpenStreetMap requests via Nextcloud" : "Прослеђуј OpenStreetMap захтеве кроз Nextcloud",
     "OpenStreetMap options saved" : "Сачуване су OpenStreetMap опције",
     "Failed to save OpenStreetMap options" : "Није успело чување OpenStreetMap опција",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Упозорење, све што куцате у менију Обједињене претраге се шаље OpenStreetMap Nominatim сервису.",

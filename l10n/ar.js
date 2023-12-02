@@ -12,6 +12,7 @@ OC.L10N.register(
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "مُكاملة \"أوبن ستريت ماب\" OpenStreetMap توفر مُزوّداً يُمكّن من البحث عن الأماكن و الإحداثيات الجغرافية، و يُمكّن من تحديد مواقع الروابط المكانية على الخرائط المتنوعة (من \"أوبن ستريت ماب\" و \"غوغل ماب\") ، و يُمكّن من تكوين الروابط المكانية (بانتقائها تفاعليّاً من سطح الخريطة). ",
     "Maptiler API key" : "مفتاح مُضاعِف واجهة برمجة التطبيقات Maptiler API key",
     "Enable searching for locations" : "تمكين البحث عن أماكن",
+    "Proxy OpenStreetMap requests via Nextcloud" : "طلبات وكيل \"أوبن تسريت ماب\" OpenStreetMap عبر نكست كلاود",
     "OpenStreetMap options saved" : "تمّ حفظ خيارات خرائط \"أوبن ستريت ماب\" OpenStreetMap",
     "Failed to save OpenStreetMap options" : "إخفاق في حفظ خيارات خرائط \"أوبن ستريت ماب\" OpenStreetMap",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "تحذير ، كل ما تكتبه في قائمة البحث الموحد سيتم إرسالة إلى خدمة Nominatim الخاصة بـ OpenStreetMap.",
