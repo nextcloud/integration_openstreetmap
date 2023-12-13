@@ -6,7 +6,7 @@
 	<description><![CDATA[OpenStreetMap integration provides a search provider for locations, a reference
 provider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker
 component to quickly insert a location link by searching or selecting a point on an (awesome) interactive map.]]></description>
-	<version>1.0.10</version>
+	<version>1.0.11</version>
 	<licence>agpl</licence>
 	<author>Julien Veyssier</author>
 	<namespace>Osm</namespace>

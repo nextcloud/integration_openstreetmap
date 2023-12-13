@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.11 – 2023-12-13
+
+### Fixed
+
+- bug when no last map state
+
 ## 1.0.10 – 2023-11-30
 
 ### Changed
