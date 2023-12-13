@@ -21,11 +21,11 @@
 		<MaplibreMap v-if="showMap"
 			class="point-map"
 			:center="lastCenter"
-			:zoom="lastMapState?.zoom"
-			:pitch="lastMapState?.pitch"
-			:bearing="lastMapState?.bearing"
-			:map-style="lastMapState?.mapStyle"
-			:use-terrain="!!lastMapState?.terrain"
+			:zoom="lastMapState?.zoom ?? undefined"
+			:pitch="lastMapState?.pitch ?? undefined"
+			:bearing="lastMapState?.bearing ?? undefined"
+			:map-style="lastMapState?.mapStyle ?? undefined"
+			:use-terrain="!!lastMapState?.terrain ?? undefined"
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
@@ -131,19 +131,13 @@ export default {
 			return linkTypes[this.selectedLinkTypeId] ?? null
 		},
 		lastCenter() {
-			if (this.lastMapState === null) {
-				return null
+			if (this.lastMapState?.lat && this.lastMapState?.lon) {
+				return {
+					lat: this.lastMapState.lat,
+					lon: this.lastMapState.lon,
+				}
 			}
-			return {
-				lat: this.lastMapState.lat,
-				lon: this.lastMapState.lon,
-			}
-		},
-		lastZoom() {
-			if (this.lastMapState === null) {
-				return null
-			}
-			return this.lastMapState.zoom
+			return null
 		},
 		currentMarker() {
 			return this.includeMarker
@@ -227,7 +221,7 @@ export default {
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
 			const pitch = this.currentPitch
-			const bearing = this.currentBearing
+			const bearing = this.currentBearing ? this.currentBearing.toFixed(2) : this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const linkType = this.selectedLinkTypeId

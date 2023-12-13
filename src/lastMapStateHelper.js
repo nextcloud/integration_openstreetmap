@@ -3,7 +3,7 @@ import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
 if (!window._osm_last_map_state) {
-	window._osm_last_map_state = loadState('integration_openstreetmap', 'last-map-state', null)
+	window._osm_last_map_state = loadState('integration_openstreetmap', 'last-map-state', {})
 }
 
 export function getLastMapState() {
