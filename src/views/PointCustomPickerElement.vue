@@ -117,7 +117,7 @@ export default {
 			currentBearing: getLastMapState()?.bearing ?? null,
 			currentMapStyle: getLastMapState()?.mapStyle ?? null,
 			currentMapTerrain: !!getLastMapState()?.terrain,
-			selectedLinkTypeId: getLastMapState()?.linkType ?? linkTypes.osm.id,
+			selectedLinkTypeId: getLastMapState()?.linkType ? getLastMapState().linkType : linkTypes.osm.id,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
