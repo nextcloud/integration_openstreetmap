@@ -221,7 +221,7 @@ export default {
 			const lon = this.currentCenter.lon
 			const zoom = this.currentZoom
 			const pitch = this.currentPitch
-			const bearing = this.currentBearing ? this.currentBearing.toFixed(2) : this.currentBearing
+			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const linkType = this.selectedLinkTypeId
