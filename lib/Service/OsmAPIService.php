@@ -16,9 +16,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Osm\AppInfo\Application;
 use OCP\Http\Client\IClient;
+use OCP\Http\Client\IClientService;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
-use OCP\Http\Client\IClientService;
 use Throwable;
 
 /**
@@ -52,7 +52,7 @@ class OsmAPIService {
 		} elseif ($service === 'esri-topo') {
 			$url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/' . $z . '/' . $y . '/' . $x;
 		} elseif ($service === 'watercolor') {
-//			$url = 'https://stamen-tiles.' . $prefix . '.ssl.fastly.net/watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
+			//			$url = 'https://stamen-tiles.' . $prefix . '.ssl.fastly.net/watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
 			$url = 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/' . $z . '/' . $y . '/' . $x . '.jpg';
 		} else {
 			$url = 'https://' . $prefix . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
@@ -120,7 +120,7 @@ class OsmAPIService {
 	 * @return array request result
 	 */
 	public function searchLocation(string $userId, string $query, string $format, array $extraParams = [],
-								   int $offset = 0, int $limit = 5): array {
+		int $offset = 0, int $limit = 5): array {
 		// no pagination...
 		$limitParam = $offset + $limit;
 		$params = [
@@ -177,7 +177,7 @@ class OsmAPIService {
 			$options = [
 				'headers' => [
 					'User-Agent' => 'Nextcloud OpenStreetMap integration',
-//					'Authorization' => 'MediaBrowser Token="' . $token . '"',
+					//					'Authorization' => 'MediaBrowser Token="' . $token . '"',
 					'Content-Type' => 'application/json',
 				],
 			];
@@ -193,11 +193,11 @@ class OsmAPIService {
 
 			if ($method === 'GET') {
 				$response = $this->client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $this->client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $this->client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
 				return ['error' => $this->l10n->t('Bad HTTP method')];

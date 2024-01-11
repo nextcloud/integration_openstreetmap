@@ -23,13 +23,13 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OCA\Osm\Service\UtilsService;
-use OCP\Collaboration\Reference\IReferenceProvider;
-use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
+use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\IReferenceProvider;
+use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 
 use OCP\IURLGenerator;

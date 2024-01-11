@@ -23,11 +23,11 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OCP\Collaboration\Reference\IReferenceProvider;
-use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\IReferenceProvider;
+use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 
 class BingReferenceProvider implements IReferenceProvider {
@@ -124,8 +124,8 @@ class BingReferenceProvider implements IReferenceProvider {
 				'lon' => (float) $matches[2],
 				'zoom' => (int) $matches[3],
 				// not accurate
-//				'markerLat' => (float) $matches[1],
-//				'markerLon' => (float) $matches[2],
+				//				'markerLat' => (float) $matches[1],
+				//				'markerLon' => (float) $matches[2],
 			];
 		}
 

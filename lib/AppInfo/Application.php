@@ -18,19 +18,19 @@ use OCA\Osm\Reference\GoogleMapsReferenceProvider;
 use OCA\Osm\Reference\HereMapsReferenceProvider;
 use OCA\Osm\Reference\OsmLocationReferenceProvider;
 use OCA\Osm\Reference\OsmPointReferenceProvider;
-use OCP\Collaboration\Reference\RenderReferenceEvent;
-use OCP\IConfig;
-
+use OCA\Osm\Search\OsmSearchLocationProvider;
 use OCP\AppFramework\App;
-use OCP\AppFramework\Bootstrap\IRegistrationContext;
+
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
+use OCP\IConfig;
 use OCP\IL10N;
 use OCP\INavigationManager;
 use OCP\IURLGenerator;
-use OCP\IUserSession;
 
-use OCA\Osm\Search\OsmSearchLocationProvider;
+use OCP\IUserSession;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
 class Application extends App implements IBootstrap {
@@ -92,4 +92,3 @@ class Application extends App implements IBootstrap {
 		}
 	}
 }
-

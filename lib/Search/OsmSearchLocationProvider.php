@@ -24,11 +24,11 @@ declare(strict_types=1);
  */
 namespace OCA\Osm\Search;
 
-use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\AppInfo\Application;
+use OCA\Osm\Service\OsmAPIService;
 use OCP\App\IAppManager;
-use OCP\IL10N;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Search\IProvider;
@@ -136,7 +136,7 @@ class OsmSearchLocationProvider implements IProvider {
 	}
 
 	protected function getLink(array $entry): string {
-//		return $this->osmAPIService->getLinkFromCoordinates((float) $entry['lat'], (float) $entry['lon']);
+		//		return $this->osmAPIService->getLinkFromCoordinates((float) $entry['lat'], (float) $entry['lon']);
 		return $this->osmAPIService->getLinkFromOsmId($entry['osm_id'], $entry['osm_type']);
 	}
 

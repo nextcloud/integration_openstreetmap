@@ -2,7 +2,6 @@
 
 namespace OCA\Osm\Tests;
 
-
 use OC\Http\Client\ClientService;
 use OC\L10N\L10N;
 use OCA\Osm\AppInfo\Application;

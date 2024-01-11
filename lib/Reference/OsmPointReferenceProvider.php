@@ -23,14 +23,14 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OCA\Osm\Service\UtilsService;
-use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
-use OCP\Collaboration\Reference\ISearchableReferenceProvider;
-use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
+use OCA\Osm\Service\UtilsService;
+use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\ISearchableReferenceProvider;
+use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -55,7 +55,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	/**
 	 * @inheritDoc
 	 */
-	public function getId(): string	{
+	public function getId(): string {
 		return 'openstreetmap-point';
 	}
 
@@ -69,7 +69,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	/**
 	 * @inheritDoc
 	 */
-	public function getOrder(): int	{
+	public function getOrder(): int {
 		return 10;
 	}
 
@@ -112,7 +112,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['markerLat'], $coords['markerLon']);
 			} else {
 				// do not geocode if no marker, the widget will simply show the map centered correctly
-//				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
+				//				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
 				$pointInfo = [];
 			}
 			if ($pointInfo !== null && !isset($pointInfo['error'])) {

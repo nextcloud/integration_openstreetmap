@@ -39,7 +39,7 @@ class UtilsService {
 		$z = -8;
 
 		for ($i = 0; $i < strlen($sc); $i++) {
-    		$ch = $sc[$i];
+			$ch = $sc[$i];
 			$digit = strpos($chars, $ch);
 			if ($digit === false) {
 				break;
@@ -53,8 +53,8 @@ class UtilsService {
 			}
 			$z += 3;
 		}
-		$x = $x * pow(2,2 - 3 * $i) * 90 - 180;
-		$y = $y * pow(2,2 - 3 * $i) * 45 -  90;
+		$x = $x * pow(2, 2 - 3 * $i) * 90 - 180;
+		$y = $y * pow(2, 2 - 3 * $i) * 45 - 90;
 		// adjust z
 		if ($i < strlen($sc) && $sc[$i] === '-') {
 			$z -= 2;

@@ -12,15 +12,15 @@
 namespace OCA\Osm\Controller;
 
 use Exception;
+use OCA\Osm\Service\OsmAPIService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
-use OCP\IRequest;
 
-use OCA\Osm\Service\OsmAPIService;
+use OCP\IRequest;
 use Psr\Log\LoggerInterface;
 use Throwable;
 

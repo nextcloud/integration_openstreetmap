@@ -1,12 +1,13 @@
 <?php
+
 namespace OCA\Osm\Settings;
 
+use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
-use OCP\Settings\ISettings;
 
-use OCA\Osm\AppInfo\Application;
+use OCP\Settings\ISettings;
 
 class Admin implements ISettings {
 
