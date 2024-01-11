@@ -23,9 +23,9 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
@@ -36,7 +36,7 @@ class BingReferenceProvider implements IReferenceProvider {
 
 	public function __construct(
 		private IConfig $config,
-		private ReferenceManager $referenceManager,
+		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private ?string $userId
 	) {

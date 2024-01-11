@@ -23,12 +23,12 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
@@ -45,7 +45,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		private IConfig $config,
 		private IL10N $l10n,
 		private IURLGenerator $urlGenerator,
-		private ReferenceManager $referenceManager,
+		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private UtilsService $utilsService,
 		private ?string $userId
@@ -115,7 +115,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				//				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
 				$pointInfo = [];
 			}
-			if ($pointInfo !== null && !isset($pointInfo['error'])) {
+			if (!isset($pointInfo['error'])) {
 				$pointInfo['url'] = $referenceText;
 				$reference = new Reference($referenceText);
 				$geoLink = 'geo:' . $coords['lat'] . ':' . $coords['lon'] . '?z=' . $coords['zoom'];

@@ -71,7 +71,7 @@ class UtilsService {
 
 	/**
 	 * @param string $hash
-	 * @return array|null
+	 * @return string|null
 	 */
 	public function decodeGoogleMapsShortLink(string $hash): ?string {
 		$client = $this->clientService->newClient();
