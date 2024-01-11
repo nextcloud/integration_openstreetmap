@@ -30,6 +30,9 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\IConfig;
 use OCP\Util;
 
+/**
+ * @template-implements IEventListener<Event>
+ */
 class OsmReferenceListener implements IEventListener {
 
 	public function __construct(

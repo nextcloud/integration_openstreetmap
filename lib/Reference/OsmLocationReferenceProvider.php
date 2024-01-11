@@ -23,11 +23,11 @@
 namespace OCA\Osm\Reference;
 
 use OC\Collaboration\Reference\LinkReferenceProvider;
-use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\IReference;
+use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
@@ -42,7 +42,7 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 		private OsmAPIService $osmAPIService,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
-		private ReferenceManager $referenceManager,
+		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private UtilsService $utilsService,
 		private ?string $userId
