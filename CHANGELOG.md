@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.12 – 2024-03-04
+
+### Added
+
+- code style and static analysis checks
+
+### Changed
+
+- update npm pkgs
+- use Maplibre-gl 4
+
+### Fixed
+
+- fix initial link type
+
 ## 1.0.11 – 2023-12-13
 
 ### Fixed
