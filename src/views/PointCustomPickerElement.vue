@@ -33,6 +33,7 @@
 			<NcSelect
 				:value="selectedLinkType"
 				:options="linkTypesArray"
+				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
 				@input="onLinkTypeSelect" />
