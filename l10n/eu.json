@@ -7,9 +7,23 @@
     "Connected accounts" : "Konektatutako kontuak",
     "OpenStreetMap integration" : "Integrazioa OpenStreetMap-ekin",
     "Integration of OpenStreetMap" : "OpenStreetMap-en integrazioa",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap integrazioak kokapenak bilatzeko hornitzaile bat eskaintzen du, \nhornitzaile bat hainbat mapa-zerbitzutako kokapen-estekak (OpenStreetMap, Google maps...) eta esteka-hautatzaile pertsonalizatu bat errendatzeko.\nKokapen-esteka azkar txertatzeko osagaia mapa interaktibo (ikaragarri) batean puntu bat bilatuz edo hautatuz.",
+    "Maptiler API key" : "Maptiler API gakoa",
+    "Enable searching for locations" : "Gaitu kokapenak bilatzea",
+    "Proxy OpenStreetMap requests via Nextcloud" : "Proxy OpenStreetMap eskaerak Nextcloud bidez",
     "OpenStreetMap options saved" : "OpenStreetMap aukerak gorde dira ",
     "Failed to save OpenStreetMap options" : "Ezin izan dira OpenStreetMap aukerak gorde",
+    "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Abisua: bilaketa bateratuaren menuan idazten duzun guztia OpenStreetMap-en Nominatim zerbitzura bidaliko da.",
+    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Nextcloud-eko administratzaile batek OpenStreetMap-en bilatzaile bateratua hornitzailea desgaitu du",
+    "Enable OpenStreetMap link previews" : "Gaitu OpenStreetMap esteken aurrebista",
+    "Prefer simple OpenStreetMap frame" : "Nahiago OpenStreetMap marko sinplea",
     "Enable navigation link" : "Gaitu nabigazio esteka",
-    "Include marker" : "Gehitu markatzailea"
+    "Search on the map" : "Bilatu mapan",
+    "Link type" : "Esteka mota",
+    "Include marker" : "Gehitu markatzailea",
+    "Generate location link" : "Sortu kokapen-esteka",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google maps",
+    "Search with Nominatim to get an OpenStreetMap link" : "Bilatu Nominatim-en bidez OpenStreetMap esteka bat lortzeko"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
