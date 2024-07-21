@@ -21,9 +21,6 @@ use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-/**
- * Service to make requests to Osm REST API
- */
 class OsmAPIService {
 	private IClient $client;
 
@@ -37,31 +34,62 @@ class OsmAPIService {
 
 	/**
 	 * @param string $service
-	 * @param string $prefix
 	 * @param int $x
 	 * @param int $y
 	 * @param int $z
+	 * @param string|null $s
 	 * @return string|null
 	 * @throws Exception
 	 */
-	public function getRasterTile(string $service, string $prefix, int $x, int $y, int $z): ?string {
+	public function getRasterTile(string $service, int $x, int $y, int $z, ?string $s = null): ?string {
+		$options = [];
 		if ($service === 'osm') {
-			$url = 'https://' . $prefix . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			if ($s === null) {
+				$s = 'abc'[mt_rand(0, 2)];
+			}
+			$url = 'https://' . $s . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
 		} elseif ($service === 'osm-highres') {
 			$url = 'https://tile.osmand.net/hd/' . $z . '/' . $x . '/' . $y . '.png';
 		} elseif ($service === 'esri-topo') {
 			$url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/' . $z . '/' . $y . '/' . $x;
 		} elseif ($service === 'watercolor') {
-			//			$url = 'https://stamen-tiles.' . $prefix . '.ssl.fastly.net/watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
-			$url = 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/' . $z . '/' . $y . '/' . $x . '.jpg';
+			$url = 'https://tiles.stadiamaps.com/styles/stamen_watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
+			// see https://docs.stadiamaps.com/authentication
+			$options['headers'] = ['Origin' => 'https://nextcloud.local'];
 		} else {
-			$url = 'https://' . $prefix . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			if ($s === null) {
+				$s = 'abc'[mt_rand(0, 2)];
+			}
+			$url = 'https://' . $s . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+		}
+		$body = $this->client->get($url, $options)->getBody();
+		if (is_resource($body)) {
+			$content = stream_get_contents($body);
+			return $content === false
+				? ''
+				: $content;
+		}
+		return $body;
+	}
+
+	/**
+	 * @param string $fontstack
+	 * @param string $range
+	 * @param string|null $key
+	 * @return string|null
+	 * @throws Exception
+	 */
+	public function getMapTilerFont(string $fontstack, string $range, ?string $key = null): ?string {
+		// https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=' + apiKey
+		$url = 'https://api.maptiler.com/fonts/' . $fontstack . '/' . $range . '.pbf';
+		if ($key !== null) {
+			$url .= '?key=' . $key;
 		}
 		$body = $this->client->get($url)->getBody();
 		if (is_resource($body)) {
 			$content = stream_get_contents($body);
 			return $content === false
-				? ''
+				? null
 				: $content;
 		}
 		return $body;

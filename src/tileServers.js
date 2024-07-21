@@ -14,9 +14,9 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyOsm
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/a/') + '{x}/{y}/{z}',
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/b/') + '{x}/{y}/{z}',
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/c/') + '{x}/{y}/{z}',
+							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=a',
+							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=b',
+							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=c',
 						]
 						: [
 							'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -47,7 +47,7 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyOsm
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/esri-topo/a/') + '{x}/{y}/{z}',
+							generateUrl('/apps/integration_openstreetmap/tiles/esri-topo/') + '{x}/{y}/{z}',
 						]
 						: [
 							'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
@@ -70,8 +70,6 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 19,
 		},
-		// didn't find a working server
-		/*
 		waterColor: {
 			title: 'WaterColor',
 			version: 8,
@@ -81,7 +79,7 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyOsm
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/watercolor/a/') + '{x}/{y}/{z}',
+							generateUrl('/apps/integration_openstreetmap/tiles/watercolor/') + '{x}/{y}/{z}',
 						]
 						: [
 							'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
@@ -105,7 +103,6 @@ export function getRasterTileServers(apiKey) {
 			],
 			maxzoom: 18,
 		},
-		*/
 	}
 }
 

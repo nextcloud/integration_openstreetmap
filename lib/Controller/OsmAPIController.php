@@ -18,6 +18,7 @@ use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\OCSController;
 
 use OCP\IRequest;
@@ -72,18 +73,37 @@ class OsmAPIController extends OCSController {
 	 * @param int $x
 	 * @param int $y
 	 * @param int $z
-	 * @return DataDisplayResponse
+	 * @return Response
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
-	public function getRasterTile(string $service, string $prefix, int $x, int $y, int $z): DataDisplayResponse {
+	public function getRasterTile(string $service, int $x, int $y, int $z, ?string $s = null): Response {
 		try {
-			$response = new DataDisplayResponse($this->osmAPIService->getRasterTile($service, $prefix, $x, $y, $z));
+			$response = new DataDisplayResponse($this->osmAPIService->getRasterTile($service, $x, $y, $z, $s));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
 		} catch (Exception | Throwable $e) {
 			$this->logger->debug('Raster tile not found', ['exception' => $e]);
-			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * @param string $fontstack
+	 * @param string $range
+	 * @param string|null $key
+	 * @return Response
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function getMapTilerFont(string $fontstack, string $range, ?string $key = null): Response {
+		try {
+			$response = new DataDisplayResponse($this->osmAPIService->getMapTilerFont($fontstack, $range, $key));
+			$response->cacheFor(60 * 60 * 24);
+			return $response;
+		} catch (Exception | Throwable $e) {
+			$this->logger->debug('Font not found', ['exception' => $e]);
+			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
 	}
 }
