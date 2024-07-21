@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.0.0 – 2024-07-21
+
+### Added
+
+- Watercolor tile server
+
+### Changed
+
+- Use latest nextcloud/vue library
+- Set min and max NC version to 30
+
 ## 1.0.12 – 2024-03-04
 
 ### Added
