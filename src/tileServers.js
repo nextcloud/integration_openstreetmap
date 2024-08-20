@@ -14,14 +14,10 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyOsm
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=a',
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=b',
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}' + '?s=c',
+							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}',
 						]
 						: [
-							'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
-							'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
-							'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+							'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 						],
 					tileSize: 256,
 					attribution: 'Map data &copy; 2013 <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -120,15 +116,10 @@ export function getVectorStyles(apiKey) {
 			title: 'Outdoor',
 			uri: 'https://api.maptiler.com/maps/outdoor/style.json?key=' + apiKey,
 		},
-		// does not work ATM
-		// malformed style.json (extra space):
-		// layers[107].paint.line-color.stops[0][1]: color expected, " #787878" found
-		/*
 		osm: {
 			title: 'OpenStreetMap',
 			uri: 'https://api.maptiler.com/maps/openstreetmap/style.json?key=' + apiKey,
 		},
-		*/
 		dark: {
 			title: 'Dark',
 			uri: 'https://api.maptiler.com/maps/streets-dark/style.json?key=' + apiKey,

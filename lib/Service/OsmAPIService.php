@@ -44,10 +44,7 @@ class OsmAPIService {
 	public function getRasterTile(string $service, int $x, int $y, int $z, ?string $s = null): ?string {
 		$options = [];
 		if ($service === 'osm') {
-			if ($s === null) {
-				$s = 'abc'[mt_rand(0, 2)];
-			}
-			$url = 'https://' . $s . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			$url = 'https://tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
 		} elseif ($service === 'osm-highres') {
 			$url = 'https://tile.osmand.net/hd/' . $z . '/' . $x . '/' . $y . '.png';
 		} elseif ($service === 'esri-topo') {
@@ -57,10 +54,7 @@ class OsmAPIService {
 			// see https://docs.stadiamaps.com/authentication
 			$options['headers'] = ['Origin' => 'https://nextcloud.local'];
 		} else {
-			if ($s === null) {
-				$s = 'abc'[mt_rand(0, 2)];
-			}
-			$url = 'https://' . $s . '.tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			$url = 'https://tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
 		}
 		$body = $this->client->get($url, $options)->getBody();
 		if (is_resource($body)) {
