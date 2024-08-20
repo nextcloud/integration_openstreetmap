@@ -24,7 +24,8 @@ class Admin implements ISettings {
 	public function getForm(): TemplateResponse {
 		$proxyOsm = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
 		$searchLocationEnabled = $this->config->getAppValue(Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
-		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key');
+		// don't expose the API key to the user
+		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key') === '' ? '' : 'dummyApiKey';
 
 		$state = [
 			'proxy_osm' => $proxyOsm,

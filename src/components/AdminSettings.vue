@@ -40,9 +40,11 @@ import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadi
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { delay } from '../utils.js'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/style.css'
+
+import { delay } from '../utils.js'
 
 export default {
 	name: 'AdminSettings',
@@ -74,28 +76,32 @@ export default {
 	methods: {
 		onCheckboxChanged(newValue, key) {
 			this.state[key] = newValue
-			this.saveOptions({ [key]: this.state[key] ? '1' : '0' })
+			this.saveOptions({ [key]: this.state[key] ? '1' : '0' }, false)
 		},
 		onInput() {
 			this.loading = true
 			delay(() => {
-				this.saveOptions({
-					maptiler_api_key: this.state.maptiler_api_key,
-				})
+				if (this.state.maptiler_api_key !== 'dummyApiKey') {
+					this.saveOptions({
+						maptiler_api_key: this.state.maptiler_api_key,
+					})
+				}
 			}, 2000)()
 		},
-		saveOptions(values) {
+		async saveOptions(values, sensitive = true) {
+			if (sensitive) {
+				await confirmPassword()
+			}
 			const req = {
 				values,
 			}
-			const url = generateUrl('/apps/integration_openstreetmap/admin-config')
+			const url = sensitive
+				? generateUrl('/apps/integration_openstreetmap/sensitive-admin-config')
+				: generateUrl('/apps/integration_openstreetmap/admin-config')
 			axios.put(url, req).then((response) => {
 				showSuccess(t('integration_openstreetmap', 'OpenStreetMap options saved'))
 			}).catch((error) => {
-				showError(
-					t('integration_openstreetmap', 'Failed to save OpenStreetMap options')
-					+ ': ' + (error.response?.data?.error ?? ''),
-				)
+				showError(t('integration_openstreetmap', 'Failed to save OpenStreetMap options'))
 				console.error(error)
 			}).then(() => {
 				this.loading = false

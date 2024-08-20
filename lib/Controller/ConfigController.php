@@ -13,7 +13,9 @@ namespace OCA\Osm\Controller;
 
 use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
 
@@ -50,9 +52,25 @@ class ConfigController extends Controller {
 	 */
 	public function setAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
+			if (in_array($key, ['maptiler_api_key'], true)) {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
 		}
 
-		return new DataResponse('');
+		return new DataResponse([]);
+	}
+
+	/**
+	 * @param array $values
+	 * @return DataResponse
+	 */
+	#[PasswordConfirmationRequired]
+	public function setSensitiveAdminConfig(array $values): DataResponse {
+		foreach ($values as $key => $value) {
+			$this->config->setAppValue(Application::APP_ID, $key, $value);
+		}
+
+		return new DataResponse([]);
 	}
 }
