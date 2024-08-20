@@ -24,7 +24,7 @@
 			<NcCheckboxRadioSwitch
 				:checked="state.proxy_osm"
 				@update:checked="onCheckboxChanged($event, 'proxy_osm')">
-				{{ t('integration_openstreetmap', 'Proxy OpenStreetMap requests via Nextcloud') }}
+				{{ t('integration_openstreetmap', 'Proxy map tiles/vectors requests via Nextcloud') }}
 			</NcCheckboxRadioSwitch>
 		</div>
 	</div>

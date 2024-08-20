@@ -55,8 +55,8 @@ class OsmReferenceListener implements IEventListener {
 
 		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
-		$proxyOsm = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
-		$this->initialState->provideInitialState('proxy-osm', $proxyOsm);
+		$proxyMapRequests = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
+		$this->initialState->provideInitialState('proxy-map-requests', $proxyMapRequests);
 
 		$lastLat = $this->config->getUserValue($this->userId, Application::APP_ID, 'lat');
 		$lastLon = $this->config->getUserValue($this->userId, Application::APP_ID, 'lon');

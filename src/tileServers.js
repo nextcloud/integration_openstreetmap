@@ -1,6 +1,6 @@
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
-const proxyOsm = loadState('integration_openstreetmap', 'proxy-osm', false)
+const proxyMapRequests = loadState('integration_openstreetmap', 'proxy-map-requests', false)
 
 export function getRasterTileServers(apiKey) {
 	return {
@@ -12,7 +12,7 @@ export function getRasterTileServers(apiKey) {
 			sources: {
 				'osm-source': {
 					type: 'raster',
-					tiles: proxyOsm
+					tiles: proxyMapRequests
 						? [
 							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}',
 						]
@@ -41,7 +41,7 @@ export function getRasterTileServers(apiKey) {
 			sources: {
 				'esri-topo-source': {
 					type: 'raster',
-					tiles: proxyOsm
+					tiles: proxyMapRequests
 						? [
 							generateUrl('/apps/integration_openstreetmap/tiles/esri-topo/') + '{x}/{y}/{z}',
 						]
@@ -73,7 +73,7 @@ export function getRasterTileServers(apiKey) {
 			sources: {
 				'watercolor-source': {
 					type: 'raster',
-					tiles: proxyOsm
+					tiles: proxyMapRequests
 						? [
 							generateUrl('/apps/integration_openstreetmap/tiles/watercolor/') + '{x}/{y}/{z}',
 						]
@@ -106,23 +106,33 @@ export function getVectorStyles(apiKey) {
 	return {
 		streets: {
 			title: 'Streets',
-			uri: 'https://api.maptiler.com/maps/streets/style.json?key=' + apiKey,
+			uri: proxyMapRequests
+				? generateUrl('/apps/gpxpod/maptiler/maps/streets-v2/style.json?key=' + apiKey)
+				: 'https://api.maptiler.com/maps/streets/style.json?key=' + apiKey,
 		},
 		satellite: {
 			title: 'Satellite',
-			uri: 'https://api.maptiler.com/maps/hybrid/style.json?key=' + apiKey,
+			uri: proxyMapRequests
+				? generateUrl('/apps/gpxpod/maptiler/maps/hybrid/style.json?key=' + apiKey)
+				: 'https://api.maptiler.com/maps/hybrid/style.json?key=' + apiKey,
 		},
 		outdoor: {
 			title: 'Outdoor',
-			uri: 'https://api.maptiler.com/maps/outdoor/style.json?key=' + apiKey,
+			uri: proxyMapRequests
+				? generateUrl('/apps/gpxpod/maptiler/maps/outdoor-v2/style.json?key=' + apiKey)
+				: 'https://api.maptiler.com/maps/outdoor/style.json?key=' + apiKey,
 		},
 		osm: {
 			title: 'OpenStreetMap',
-			uri: 'https://api.maptiler.com/maps/openstreetmap/style.json?key=' + apiKey,
+			uri: proxyMapRequests
+				? generateUrl('/apps/gpxpod/maptiler/maps/openstreetmap/style.json?key=' + apiKey)
+				: 'https://api.maptiler.com/maps/openstreetmap/style.json?key=' + apiKey,
 		},
 		dark: {
 			title: 'Dark',
-			uri: 'https://api.maptiler.com/maps/streets-dark/style.json?key=' + apiKey,
+			uri: proxyMapRequests
+				? generateUrl('/apps/gpxpod/maptiler/maps/streets-dark/style.json?key=' + apiKey)
+				: 'https://api.maptiler.com/maps/streets-dark/style.json?key=' + apiKey,
 		},
 	}
 }
