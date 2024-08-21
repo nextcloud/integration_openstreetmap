@@ -12,7 +12,6 @@ OC.L10N.register(
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap integrazioak kokapenak bilatzeko hornitzaile bat eskaintzen du, \nhornitzaile bat hainbat mapa-zerbitzutako kokapen-estekak (OpenStreetMap, Google maps...) eta esteka-hautatzaile pertsonalizatu bat errendatzeko.\nKokapen-esteka azkar txertatzeko osagaia mapa interaktibo (ikaragarri) batean puntu bat bilatuz edo hautatuz.",
     "Maptiler API key" : "Maptiler API gakoa",
     "Enable searching for locations" : "Gaitu kokapenak bilatzea",
-    "Proxy OpenStreetMap requests via Nextcloud" : "Proxy OpenStreetMap eskaerak Nextcloud bidez",
     "OpenStreetMap options saved" : "OpenStreetMap aukerak gorde dira ",
     "Failed to save OpenStreetMap options" : "Ezin izan dira OpenStreetMap aukerak gorde",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Abisua: bilaketa bateratuaren menuan idazten duzun guztia OpenStreetMap-en Nominatim zerbitzura bidaliko da.",

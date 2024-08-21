@@ -10,7 +10,6 @@
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "Az OpenStreetMap integráció a következőket biztosítja: helykeresési szolgáltató, hivatkozáskészítő különböző\ntérképszolgáltatásokhoz (OpenStreetMap, Google Térképek, …) és egyéni hivatkozásválasztó komponens a hivatkozások\ngyors beszúrásához (kereséssel vagy egy pont kiválasztásával egy interaktív térképről).",
     "Maptiler API key" : "Maptiler API kulcs",
     "Enable searching for locations" : "Helyadatok keresésének az engedélyezése",
-    "Proxy OpenStreetMap requests via Nextcloud" : "Az OpenStreetMap kérések közvetítése a Nextcloudon keresztül",
     "OpenStreetMap options saved" : "Az OpenStreetMap beállításai mentve",
     "Failed to save OpenStreetMap options" : "Az OpenStreetMap beállításainak mentése sikertelen",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Figyelem, az összes, az egyesített keresési menüben beírt szöveg elküldésre kerül az OpenStreetMap Nominatim szolgáltatásának.",
