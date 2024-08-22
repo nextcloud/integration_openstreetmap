@@ -12,6 +12,7 @@ OC.L10N.register(
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map.",
     "Maptiler API key" : "Maptiler API key",
     "Enable searching for locations" : "Enable searching for locations",
+    "Proxy map tiles/vectors requests via Nextcloud" : "Proxy map tiles/vectors requests via Nextcloud",
     "OpenStreetMap options saved" : "OpenStreetMap options saved",
     "Failed to save OpenStreetMap options" : "Failed to save OpenStreetMap options",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service.",

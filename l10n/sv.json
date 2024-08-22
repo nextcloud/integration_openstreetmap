@@ -11,9 +11,13 @@
     "OpenStreetMap options saved" : "OpenStreetMap-alternativ sparade",
     "Failed to save OpenStreetMap options" : "Det gick inte att spara OpenStreetMap-alternativ",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Varning, allt du skriver i Unified Sök-menyn kommer att skickas till OpenStreetMaps Nominatim-tjänst.",
+    "Enable OpenStreetMap link previews" : "Aktivera förhandsvisningar av OpenStreetMap-länkar",
+    "Prefer simple OpenStreetMap frame" : "Föredrar enkel OpenStreetMap-ram",
     "Enable navigation link" : "Aktivera navigeringslänk",
     "Search on the map" : "Sök på kartan",
+    "Link type" : "Länktyp",
     "Include marker" : "Inkludera markör",
-    "Generate location link" : "Skapa platslänk"
+    "Generate location link" : "Skapa platslänk",
+    "Google maps" : "Google maps"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
