@@ -10,6 +10,7 @@
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "A integração do OpenStreetMap fornece um provedor de pesquisa para locais, uma referência\nprovedor para renderizar links de localização de vários serviços de mapa (OpenStreetMap, mapas do Google...) e um seletor de link personalizado\ncomponente para inserir rapidamente um link de localização pesquisando ou selecionando um ponto em um (incrível) mapa interativo.",
     "Maptiler API key" : "Chave de API do Maptiler",
     "Enable searching for locations" : "Ativar pesquisa de locais",
+    "Proxy map tiles/vectors requests via Nextcloud" : "Solicitação de vetores/blocos de mapa proxy via Nextcloud",
     "OpenStreetMap options saved" : "Opções do OpenStreetMap salvas",
     "Failed to save OpenStreetMap options" : "Falha ao salvar as opções do OpenStreetMap",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Atenção, tudo que você digitar no menu Pesquisa Unificada será enviado para o serviço Nominatim do OpenStreetMap.",
