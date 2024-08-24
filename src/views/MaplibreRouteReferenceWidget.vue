@@ -62,7 +62,7 @@
 				:map-style="style"
 				:use-terrain="useTerrain"
 				:markers="richObject.waypoints"
-				:line="richObject.geojson" />
+				:line="selectedRoute.geojson" />
 		</div>
 	</div>
 </template>
@@ -109,12 +109,15 @@ export default {
 	},
 
 	computed: {
+		selectedRoute() {
+			return this.richObject.routes[0]
+		},
 		formattedDuration() {
-			if (this.richObject.duration) {
-				const mDuration = moment.duration(this.richObject.duration, 'seconds')
-				if (this.richObject.duration < 60 * 60) {
+			if (this.selectedRoute.duration) {
+				const mDuration = moment.duration(this.selectedRoute.duration, 'seconds')
+				if (this.selectedRoute.duration < 60 * 60) {
 					return mDuration.humanize()
-				} else if (this.richObject.duration < 60 * 60 * 24) {
+				} else if (this.selectedRoute.duration < 60 * 60 * 24) {
 					return mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
 				} else {
 					return mDuration.days() + ' d ' + mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
@@ -123,11 +126,11 @@ export default {
 			return null
 		},
 		formattedDistance() {
-			if (this.richObject.distance) {
-				if (this.richObject.distance < 1000) {
-					return this.richObject.distance + ' m'
+			if (this.selectedRoute.distance) {
+				if (this.selectedRoute.distance < 1000) {
+					return this.selectedRoute.distance + ' m'
 				} else {
-					return (this.richObject.distance / 1000).toFixed(2) + ' km'
+					return (this.selectedRoute.distance / 1000).toFixed(2) + ' km'
 				}
 			}
 			return null

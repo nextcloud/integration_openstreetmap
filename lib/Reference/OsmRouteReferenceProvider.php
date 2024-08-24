@@ -59,7 +59,7 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 			return false;
 		}
 
-		return $this->getRoutingInfo($referenceText) !== null;
+		return $this->getLinkInfo($referenceText) !== null;
 	}
 
 	/**
@@ -69,18 +69,18 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 		if (!$this->matchReference($referenceText)) {
 			return null;
 		}
-		$routingInfo = $this->getRoutingInfo($referenceText);
-		if ($routingInfo === null) {
+		$linkInfo = $this->getLinkInfo($referenceText);
+		if ($linkInfo === null) {
 			return $this->linkReferenceProvider->resolveReference($referenceText);
 		}
-		$route = $this->routingService->computeOsrmRoute($routingInfo['points'], $routingInfo['profile']);
-		if ($route === null) {
+		$routing = $this->routingService->computeOsrmRoute($linkInfo['points'], $linkInfo['profile']);
+		if ($routing === null) {
 			return $this->linkReferenceProvider->resolveReference($referenceText);
 		}
 
 		$reference = new Reference($referenceText);
 		$reference->setTitle('Route');
-		$reference->setDescription($routingInfo['profile']);
+		$reference->setDescription($linkInfo['profile']);
 		$logoUrl = $this->urlGenerator->getAbsoluteURL(
 			$this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg')
 		);
@@ -89,9 +89,9 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 		$reference->setRichObject(
 			self::RICH_OBJECT_TYPE,
 			[
-				'queryPoints' => $routingInfo['points'],
-				'profile' => $routingInfo['profile'],
-				...$route,
+				'queryPoints' => $linkInfo['points'],
+				'profile' => $linkInfo['profile'],
+				...$routing,
 			],
 		);
 		return $reference;
@@ -101,9 +101,36 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getRoutingInfo(string $url): ?array {
+	private function getLinkInfo(string $url): ?array {
 		// supported link examples:
 		// https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=43.69788%2C3.86245%3B43.66652%2C3.86134
+		// https://graphhopper.com/maps/?point=43.787469%2C3.736534
+		// &point=43.775434%2C3.867687
+		// &point=43.666524%2C3.861343_Montferrier-sur-Lez%2C+34980%2C+Occitanie%2C+France
+		// &profile=foot&layer=Omniscale
+
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?graphhopper\.com\/maps\/\?.*point=(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url) === 1) {
+			$fixedUrl = str_replace('point=', 'point[]=', $url);
+			$query = parse_url($fixedUrl, PHP_URL_QUERY);
+			parse_str($query, $parsedQuery);
+			if (isset($parsedQuery['point']) && is_array($parsedQuery['point']) && count($parsedQuery['point']) >= 2) {
+				$ghpProfiles = [
+					'car' => 'car',
+					'bike' => 'bike',
+					'foot' => 'foot',
+				];
+				return [
+					'profile' => $ghpProfiles[$parsedQuery['profile']] ?? 'car',
+					'points' => array_map(function ($point) {
+						preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $point, $matches);
+						if (count($matches) > 2) {
+							return [(float)$matches[1], (float)$matches[2]];
+						}
+						return null;
+					}, $parsedQuery['point'])
+				];
+			}
+		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/directions\?engine=([a-z_]+)&route=(-?\d+\.\d+)%2C(-?\d+\.\d+)%3B(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 5) {
@@ -111,6 +138,12 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 				'fossgis_osrm_car' => 'car',
 				'fossgis_osrm_bike' => 'bike',
 				'fossgis_osrm_foot' => 'foot',
+				'graphhopper_car' => 'car',
+				'graphhopper_bicycle' => 'bike',
+				'graphhopper_foot' => 'foot',
+				'fossgis_valhalla_car' => 'car',
+				'fossgis_valhalla_bicycle' => 'bike',
+				'fossgis_valhalla_foot' => 'foot',
 			];
 			return [
 				'profile' => $osmProfiles[$matches[1]] ?? 'car',
