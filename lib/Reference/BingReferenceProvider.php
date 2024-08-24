@@ -22,11 +22,11 @@
 
 namespace OCA\Osm\Reference;
 
-use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\AppInfo\Application;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
+use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 

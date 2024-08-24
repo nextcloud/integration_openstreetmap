@@ -11,15 +11,10 @@
 
 namespace OCA\Osm\Service;
 
-use Exception;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
-use OCA\Osm\AppInfo\Application;
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 class RoutingService {
 	private IClient $client;

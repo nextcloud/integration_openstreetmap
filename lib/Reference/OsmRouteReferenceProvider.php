@@ -22,13 +22,13 @@
 
 namespace OCA\Osm\Reference;
 
-use OCA\Osm\Service\RoutingService;
-use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\AppInfo\Application;
+use OCA\Osm\Service\RoutingService;
 use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
+use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 
@@ -91,7 +91,8 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 			[
 				'queryPoints' => $linkInfo['points'],
 				'profile' => $linkInfo['profile'],
-				...$routing,
+				'routes' => $routing['routes'],
+				'waypoints' => $routing['waypoints'],
 			],
 		);
 		return $reference;
@@ -101,8 +102,7 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getLinkInfo(string $url): ?array
-	{
+	private function getLinkInfo(string $url): ?array {
 		// supported link examples:
 		// https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=43.69788%2C3.86245%3B43.66652%2C3.86134
 		// https://graphhopper.com/maps/?point=43.787469%2C3.736534

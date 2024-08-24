@@ -22,7 +22,6 @@
 
 namespace OCA\Osm\Reference;
 
-use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\Service\UtilsService;
@@ -30,6 +29,7 @@ use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
+use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 use OCP\IL10N;
