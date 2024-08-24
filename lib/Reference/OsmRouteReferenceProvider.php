@@ -101,7 +101,8 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getLinkInfo(string $url): ?array {
+	private function getLinkInfo(string $url): ?array
+	{
 		// supported link examples:
 		// https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=43.69788%2C3.86245%3B43.66652%2C3.86134
 		// https://graphhopper.com/maps/?point=43.787469%2C3.736534
@@ -164,24 +165,30 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 			}
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/directions\?engine=([a-z_]+)&route=(-?\d+\.\d+)%2C(-?\d+\.\d+)%3B(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url, $matches);
-		if (count($matches) > 5) {
-			$osmProfiles = [
-				'fossgis_osrm_car' => 'car',
-				'fossgis_osrm_bike' => 'bike',
-				'fossgis_osrm_foot' => 'foot',
-				'graphhopper_car' => 'car',
-				'graphhopper_bicycle' => 'bike',
-				'graphhopper_foot' => 'foot',
-				'fossgis_valhalla_car' => 'car',
-				'fossgis_valhalla_bicycle' => 'bike',
-				'fossgis_valhalla_foot' => 'foot',
-			];
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/directions\?.*route=(-?\d+\.\d+)%2C(-?\d+\.\d+)%3B(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url, $matches) === 1) {
+			$query = parse_url($url, PHP_URL_QUERY);
+			parse_str($query, $parsedQuery);
+			if (isset($parsedQuery['engine']) && is_string($parsedQuery['engine'])) {
+				$osmProfiles = [
+					'fossgis_osrm_car' => 'car',
+					'fossgis_osrm_bike' => 'bike',
+					'fossgis_osrm_foot' => 'foot',
+					'graphhopper_car' => 'car',
+					'graphhopper_bicycle' => 'bike',
+					'graphhopper_foot' => 'foot',
+					'fossgis_valhalla_car' => 'car',
+					'fossgis_valhalla_bicycle' => 'bike',
+					'fossgis_valhalla_foot' => 'foot',
+				];
+				$profile = $osmProfiles[$parsedQuery['engine']] ?? 'car';
+			} else {
+				$profile = 'car';
+			}
 			return [
-				'profile' => $osmProfiles[$matches[1]] ?? 'car',
+				'profile' => $profile,
 				'points' => [
-					[(float)$matches[2], (float)$matches[3]],
-					[(float)$matches[4], (float)$matches[5]],
+					[(float)$matches[1], (float)$matches[2]],
+					[(float)$matches[3], (float)$matches[4]],
 				],
 			];
 		}
