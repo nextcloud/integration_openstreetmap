@@ -12,6 +12,10 @@ export default {
 			type: [Object, Array],
 			required: true,
 		},
+		color: {
+			type: String,
+			default: undefined,
+		},
 		map: {
 			type: Object,
 			required: true,
@@ -44,7 +48,7 @@ export default {
 
 	methods: {
 		init() {
-			this.mapObject = new Marker({})
+			this.mapObject = new Marker({ color: this.color })
 				.setLngLat(this.lngLat)
 				.addTo(this.map)
 			this.ready = true

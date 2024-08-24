@@ -12,6 +12,11 @@
 			<VMarker v-if="marker"
 				:map="map"
 				:lng-lat="marker" />
+			<VMarker v-for="(m, i) in markers"
+				:key="'marker-' + i"
+				:map="map"
+				:color="m.color"
+				:lng-lat="m.location" />
 			<!-- some stuff go away when changing the style -->
 			<div v-if="mapLoaded">
 				<PolygonFill v-if="area"
@@ -19,6 +24,10 @@
 					:geojson="area"
 					:map="map"
 					:fill-opacity="0.25" />
+				<LinestringCollection v-if="line"
+					layer-id="line"
+					:geojson="line"
+					:map="map" />
 			</div>
 		</div>
 	</div>
@@ -42,6 +51,7 @@ import { maplibreForwardGeocode } from '../../mapUtils.js'
 
 import VMarker from './VMarker.vue'
 import PolygonFill from './PolygonFill.vue'
+import LinestringCollection from './LinestringCollection.vue'
 
 const DEFAULT_MAP_MAX_ZOOM = 22
 
@@ -49,6 +59,7 @@ export default {
 	name: 'MaplibreMap',
 
 	components: {
+		LinestringCollection,
 		PolygonFill,
 		VMarker,
 	},
@@ -61,6 +72,10 @@ export default {
 		marker: {
 			type: Object,
 			default: null,
+		},
+		markers: {
+			type: Array,
+			default: () => [],
 		},
 		bbox: {
 			type: Object,
@@ -87,6 +102,10 @@ export default {
 			default: 'streets',
 		},
 		area: {
+			type: Object,
+			default: null,
+		},
+		line: {
 			type: Object,
 			default: null,
 		},

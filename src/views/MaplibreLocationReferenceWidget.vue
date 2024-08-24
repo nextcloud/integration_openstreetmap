@@ -50,7 +50,7 @@
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
 export default {
-	name: 'MaplibreReferenceWidget',
+	name: 'MaplibreLocationReferenceWidget',
 
 	components: {
 		MaplibreMap,

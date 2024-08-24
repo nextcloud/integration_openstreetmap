@@ -26,6 +26,22 @@ import { getRequestToken } from '@nextcloud/auth'
 __webpack_nonce__ = btoa(getRequestToken()) // eslint-disable-line
 __webpack_public_path__ = linkTo('integration_openstreetmap', 'js/') // eslint-disable-line
 
+registerWidget('integration_openstreetmap_route', async (el, { richObjectType, richObject, accessible }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
+	Vue.mixin({ methods: { t, n } })
+	const { default: MaplibreRouteReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreRouteReferenceWidget.vue')
+	const ReferenceWidgetComponent = MaplibreRouteReferenceWidget
+
+	const Widget = Vue.extend(ReferenceWidgetComponent)
+	new Widget({
+		propsData: {
+			richObjectType,
+			richObject,
+			accessible,
+		},
+	}).$mount(el)
+})
+
 registerWidget('integration_openstreetmap_location', async (el, { richObjectType, richObject, accessible }) => {
 	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
 	Vue.mixin({ methods: { t, n } })
@@ -36,8 +52,8 @@ registerWidget('integration_openstreetmap_location', async (el, { richObjectType
 		const { default: OsmFrameReferenceWidget } = await import(/* webpackChunkName: "reference-frame-lazy" */'./views/OsmFrameReferenceWidget.vue')
 		ReferenceWidgetComponent = OsmFrameReferenceWidget
 	} else {
-		const { default: MaplibreReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreReferenceWidget.vue')
-		ReferenceWidgetComponent = MaplibreReferenceWidget
+		const { default: MaplibreLocationReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreLocationReferenceWidget.vue')
+		ReferenceWidgetComponent = MaplibreLocationReferenceWidget
 	}
 
 	const Widget = Vue.extend(ReferenceWidgetComponent)

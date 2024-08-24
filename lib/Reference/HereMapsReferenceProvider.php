@@ -22,7 +22,7 @@
 
 namespace OCA\Osm\Reference;
 
-use OC\Collaboration\Reference\LinkReferenceProvider;
+use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCP\Collaboration\Reference\IReference;

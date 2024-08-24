@@ -22,22 +22,29 @@
 
 namespace OCA\Osm\Reference;
 
+use OCA\Osm\Service\RoutingService;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCA\Osm\AppInfo\Application;
+use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 
-class DuckduckgoReferenceProvider implements IReferenceProvider {
+use OCP\IURLGenerator;
 
-	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
+class OsmRouteReferenceProvider implements IReferenceProvider {
+
+	private const RICH_OBJECT_TYPE = Application::APP_ID . '_route';
 
 	public function __construct(
+		private RoutingService $routingService,
 		private IConfig $config,
+		private IURLGenerator $urlGenerator,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
+		private UtilsService $utilsService,
 		private ?string $userId
 	) {
 	}
@@ -52,46 +59,64 @@ class DuckduckgoReferenceProvider implements IReferenceProvider {
 			return false;
 		}
 
-		return $this->getCoordinates($referenceText) !== null;
+		return $this->getRoutingInfo($referenceText) !== null;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function resolveReference(string $referenceText): ?IReference {
-		if ($this->matchReference($referenceText)) {
-			$coords = $this->getCoordinates($referenceText);
-			if ($coords !== null) {
-				$reference = new Reference($referenceText);
-				$reference->setRichObject(
-					self::RICH_OBJECT_TYPE,
-					$coords,
-				);
-				return $reference;
-			}
-			// fallback to opengraph
+		if (!$this->matchReference($referenceText)) {
+			return null;
+		}
+		$routingInfo = $this->getRoutingInfo($referenceText);
+		if ($routingInfo === null) {
+			return $this->linkReferenceProvider->resolveReference($referenceText);
+		}
+		$route = $this->routingService->computeOsrmRoute($routingInfo['points'], $routingInfo['profile']);
+		if ($route === null) {
 			return $this->linkReferenceProvider->resolveReference($referenceText);
 		}
 
-		return null;
+		$reference = new Reference($referenceText);
+		$reference->setTitle('Route');
+		$reference->setDescription($routingInfo['profile']);
+		$logoUrl = $this->urlGenerator->getAbsoluteURL(
+			$this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg')
+		);
+		$reference->setImageUrl($logoUrl);
+
+		$reference->setRichObject(
+			self::RICH_OBJECT_TYPE,
+			[
+				'queryPoints' => $routingInfo['points'],
+				'profile' => $routingInfo['profile'],
+				...$route,
+			],
+		);
+		return $reference;
 	}
 
 	/**
 	 * @param string $url
 	 * @return array|null
 	 */
-	private function getCoordinates(string $url): ?array {
-		// link examples:
-		// https://duckduckgo.com/?t=ffab&q=Privas&ia=web&iaxm=maps&strict_bbox=0&bbox=44.745808303066084%2C4.539061284793959%2C44.69692460306608%2C4.6507849152060174&iax=images
+	private function getRoutingInfo(string $url): ?array {
+		// supported link examples:
+		// https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=43.69788%2C3.86245%3B43.66652%2C3.86134
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?duckduckgo\.com\/.*bbox=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)/i', $url, $matches);
-		if (count($matches) > 4) {
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/directions\?engine=([a-z_]+)&route=(-?\d+\.\d+)%2C(-?\d+\.\d+)%3B(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url, $matches);
+		if (count($matches) > 5) {
+			$osmProfiles = [
+				'fossgis_osrm_car' => 'car',
+				'fossgis_osrm_bike' => 'bike',
+				'fossgis_osrm_foot' => 'foot',
+			];
 			return [
-				'boundingbox' => [
-					(float) $matches[1],
-					(float) $matches[3],
-					(float) $matches[2],
-					(float) $matches[4],
+				'profile' => $osmProfiles[$matches[1]] ?? 'car',
+				'points' => [
+					[(float)$matches[2], (float)$matches[3]],
+					[(float)$matches[4], (float)$matches[5]],
 				],
 			];
 		}
