@@ -119,24 +119,13 @@ export default {
 		},
 		formattedDuration() {
 			if (this.selectedRoute.duration) {
-				const mDuration = moment.duration(this.selectedRoute.duration, 'seconds')
-				if (this.selectedRoute.duration < 60 * 60) {
-					return mDuration.humanize()
-				} else if (this.selectedRoute.duration < 60 * 60 * 24) {
-					return mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
-				} else {
-					return mDuration.days() + ' d ' + mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
-				}
+				return this.getFormattedDuration(this.selectedRoute)
 			}
 			return null
 		},
 		formattedDistance() {
 			if (this.selectedRoute.distance) {
-				if (this.selectedRoute.distance < 1000) {
-					return this.selectedRoute.distance + ' m'
-				} else {
-					return (this.selectedRoute.distance / 1000).toFixed(2) + ' km'
-				}
+				return this.getFormattedDistance(this.selectedRoute)
 			}
 			return null
 		},
@@ -192,10 +181,28 @@ export default {
 
 	mounted() {
 		this.updateRouteOpacities()
+		this.setRoutesPopupContent()
 		console.debug('[osm] routing mounted', this.richObject)
 	},
 
 	methods: {
+		getFormattedDuration(route) {
+			const mDuration = moment.duration(route.duration, 'seconds')
+			if (route.duration < 60 * 60) {
+				return mDuration.humanize()
+			} else if (route.duration < 60 * 60 * 24) {
+				return mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
+			} else {
+				return mDuration.days() + ' d ' + mDuration.hours() + ' h ' + mDuration.minutes() + ' min'
+			}
+		},
+		getFormattedDistance(route) {
+			if (route.distance < 1000) {
+				return route.distance + ' m'
+			} else {
+				return (route.distance / 1000).toFixed(2) + ' km'
+			}
+		},
 		onRouteClicked(index) {
 			this.selectedRouteIndex = index
 			this.updateRouteOpacities()
@@ -205,6 +212,18 @@ export default {
 				this.$set(g, 'opacity', 0.3)
 			})
 			this.$set(this.selectedRoute.geojson, 'opacity', 1)
+		},
+		setRoutesPopupContent() {
+			this.richObject.routes.forEach(r => {
+				let popupContent = ''
+				if (r.distance) {
+					popupContent += '\n' + t('integration_openstreetmap', 'Distance: {distance}', { distance: this.getFormattedDistance(r) })
+				}
+				if (r.duration) {
+					popupContent += '\n' + t('integration_openstreetmap', 'Duration: {duration}', { duration: this.getFormattedDuration(r) })
+				}
+				this.$set(r.geojson, 'popupContent', popupContent.trim())
+			})
 		},
 	},
 }

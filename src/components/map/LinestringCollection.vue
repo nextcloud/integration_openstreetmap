@@ -1,4 +1,6 @@
 <script>
+import { Popup } from 'maplibre-gl'
+
 export default {
 	name: 'LinestringCollection',
 
@@ -39,6 +41,7 @@ export default {
 	data() {
 		return {
 			ready: false,
+			popup: null,
 		}
 	},
 
@@ -112,28 +115,52 @@ export default {
 				this.map.moveLayer(this.layerId)
 			}
 		},
-		onMouseEnter() {
+		onMouseEnter(e) {
 			this.map.getCanvas().style.cursor = 'pointer'
 			if (this.map.getLayer(this.layerId)) {
 				this.map.setPaintProperty(this.layerId, 'line-width', this.lineWidth * 1.7)
-				this.map.setPaintProperty(this.layerId, 'line-color', 'red')
+				// this.map.setPaintProperty(this.layerId, 'line-color', 'red')
 			}
 			if (this.map.getLayer(this.borderLayerId)) {
 				this.map.setPaintProperty(this.borderLayerId, 'line-width', (this.lineWidth * 0.3) * 1.7)
 				this.map.setPaintProperty(this.borderLayerId, 'line-gap-width', this.lineWidth * 1.7)
 			}
+			if (this.geojson.popupContent) {
+				this.showPopup(e.lngLat, false)
+			}
 		},
 		onMouseLeave() {
 			this.map.getCanvas().style.cursor = ''
 			this.setNormalLineWidth()
+			if (this.popup) {
+				this.popup.remove()
+				this.popup = null
+			}
 		},
 		onClick() {
 			this.$emit('click')
 		},
+		showPopup(lngLat) {
+			if (this.popup) {
+				this.popup.remove()
+			}
+			const html = '<div style="border-color: ' + this.color + ';">'
+				+ this.geojson.popupContent.replace('\n', '<br>')
+				+ '</div>'
+			const popup = new Popup({
+				closeButton: false,
+				closeOnClick: true,
+				closeOnMove: true,
+			})
+				.setLngLat(lngLat)
+				.setHTML(html)
+				.addTo(this.map)
+			this.popup = popup
+		},
 		setNormalLineWidth() {
 			if (this.map.getLayer(this.layerId)) {
 				this.map.setPaintProperty(this.layerId, 'line-width', this.lineWidth)
-				this.map.setPaintProperty(this.layerId, 'line-color', this.color)
+				// this.map.setPaintProperty(this.layerId, 'line-color', this.color)
 			}
 			if (this.map.getLayer(this.borderLayerId)) {
 				this.map.setPaintProperty(this.borderLayerId, 'line-width', this.lineWidth * 0.3)
