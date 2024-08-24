@@ -62,7 +62,8 @@
 				:map-style="style"
 				:use-terrain="useTerrain"
 				:markers="richObject.waypoints"
-				:line="selectedRoute.geojson" />
+				:lines="routeGeojsons"
+				@line-click="onRouteClicked" />
 		</div>
 	</div>
 </template>
@@ -105,12 +106,16 @@ export default {
 
 	data() {
 		return {
+			selectedRouteIndex: 0,
 		}
 	},
 
 	computed: {
+		routeGeojsons() {
+			return this.richObject.routes.map(r => r.geojson)
+		},
 		selectedRoute() {
-			return this.richObject.routes[0]
+			return this.richObject.routes[this.selectedRouteIndex]
 		},
 		formattedDuration() {
 			if (this.selectedRoute.duration) {
@@ -175,7 +180,22 @@ export default {
 		},
 	},
 
+	mounted() {
+		this.updateRouteOpacities()
+		console.debug('[osm] routing mounted', this.richObject)
+	},
+
 	methods: {
+		onRouteClicked(index) {
+			this.selectedRouteIndex = index
+			this.updateRouteOpacities()
+		},
+		updateRouteOpacities() {
+			this.routeGeojsons.forEach(g => {
+				this.$set(g, 'opacity', 0.3)
+			})
+			this.$set(this.selectedRoute.geojson, 'opacity', 1)
+		},
 	},
 }
 </script>

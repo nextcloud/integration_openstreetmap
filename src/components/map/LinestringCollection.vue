@@ -78,6 +78,7 @@ export default {
 			}
 		},
 		opacity() {
+			console.debug('[osm] line opacity has changed', this.layerId)
 			if (this.map.getLayer(this.layerId)) {
 				this.map.setPaintProperty(this.layerId, 'line-opacity', this.opacity)
 			}
@@ -126,6 +127,9 @@ export default {
 			this.map.getCanvas().style.cursor = ''
 			this.setNormalLineWidth()
 		},
+		onClick() {
+			this.$emit('click')
+		},
 		setNormalLineWidth() {
 			if (this.map.getLayer(this.layerId)) {
 				this.map.setPaintProperty(this.layerId, 'line-width', this.lineWidth)
@@ -137,10 +141,12 @@ export default {
 			}
 		},
 		listenToEvents() {
+			this.map.on('click', this.invisibleBorderLayerId, this.onClick)
 			this.map.on('mouseenter', this.invisibleBorderLayerId, this.onMouseEnter)
 			this.map.on('mouseleave', this.invisibleBorderLayerId, this.onMouseLeave)
 		},
 		releaseEvents() {
+			this.map.off('click', this.invisibleBorderLayerId, this.onClick)
 			this.map.off('mouseenter', this.invisibleBorderLayerId, this.onMouseEnter)
 			this.map.off('mouseleave', this.invisibleBorderLayerId, this.onMouseLeave)
 		},

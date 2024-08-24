@@ -47,7 +47,7 @@ class RoutingService {
 			. $pointsPath
 			. '?overview=false'
 			. '&geometries=geojson'
-			// . '&alternatives=true'
+			. '&alternatives=true'
 			. '&steps=true';
 
 		$options = [];
@@ -73,6 +73,8 @@ class RoutingService {
 				$steps = array_filter($leg['steps'], static function ($step) {
 					return ($step['geometry']['type'] ?? '') === 'LineString';
 				});
+				// one feature per step
+				/*
 				array_push(
 					$geojson['features'],
 					...array_map(static function ($step) {
@@ -83,6 +85,22 @@ class RoutingService {
 						];
 					}, $steps)
 				);
+				*/
+				// one single feature, all route steps together
+				$geojson['features'][] = [
+					'type' => 'Feature',
+					'geometry' => [
+						'type' => 'LineString',
+						'coordinates' => array_reduce(
+							$steps,
+							static function ($carry, $step) {
+								return array_merge($carry, $step['geometry']['coordinates']);
+							},
+							[]
+						),
+					],
+					'properties' => ['color' => 'red'],
+				];
 			}
 			return [
 				'duration' => $route['duration'],

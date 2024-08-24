@@ -24,10 +24,13 @@
 					:geojson="area"
 					:map="map"
 					:fill-opacity="0.25" />
-				<LinestringCollection v-if="line"
-					layer-id="line"
+				<LinestringCollection v-for="(line, i) in lines"
+					:key="'line-' + i"
+					:layer-id="'line-' + i"
 					:geojson="line"
-					:map="map" />
+					:opacity="line.opacity"
+					:map="map"
+					@click="$emit('line-click', i)" />
 			</div>
 		</div>
 	</div>
@@ -105,9 +108,9 @@ export default {
 			type: Object,
 			default: null,
 		},
-		line: {
-			type: Object,
-			default: null,
+		lines: {
+			type: Array,
+			default: () => [],
 		},
 		unit: {
 			type: String,
