@@ -86,7 +86,7 @@ class RoutingService {
 					}, $steps)
 				);
 				*/
-				// one single feature, all route steps together
+				// one single feature per leg, all steps together
 				$geojson['features'][] = [
 					'type' => 'Feature',
 					'geometry' => [

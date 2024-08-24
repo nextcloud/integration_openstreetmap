@@ -108,6 +108,30 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 		// &point=43.775434%2C3.867687
 		// &point=43.666524%2C3.861343_Montferrier-sur-Lez%2C+34980%2C+Occitanie%2C+France
 		// &profile=foot&layer=Omniscale
+		// https://routing.openstreetmap.de/?z=12&center=43.672590%2C3.864441&loc=43.720249%2C3.869934&loc=43.679046%2C3.939972&loc=43.611242%2C3.876734&hl=en&alt=0&srv=2
+
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?routing\.openstreetmap\.de\/\?.*loc=(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url) === 1) {
+			$fixedUrl = str_replace('loc=', 'loc[]=', $url);
+			$query = parse_url($fixedUrl, PHP_URL_QUERY);
+			parse_str($query, $parsedQuery);
+			if (isset($parsedQuery['loc']) && is_array($parsedQuery['loc']) && count($parsedQuery['loc']) >= 2) {
+				$osrmProfiles = [
+					'0' => 'car',
+					'1' => 'bike',
+					'2' => 'foot',
+				];
+				return [
+					'profile' => $osrmProfiles[$parsedQuery['srv'] ?? '0'] ?? 'car',
+					'points' => array_map(function ($point) {
+						preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $point, $matches);
+						if (count($matches) > 2) {
+							return [(float)$matches[1], (float)$matches[2]];
+						}
+						return null;
+					}, $parsedQuery['loc'])
+				];
+			}
+		}
 
 		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?graphhopper\.com\/maps\/\?.*point=(-?\d+\.\d+)%2C(-?\d+\.\d+)/i', $url) === 1) {
 			$fixedUrl = str_replace('point=', 'point[]=', $url);

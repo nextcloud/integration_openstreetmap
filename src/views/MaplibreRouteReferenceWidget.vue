@@ -151,8 +151,18 @@ export default {
 			if (this.mapCenter) {
 				return undefined
 			}
-			const lats = this.richObject.queryPoints.map(p => p[0])
-			const lons = this.richObject.queryPoints.map(p => p[1])
+			const lats = this.selectedRoute.geojson.features.reduce((acc, value) => {
+				return [
+					...acc,
+					...value.geometry.coordinates.map(p => p[1]),
+				]
+			}, [])
+			const lons = this.selectedRoute.geojson.features.reduce((acc, value) => {
+				return [
+					...acc,
+					...value.geometry.coordinates.map(p => p[0]),
+				]
+			}, [])
 			return {
 				north: lats.reduce((acc, val) => Math.max(acc, val)),
 				south: lats.reduce((acc, val) => Math.min(acc, val)),
