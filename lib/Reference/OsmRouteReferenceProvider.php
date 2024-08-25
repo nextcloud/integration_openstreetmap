@@ -139,6 +139,23 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 		// https://routing.openstreetmap.de/?z=12&center=43.672590%2C3.864441&loc=43.720249%2C3.869934&loc=43.679046%2C3.939972&loc=43.611242%2C3.876734&hl=en&alt=0&srv=2
 		// https://map.project-osrm.org/?z=9&center=50.572772%2C8.094177&loc=50.979182%2C7.910156&loc=50.162824%2C8.338623&hl=en&alt=0&srv=1
 		// https://www.google.*/maps/dir/43.6577236,3.8765911/43.6637695,3.8992984/@43.6600832,3.8897232,14z/data=blabla?entry=ttu&g_ep=blabla
+		// https://www.waze.com/*/live-map/directions?...=&to=ll.43.65818541%2C3.88821602&from=ll.43.64247306%2C3.85920525
+
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?waze\.com\/[a-z-_]+\/live-map\/directions\?/i', $url) === 1) {
+			$query = parse_url($url, PHP_URL_QUERY);
+			parse_str($query, $parsedQuery);
+			if (isset($parsedQuery['from'], $parsedQuery['to'])) {
+				preg_match('/^ll\.(-?\d+\.\d+),(-?\d+\.\d+)/i', $parsedQuery['from'], $fromMatches);
+				preg_match('/^ll\.(-?\d+\.\d+),(-?\d+\.\d+)/i', $parsedQuery['to'], $toMatches);
+				return [
+					'profile' => 'car',
+					'points' => [
+						[(float)$fromMatches[1], (float)$fromMatches[2]],
+						[(float)$toMatches[1], (float)$toMatches[2]],
+					],
+				];
+			}
+		}
 
 		$osrmBaseUrls = [
 			'https://routing.openstreetmap.de',

@@ -1,7 +1,7 @@
 <template>
 	<div class="direction-picker-content">
 		<h2>
-			{{ t('integration_openstreetmap', 'Map directions (by OpenStreetMap)') }}
+			{{ t('integration_openstreetmap', 'Map directions (by OSRM)') }}
 		</h2>
 		<div class="header">
 			<NcSelect
