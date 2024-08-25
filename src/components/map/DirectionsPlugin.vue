@@ -91,6 +91,16 @@ export default {
 		initLayers() {
 			this.layers = layersFactory()
 
+			// change route line color
+			const routeLineLayer = this.layers.find(l => l.id === 'maplibre-gl-directions-routeline')
+			if (routeLineLayer) {
+				routeLineLayer.paint['line-color'] = '#0693e3'
+			}
+			const routeLineCasingLayer = this.layers.find(l => l.id === 'maplibre-gl-directions-routeline-casing')
+			if (routeLineCasingLayer) {
+				routeLineCasingLayer.paint['line-color'] = '#0693e3'
+			}
+
 			const wpLayerIndex = this.layers.findIndex(l => l.id === 'maplibre-gl-directions-waypoint')
 			this.layers.splice(wpLayerIndex, 1)
 			const wpCasingLayerIndex = this.layers.findIndex(l => l.id === 'maplibre-gl-directions-waypoint-casing')
