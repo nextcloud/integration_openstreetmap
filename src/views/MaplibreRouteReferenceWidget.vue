@@ -34,7 +34,7 @@
 				<span v-for="(w, i) in richObject.waypoints"
 					:key="'step-' + i"
 					class="step">
-					<MapMarkerIcon :fill-color="w.color ?? 'lightblue'" />
+					<MapMarkerIcon :fill-color="w.color ?? '#3FB1CE'" />
 					<span>{{ w.name || w.location.join(', ') }}</span>
 				</span>
 			</div>

@@ -107,31 +107,31 @@ export function getVectorStyles(apiKey) {
 		streets: {
 			title: 'Streets',
 			uri: proxyMapRequests
-				? generateUrl('/apps/gpxpod/maptiler/maps/streets-v2/style.json?key=' + apiKey)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/maps/streets-v2/style.json?key=' + apiKey)
 				: 'https://api.maptiler.com/maps/streets/style.json?key=' + apiKey,
 		},
 		satellite: {
 			title: 'Satellite',
 			uri: proxyMapRequests
-				? generateUrl('/apps/gpxpod/maptiler/maps/hybrid/style.json?key=' + apiKey)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/maps/hybrid/style.json?key=' + apiKey)
 				: 'https://api.maptiler.com/maps/hybrid/style.json?key=' + apiKey,
 		},
 		outdoor: {
 			title: 'Outdoor',
 			uri: proxyMapRequests
-				? generateUrl('/apps/gpxpod/maptiler/maps/outdoor-v2/style.json?key=' + apiKey)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/maps/outdoor-v2/style.json?key=' + apiKey)
 				: 'https://api.maptiler.com/maps/outdoor/style.json?key=' + apiKey,
 		},
 		osm: {
 			title: 'OpenStreetMap',
 			uri: proxyMapRequests
-				? generateUrl('/apps/gpxpod/maptiler/maps/openstreetmap/style.json?key=' + apiKey)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/maps/openstreetmap/style.json?key=' + apiKey)
 				: 'https://api.maptiler.com/maps/openstreetmap/style.json?key=' + apiKey,
 		},
 		dark: {
 			title: 'Dark',
 			uri: proxyMapRequests
-				? generateUrl('/apps/gpxpod/maptiler/maps/streets-dark/style.json?key=' + apiKey)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/maps/streets-dark/style.json?key=' + apiKey)
 				: 'https://api.maptiler.com/maps/streets-dark/style.json?key=' + apiKey,
 		},
 	}

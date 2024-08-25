@@ -2,6 +2,12 @@ import { Map } from 'maplibre-gl'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
+export const mapVectorImages = {
+	marker: 'mapIcons/marker.svg',
+	marker_red: 'mapIcons/marker-red.svg',
+	marker_green: 'mapIcons/marker-green.svg',
+}
+
 export function getBBFromCenterZoom(lat, lon, zoom) {
 	const dummyElement = document.createElement('div')
 	const map = new Map({

@@ -27,6 +27,11 @@ class MaptilerService {
 		$this->client = $clientService->newClient();
 	}
 
+	private function getReplacementUrl(): string {
+		$replacementUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.maptiler.getMapTilerStyle', ['version' => 'aaa']);
+		return str_replace('/maptiler/maps/aaa/style.json', '/maptiler', $replacementUrl);
+	}
+
 	/**
 	 * @param string $version
 	 * @param string|null $key
@@ -44,7 +49,7 @@ class MaptilerService {
 		} else {
 			$content = $body;
 		}
-		$replacementUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.page.index') . 'maptiler';
+		$replacementUrl = $this->getReplacementUrl();
 		$style = json_decode(preg_replace('/https:\/\/api\.maptiler\.com/', $replacementUrl, $content), true);
 		foreach ($style['layers'] as $i => $layer) {
 			if (is_array($layer['layout']) && empty($layer['layout'])) {
@@ -97,7 +102,7 @@ class MaptilerService {
 		} else {
 			$content = $body;
 		}
-		$replacementUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.page.index') . 'maptiler';
+		$replacementUrl = $this->getReplacementUrl();
 		return json_decode(preg_replace('/https:\/\/api\.maptiler\.com/', $replacementUrl, $content), true);
 	}
 

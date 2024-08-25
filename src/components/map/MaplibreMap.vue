@@ -46,13 +46,13 @@ import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
 
 import { loadState } from '@nextcloud/initial-state'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, imagePath } from '@nextcloud/router'
 import {
 	getRasterTileServers,
 	getVectorStyles,
 } from '../../tileServers.js'
 import { MousePositionControl, TileControl } from '../../mapControls.js'
-import { maplibreForwardGeocode } from '../../mapUtils.js'
+import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
 
 import VMarker from './VMarker.vue'
 import PolygonFill from './PolygonFill.vue'
@@ -281,7 +281,8 @@ export default {
 			this.handleMapEvents()
 
 			this.map.on('load', () => {
-				this.mapLoaded = true
+				this.loadImages()
+
 				this.addTerrainSource()
 				if (this.useTerrain) {
 					this.terrainControl._toggleTerrain()
@@ -292,12 +293,46 @@ export default {
 				}, 300)
 			})
 		},
+		loadImages() {
+			// this is needed when switching between vector and raster tile servers, the image is sometimes not removed
+			for (const imgKey in mapVectorImages) {
+				if (this.map.hasImage(imgKey)) {
+					this.map.removeImage(imgKey)
+				}
+			}
+			const loadImagePromises = Object.keys(mapVectorImages).map((k) => {
+				return this.loadVectorImage(k)
+			})
+			Promise.allSettled(loadImagePromises)
+				.then((promises) => {
+					// tracks are waiting for that to load
+					this.mapLoaded = true
+					promises.forEach(p => {
+						if (p.status === 'rejected') {
+							console.error(p.reason?.message)
+						}
+					})
+				})
+		},
+		loadVectorImage(imgKey) {
+			return new Promise((resolve, reject) => {
+				const svgIcon = new Image(41, 41)
+				svgIcon.onload = () => {
+					this.map.addImage(imgKey, svgIcon)
+					resolve()
+				}
+				svgIcon.onerror = () => {
+					reject(new Error('Failed to load ' + imgKey))
+				}
+				svgIcon.src = imagePath('integration_openstreetmap', mapVectorImages[imgKey])
+			})
+		},
 		reRenderLayersAndTerrain() {
 			// re render the layers
 			this.mapLoaded = false
 			setTimeout(() => {
 				this.$nextTick(() => {
-					this.mapLoaded = true
+					this.loadImages()
 				})
 			}, 500)
 
@@ -315,7 +350,8 @@ export default {
 			if (!this.map.getSource('terrain')) {
 				this.map.addSource('terrain', {
 					type: 'raster-dem',
-					url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
+					// url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
+					url: generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey),
 				})
 			}
 		},
