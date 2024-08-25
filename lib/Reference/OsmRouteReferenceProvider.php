@@ -135,12 +135,10 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 	private function getLinkInfo(string $url): ?array {
 		// supported link examples:
 		// https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=43.69788%2C3.86245%3B43.66652%2C3.86134
-		// https://graphhopper.com/maps/?point=43.787469%2C3.736534
-		// &point=43.775434%2C3.867687
-		// &point=43.666524%2C3.861343_Montferrier-sur-Lez%2C+34980%2C+Occitanie%2C+France
-		// &profile=foot&layer=Omniscale
+		// https://graphhopper.com/maps/?point=43.787469%2C3.736534&point=43.775434%2C3.867687&point=43.666524%2C3.861343_blabla&profile=foot&layer=Omniscale
 		// https://routing.openstreetmap.de/?z=12&center=43.672590%2C3.864441&loc=43.720249%2C3.869934&loc=43.679046%2C3.939972&loc=43.611242%2C3.876734&hl=en&alt=0&srv=2
 		// https://map.project-osrm.org/?z=9&center=50.572772%2C8.094177&loc=50.979182%2C7.910156&loc=50.162824%2C8.338623&hl=en&alt=0&srv=1
+		// https://www.google.*/maps/dir/43.6577236,3.8765911/43.6637695,3.8992984/@43.6600832,3.8897232,14z/data=blabla?entry=ttu&g_ep=blabla
 
 		$osrmBaseUrls = [
 			'https://routing.openstreetmap.de',
@@ -213,6 +211,24 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 				$profile = $osmProfiles[$parsedQuery['engine']] ?? 'car';
 			} else {
 				$profile = 'car';
+			}
+			return [
+				'profile' => $profile,
+				'points' => [
+					[(float)$matches[1], (float)$matches[2]],
+					[(float)$matches[3], (float)$matches[4]],
+				],
+			];
+		}
+
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/dir\/(-?\d+\.\d+),(-?\d+\.\d+)\/(-?\d+\.\d+),(-?\d+\.\d+)\//i', $url, $matches) === 1) {
+			$profile = 'car';
+			if (preg_match('/data=[^?]+3e(\d)\?/i', $url, $profileMatches) === 1) {
+				if ($profileMatches[1] === '1') {
+					$profile = 'bike';
+				} elseif ($profileMatches[1] === '2') {
+					$profile = 'foot';
+				}
 			}
 			return [
 				'profile' => $profile,
