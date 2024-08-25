@@ -1,7 +1,7 @@
 <template>
 	<div class="map-wrapper">
 		<a href="https://www.maptiler.com" class="watermark" :class="{ padded: showMousePositionControl }">
-			<img src="https://api.maptiler.com/resources/logo.svg"
+			<img :src="maptilerLogoUrl"
 				alt="MapTiler logo">
 		</a>
 		<div
@@ -19,6 +19,7 @@
 				:lng-lat="m.location" />
 			<!-- some stuff go away when changing the style -->
 			<div v-if="mapLoaded">
+				<slot name="default" :map="map" />
 				<PolygonFill v-if="area"
 					layer-id="target-object"
 					:geojson="area"
@@ -45,6 +46,7 @@ import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
 
 import { loadState } from '@nextcloud/initial-state'
+import { generateUrl } from '@nextcloud/router'
 import {
 	getRasterTileServers,
 	getVectorStyles,
@@ -135,6 +137,8 @@ export default {
 			scaleControl: null,
 			terrainControl: null,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
+			// https://api.maptiler.com/resources/logo.svg
+			maptilerLogoUrl: generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg'),
 		}
 	},
 

@@ -13,40 +13,50 @@ namespace OCA\Osm\Service;
 
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
 
 class RoutingService {
 	private IClient $client;
 
 	public function __construct(
-		private LoggerInterface $logger,
-		private IL10N $l10n,
 		IClientService $clientService
 	) {
 		$this->client = $clientService->newClient();
 	}
 
-	public function computeOsrmRoute(array $points, ?string $profile = null): ?array {
+	public function getOsrmRoute(
+		string $coordinates, ?string $profile = null, ?bool $alternatives = null,
+		?string $geometries = null, ?bool $steps = null, ?string $overview = null
+	): string	{
 		// OSRM URL example:
 		// https://routing.openstreetmap.de/routed-bike/route/v1/driving/3.862452,43.6978777;3.8613428,43.6665244?overview=false&geometries=geojson&steps=true
 		// profiles can be: routed-bike, routed-foot, routed-car
 
+		$url = 'https://routing.openstreetmap.de/' . $profile . '/route/v1/driving/' . $coordinates;
+		$url .= '?overview=' . ($overview ?? 'simplified');
+		if ($geometries !== null) {
+			$url .= '&geometries=' . $geometries;
+		}
+		if ($steps !== null) {
+			$url .= '&steps=' . ($steps ? 'true' : 'false');
+		}
+		if ($alternatives !== null) {
+			$url .= '&alternatives=' . ($alternatives ? 'true' : 'false');
+		}
+
+		$options = [];
+		return (string) $this->client->get($url, $options)->getBody();
+	}
+
+	public function computeOsrmRoute(
+		array $points, ?string $profile = null, bool $alternatives = true, ?string $geometries = null, bool $steps = true
+	): ?array	{
 		$pointsPath = implode(
 			';',
 			array_map(function (array $point) {
 				return $point[1] . ',' . $point[0];
 			}, $points)
 		);
-		$url = 'https://routing.openstreetmap.de/routed-' . $profile . '/route/v1/driving/'
-			. $pointsPath
-			. '?overview=false'
-			. '&geometries=geojson'
-			. '&alternatives=true'
-			. '&steps=true';
-
-		$options = [];
-		$body = $this->client->get($url, $options)->getBody();
+		$body = $this->getOsrmRoute($pointsPath, 'routed-' . $profile, $alternatives, $geometries, $steps);
 		$bodyArray = json_decode($body, true);
 
 		if (!isset($bodyArray['routes']) || empty($bodyArray['routes'])) {

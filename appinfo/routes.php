@@ -15,6 +15,8 @@ return [
 		['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
 		['name' => 'osmAPI#nominatimSearch', 'url' => '/search', 'verb' => 'GET'],
 		['name' => 'osmAPI#getRasterTile', 'url' => '/tiles/{service}/{x}/{y}/{z}', 'verb' => 'GET'],
+		['name' => 'osmAPI#getOsrmRoutes', 'url' => '/osrm/route/{profile}/{coordinates}', 'verb' => 'GET'],
+
 		['name' => 'maptiler#getMapTilerStyle', 'url' => '/maptiler/maps/{version}/style.json', 'verb' => 'GET'],
 		['name' => 'maptiler#getMapTilerFont', 'url' => '/maptiler/fonts/{fontstack}/{range}.pbf', 'verb' => 'GET'],
 		['name' => 'maptiler#getMapTilerTiles', 'url' => '/maptiler/tiles/{version}/tiles.json', 'verb' => 'GET'],

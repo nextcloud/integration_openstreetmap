@@ -23,9 +23,11 @@ declare(strict_types=1);
  */
 namespace OCA\Osm\Listener;
 
+use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Http\EmptyContentSecurityPolicy;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
@@ -34,7 +36,10 @@ use OCP\Security\CSP\AddContentSecurityPolicyEvent;
  */
 class CSPListener implements IEventListener {
 
-	public function __construct(private IRequest $request) {
+	public function __construct(
+		private IRequest $request,
+		private IConfig $config,
+	) {
 	}
 
 	public function handle(Event $event): void {
@@ -49,13 +54,17 @@ class CSPListener implements IEventListener {
 		$policy = new EmptyContentSecurityPolicy();
 		$policy
 			->addAllowedFrameDomain('https://www.openstreetmap.org')
-			->addAllowedImageDomain('https://*.openstreetmap.org')
-			->addAllowedImageDomain('https://api.maptiler.com')
-			->addAllowedConnectDomain('https://*.openstreetmap.org')
-			->addAllowedConnectDomain('https://server.arcgisonline.com')
-			->addAllowedConnectDomain('https://stamen-tiles.a.ssl.fastly.net')
-			->addAllowedConnectDomain('https://api.maptiler.com');
+			->addAllowedImageDomain('https://*.tile.openstreetmap.org');
 
+		$proxyOsm = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
+		if (!$proxyOsm) {
+			$policy
+				->addAllowedConnectDomain('https://*.openstreetmap.org')
+				->addAllowedConnectDomain('https://server.arcgisonline.com')
+				->addAllowedConnectDomain('https://stamen-tiles.a.ssl.fastly.net')
+				->addAllowedConnectDomain('https://api.maptiler.com')
+				->addAllowedImageDomain('https://api.maptiler.com');
+		}
 		$event->addPolicy($policy);
 	}
 

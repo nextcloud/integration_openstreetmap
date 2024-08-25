@@ -82,3 +82,20 @@ registerCustomPickerElement('openstreetmap-point', async (el, { providerId, acce
 }, (el, renderResult) => {
 	renderResult.object.$destroy()
 })
+
+registerCustomPickerElement('openstreetmap-direction', async (el, { providerId, accessible }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "reference-picker-lazy" */'vue')
+	const { default: DirectionCustomPickerElement } = await import(/* webpackChunkName: "reference-direction-picker-lazy" */'./views/DirectionCustomPickerElement.vue')
+	Vue.mixin({ methods: { t, n } })
+
+	const Element = Vue.extend(DirectionCustomPickerElement)
+	const vueElement = new Element({
+		propsData: {
+			providerId,
+			accessible,
+		},
+	}).$mount(el)
+	return new NcCustomPickerRenderResult(vueElement.$el, vueElement)
+}, (el, renderResult) => {
+	renderResult.object.$destroy()
+})

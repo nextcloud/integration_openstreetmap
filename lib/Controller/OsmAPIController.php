@@ -13,11 +13,13 @@ namespace OCA\Osm\Controller;
 
 use Exception;
 use OCA\Osm\Service\OsmAPIService;
+use OCA\Osm\Service\RoutingService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\OCSController;
 
@@ -31,6 +33,7 @@ class OsmAPIController extends OCSController {
 		string $appName,
 		IRequest $request,
 		private OsmAPIService $osmAPIService,
+		private RoutingService $routingService,
 		private LoggerInterface $logger,
 		private ?string $userId
 	) {
@@ -69,10 +72,10 @@ class OsmAPIController extends OCSController {
 
 	/**
 	 * @param string $service
-	 * @param string $prefix
 	 * @param int $x
 	 * @param int $y
 	 * @param int $z
+	 * @param string|null $s
 	 * @return Response
 	 */
 	#[NoAdminRequired]
@@ -105,5 +108,32 @@ class OsmAPIController extends OCSController {
 			$this->logger->debug('Font not found', ['exception' => $e]);
 			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
+	}
+
+
+	/**
+	 * @param string $profile
+	 * @param string $coordinates
+	 * @param string|null $alternatives
+	 * @param string|null $geometries
+	 * @param string|null $steps
+	 * @return JSONResponse
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function getOsrmRoutes(
+		string $profile, string $coordinates, ?string $alternatives = null,
+		?string $geometries = null, ?string $steps = null,
+	): JSONResponse {
+		$alt = $alternatives === null
+			? null
+			: ($alternatives === 'true');
+		$stp = $steps === null
+			? null
+			: ($steps === 'true');
+		$rawRouteResponse = $this->routingService->getOsrmRoute($coordinates, $profile, $alt, $geometries, $stp);
+		$response = new JSONResponse(json_decode($rawRouteResponse, true));
+		$response->cacheFor(60 * 60 * 24, false, true);
+		return $response;
 	}
 }

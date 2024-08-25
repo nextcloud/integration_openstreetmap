@@ -24,17 +24,17 @@ namespace OCA\Osm\Reference;
 
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\RoutingService;
-use OCA\Osm\Service\UtilsService;
+use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
-use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 
+use OCP\IL10N;
 use OCP\IURLGenerator;
 
-class OsmRouteReferenceProvider implements IReferenceProvider {
+class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_route';
 
@@ -42,11 +42,41 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 		private RoutingService $routingService,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
+		private IL10N $l10n,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
-		private UtilsService $utilsService,
 		private ?string $userId
 	) {
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getId(): string {
+		return 'openstreetmap-direction';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle(): string {
+		return $this->l10n->t('Map directions (by OSRM)');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getOrder(): int {
+		return 10;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getIconUrl(): string {
+		return $this->urlGenerator->getAbsoluteURL(
+			$this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')
+		);
 	}
 
 	/**
@@ -73,7 +103,7 @@ class OsmRouteReferenceProvider implements IReferenceProvider {
 		if ($linkInfo === null) {
 			return $this->linkReferenceProvider->resolveReference($referenceText);
 		}
-		$routing = $this->routingService->computeOsrmRoute($linkInfo['points'], $linkInfo['profile']);
+		$routing = $this->routingService->computeOsrmRoute($linkInfo['points'], $linkInfo['profile'], true, 'geojson');
 		if ($routing === null) {
 			return $this->linkReferenceProvider->resolveReference($referenceText);
 		}
