@@ -26,7 +26,7 @@ class RoutingService {
 	public function getOsrmRoute(
 		string $coordinates, ?string $profile = null, ?bool $alternatives = null,
 		?string $geometries = null, ?bool $steps = null, ?string $overview = null
-	): string	{
+	): string {
 		// OSRM URL example:
 		// https://routing.openstreetmap.de/routed-bike/route/v1/driving/3.862452,43.6978777;3.8613428,43.6665244?overview=false&geometries=geojson&steps=true
 		// profiles can be: routed-bike, routed-foot, routed-car
@@ -49,7 +49,7 @@ class RoutingService {
 
 	public function computeOsrmRoute(
 		array $points, ?string $profile = null, bool $alternatives = true, ?string $geometries = null, bool $steps = true
-	): ?array	{
+	): ?array {
 		$pointsPath = implode(
 			';',
 			array_map(function (array $point) {

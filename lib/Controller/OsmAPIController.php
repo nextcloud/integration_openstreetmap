@@ -132,8 +132,13 @@ class OsmAPIController extends OCSController {
 			? null
 			: ($steps === 'true');
 		$rawRouteResponse = $this->routingService->getOsrmRoute($coordinates, $profile, $alt, $geometries, $stp);
-		$response = new JSONResponse(json_decode($rawRouteResponse, true));
-		$response->cacheFor(60 * 60 * 24, false, true);
+		$arrayRoute = json_decode($rawRouteResponse, true);
+		if (is_array($arrayRoute)) {
+			$response = new JSONResponse($arrayRoute);
+			$response->cacheFor(60 * 60 * 24, false, true);
+		} else {
+			$response = new JSONResponse(['error' => 'Result is not an array'], Http::STATUS_BAD_REQUEST);
+		}
 		return $response;
 	}
 }
