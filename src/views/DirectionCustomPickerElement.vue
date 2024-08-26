@@ -23,6 +23,9 @@
 					</span>
 				</template>
 			</NcSelect>
+			<div v-if="hint">
+				{{ hint }}
+			</div>
 			<div v-if="formattedDistance && formattedDuration" class="route--info">
 				<span :title="routeDistance">
 					{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
@@ -177,6 +180,14 @@ export default {
 					lat: this.lastMapState.lat,
 					lon: this.lastMapState.lon,
 				}
+			}
+			return null
+		},
+		hint() {
+			if (this.waypoints === null || this.waypoints.length === 0) {
+				return t('integration_openstreetmap', 'Click on the map to set the start location')
+			} else if (this.waypoints.length === 1) {
+				return t('integration_openstreetmap', 'Click on the map to add a waypoint')
 			}
 			return null
 		},
