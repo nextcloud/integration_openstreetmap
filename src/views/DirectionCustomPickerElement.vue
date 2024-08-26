@@ -7,9 +7,22 @@
 			<NcSelect
 				v-model="selectedProfile"
 				class="profile-select"
-				:options="profiles"
+				:options="profileList"
 				:aria-label-combobox="t('integration_openstreetmap', 'Routing profile')"
-				:placeholder="t('integration_openstreetmap', 'Routing profile')" />
+				:placeholder="t('integration_openstreetmap', 'Routing profile')">
+				<template #option="option">
+					<span class="profile-option">
+						<component :is="option.icon" />
+						<span>{{ option.label }}</span>
+					</span>
+				</template>
+				<template #selected-option="option">
+					<span class="profile-option">
+						<component :is="option.icon" />
+						<span>{{ option.label }}</span>
+					</span>
+				</template>
+			</NcSelect>
 			<div v-if="formattedDistance && formattedDuration" class="route--info">
 				<span :title="routeDistance">
 					{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
@@ -19,6 +32,11 @@
 					{{ t('integration_openstreetmap', 'Duration: {duration}', { duration: formattedDuration }) }}
 				</span>
 			</div>
+			<NcButton :title="helpText">
+				<template #icon>
+					<HelpIcon />
+				</template>
+			</NcButton>
 		</div>
 		<!--a v-if="currentLink"
 			:href="currentLink"
@@ -73,6 +91,7 @@
 
 <script>
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
+import HelpIcon from 'vue-material-design-icons/Help.vue'
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
@@ -83,6 +102,7 @@ import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
 import moment from '@nextcloud/moment'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
+import { routingProfiles } from '../mapUtils.js'
 
 const linkTypes = {
 	osrm_osm_de: {
@@ -100,27 +120,6 @@ const linkTypes = {
 }
 const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
 
-const profiles = [
-	{
-		id: 'routed-car',
-		label: t('integration_openstreetmap', 'Car'),
-		srv: 0,
-		ghpProfile: 'car',
-	},
-	{
-		id: 'routed-bike',
-		label: t('integration_openstreetmap', 'Bike'),
-		srv: 1,
-		ghpProfile: 'bike',
-	},
-	{
-		id: 'routed-foot',
-		label: t('integration_openstreetmap', 'Foot'),
-		srv: 2,
-		ghpProfile: 'foot',
-	},
-]
-
 export default {
 	name: 'DirectionCustomPickerElement',
 
@@ -130,6 +129,7 @@ export default {
 		NcButton,
 		NcSelect,
 		ArrowRightIcon,
+		HelpIcon,
 	},
 
 	props: {
@@ -153,12 +153,15 @@ export default {
 			waypoints: null,
 			routeDistance: null,
 			routeDuration: null,
-			profiles,
-			selectedProfile: profiles[0],
+			selectedProfile: routingProfiles.car,
+			helpText: t('integration_openstreetmap', 'Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged.'),
 		}
 	},
 
 	computed: {
+		profileList() {
+			return Object.values(routingProfiles)
+		},
 		selectedProfileId() {
 			if (this.selectedProfile) {
 				return this.selectedProfile.id
@@ -312,6 +315,12 @@ export default {
 </style>
 
 <style scoped lang="scss">
+.profile-option {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
 .direction-picker-content {
 	width: 100%;
 	display: flex;
@@ -328,13 +337,14 @@ export default {
 		width: 100%;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		gap: 12px;
 		margin-bottom: 4px;
 
 		.profile-select {
 			align-self: start;
 			margin: 0 !important;
-			width: 170px !important;
+			width: 200px !important;
 			min-width: 170px !important;
 		}
 	}

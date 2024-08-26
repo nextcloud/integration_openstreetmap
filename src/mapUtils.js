@@ -1,3 +1,7 @@
+import CarIcon from 'vue-material-design-icons/Car.vue'
+import WalkIcon from 'vue-material-design-icons/Walk.vue'
+import BicycleIcon from 'vue-material-design-icons/Bicycle.vue'
+
 import { Map } from 'maplibre-gl'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
@@ -6,6 +10,30 @@ export const mapVectorImages = {
 	marker: 'mapIcons/marker.svg',
 	marker_red: 'mapIcons/marker-red.svg',
 	marker_green: 'mapIcons/marker-green.svg',
+}
+
+export const routingProfiles = {
+	car: {
+		id: 'routed-car',
+		label: t('integration_openstreetmap', 'By car'),
+		srv: 0,
+		ghpProfile: 'car',
+		icon: CarIcon,
+	},
+	bike: {
+		id: 'routed-bike',
+		label: t('integration_openstreetmap', 'By bike'),
+		srv: 1,
+		ghpProfile: 'bike',
+		icon: BicycleIcon,
+	},
+	foot: {
+		id: 'routed-foot',
+		label: t('integration_openstreetmap', 'By foot'),
+		srv: 2,
+		ghpProfile: 'foot',
+		icon: WalkIcon,
+	},
 }
 
 export function getBBFromCenterZoom(lat, lon, zoom) {

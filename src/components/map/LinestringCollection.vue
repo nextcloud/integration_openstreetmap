@@ -152,7 +152,8 @@ export default {
 				closeOnClick: true,
 				closeOnMove: true,
 			})
-				.setLngLat(lngLat)
+				// .setLngLat(lngLat)
+				.trackPointer()
 				.setHTML(html)
 				.addTo(this.map)
 			this.popup = popup

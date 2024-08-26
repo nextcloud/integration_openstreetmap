@@ -30,26 +30,37 @@
 					{{ richObject.display_name }}
 				</strong>
 			</a>
-			<div class="route--steps">
-				<span v-for="(w, i) in richObject.waypoints"
-					:key="'step-' + i"
-					class="step">
-					<MapMarkerIcon :fill-color="w.color ?? '#3FB1CE'" />
-					<span>{{ w.name || w.location.join(', ') }}</span>
-				</span>
-			</div>
-			<div class="route--info">
-				<span v-if="profileDisplayName">
-					{{ t('integration_openstreetmap', 'Profile: {profile}', { profile: profileDisplayName }) }}
-				</span>
-				|
-				<span v-if="formattedDistance" :title="richObject.distance">
-					{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
-				</span>
-				|
-				<span v-if="formattedDuration" :title="richObject.duration">
-					{{ t('integration_openstreetmap', 'Duration: {duration}', { duration: formattedDuration }) }}
-				</span>
+			<div class="header">
+				<div class="route--steps">
+					<span v-for="(w, i) in richObject.waypoints"
+						:key="'step-' + i"
+						class="step">
+						<MarkerGreenIcon v-if="i === 0" />
+						<MarkerRedIcon v-else-if="i === richObject.waypoints.length - 1" />
+						<MarkerIcon v-else />
+						<span>{{ w.name || w.location.join(', ') }}</span>
+					</span>
+				</div>
+				<div class="route--info">
+					<span v-if="profileDisplayName" class="profile">
+						<component :is="profileIcon" />
+						{{ profileDisplayName }}
+					</span>
+					|
+					<span v-if="formattedDistance" :title="richObject.distance">
+						{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
+					</span>
+					<span v-else>
+						{{ t('integration_openstreetmap', 'Unknown distance') }}
+					</span>
+					|
+					<span v-if="formattedDuration" :title="richObject.duration">
+						{{ t('integration_openstreetmap', 'Duration: {duration}', { duration: formattedDuration }) }}
+					</span>
+					<span v-else>
+						{{ t('integration_openstreetmap', 'Unknown duration') }}
+					</span>
+				</div>
 			</div>
 			<MaplibreMap
 				class="route--map"
@@ -69,24 +80,24 @@
 </template>
 
 <script>
-import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue'
+import MarkerIcon from '../components/icons/MarkerIcon.vue'
+import MarkerRedIcon from '../components/icons/MarkerRedIcon.vue'
+import MarkerGreenIcon from '../components/icons/MarkerGreenIcon.vue'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
-import moment from '@nextcloud/moment'
+import { routingProfiles } from '../mapUtils.js'
 
-const profileNames = {
-	car: t('integration_openstreetmap', 'By car'),
-	foot: t('integration_openstreetmap', 'By foot'),
-	bike: t('integration_openstreetmap', 'By bike'),
-}
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'MaplibreRouteReferenceWidget',
 
 	components: {
+		MarkerGreenIcon,
+		MarkerRedIcon,
+		MarkerIcon,
 		MaplibreMap,
-		MapMarkerIcon,
 	},
 
 	props: {
@@ -129,9 +140,19 @@ export default {
 			}
 			return null
 		},
+		profileIcon() {
+			if (this.richObject.profile) {
+				return routingProfiles[this.richObject.profile]
+					? routingProfiles[this.richObject.profile].icon
+					: routingProfiles.car.icon
+			}
+			return null
+		},
 		profileDisplayName() {
 			if (this.richObject.profile) {
-				return profileNames[this.richObject.profile] ?? profileNames.car
+				return routingProfiles[this.richObject.profile]
+					? routingProfiles[this.richObject.profile].label
+					: routingProfiles.car.label
 			}
 			return null
 		},
@@ -241,6 +262,10 @@ export default {
 		// in case there is an absolute inside
 		position: relative;
 
+		.header {
+			margin: 4px;
+		}
+
 		&--link {
 			padding: 10px;
 			&:hover {
@@ -251,11 +276,18 @@ export default {
 		&--info {
 			display: flex;
 			gap: 10px;
+			.profile {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
 		}
 
 		&--steps {
 			display: flex;
-			flex-direction: column;
+			//flex-direction: column;
+			flex-wrap: wrap;
+			gap: 4px;
 			.step {
 				display: flex;
 				gap: 4px;
