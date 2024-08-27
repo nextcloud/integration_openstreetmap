@@ -104,7 +104,7 @@ class RoutingService {
 							[]
 						),
 					],
-					'properties' => ['color' => 'red'],
+					'properties' => ['color' => ''],
 				];
 			}
 			return [
@@ -121,6 +121,10 @@ class RoutingService {
 				'location' => $waypoint['location'],
 			];
 		}, $bodyArray['waypoints'] ?? []);
+		if (count($waypoints) >= 2) {
+			$waypoints[0]['color'] = 'lightgreen';
+			$waypoints[count($waypoints) - 1]['color'] = 'red';
+		}
 		return [
 			'waypoints' => $waypoints,
 			'routes' => $routes,
