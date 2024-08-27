@@ -36,6 +36,54 @@ export const routingProfiles = {
 	},
 }
 
+export const routingLinkTypes = {
+	osrm_osm_de: {
+		id: 'osrm_osm_de',
+		label: 'https://routing.openstreetmap.de',
+	},
+	osrm_org: {
+		id: 'osrm_org',
+		label: 'https://map.project-osrm.org',
+	},
+	graphhopper_com: {
+		id: 'graphhopper_com',
+		label: 'https://graphhopper.com/maps',
+	},
+}
+
+export function getRoutingLink(waypoints, profile = routingProfiles.car, linkTypeId = routingLinkTypes.osrm_org.id) {
+	if (waypoints === null || waypoints.length < 2) {
+		return null
+	}
+
+	const selectedProfile = profile ?? routingProfiles.car
+
+	let link
+	const fragments = []
+	const queryParams = []
+	if (linkTypeId === null || linkTypeId === routingLinkTypes.osrm_org.id) {
+		link = 'https://map.project-osrm.org/'
+		queryParams.push(...waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
+		queryParams.push('srv=' + selectedProfile.srv)
+	} else if (linkTypeId === routingLinkTypes.osrm_osm_de.id) {
+		link = 'https://routing.openstreetmap.de/'
+		queryParams.push(...waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
+		queryParams.push('srv=' + selectedProfile.srv)
+	} else if (linkTypeId === routingLinkTypes.graphhopper_com.id) {
+		link = 'https://graphhopper.com/maps/'
+		queryParams.push(...waypoints.map(w => `point=${w[1]}%2C${w[0]}`))
+		queryParams.push('profile=' + selectedProfile.ghpProfile)
+	}
+
+	if (queryParams.length > 0) {
+		link += '?' + queryParams.join('&')
+	}
+	if (fragments.length > 0) {
+		link += '#' + fragments.join('&')
+	}
+	return link
+}
+
 export function getBBFromCenterZoom(lat, lon, zoom) {
 	const dummyElement = document.createElement('div')
 	const map = new Map({

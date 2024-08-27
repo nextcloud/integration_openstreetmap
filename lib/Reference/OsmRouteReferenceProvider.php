@@ -120,6 +120,7 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 			self::RICH_OBJECT_TYPE,
 			[
 				'queryPoints' => $linkInfo['points'],
+				'type' => $linkInfo['type'] ?? 'osrm_org',
 				'profile' => $linkInfo['profile'],
 				'routes' => $routing['routes'],
 				'waypoints' => $routing['waypoints'],
@@ -181,7 +182,8 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 								return [(float)$matches[1], (float)$matches[2]];
 							}
 							return null;
-						}, $parsedQuery['loc'])
+						}, $parsedQuery['loc']),
+						'type' => $osrmBaseUrl === 'https://routing.openstreetmap.de' ? 'osrm_osm_de' : 'osrm_org',
 					];
 				}
 			}
@@ -205,7 +207,8 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 							return [(float)$matches[1], (float)$matches[2]];
 						}
 						return null;
-					}, $parsedQuery['point'])
+					}, $parsedQuery['point']),
+					'type' => 'graphhopper_com',
 				];
 			}
 		}

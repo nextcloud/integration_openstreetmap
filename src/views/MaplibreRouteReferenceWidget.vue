@@ -42,18 +42,34 @@
 					</span>
 				</div>
 				<div class="route--info">
-					<span v-if="profileDisplayName" class="profile">
+					<NcButton @click="editing = !editing">
+						{{ editing ? t('integration_openstreetmap', 'Cancel edition') : t('integration_openstreetmap', 'Edit route') }}
+						<template #icon>
+							<CloseIcon v-if="editing" />
+							<PencilIcon v-else />
+						</template>
+					</NcButton>
+					<NcButton v-if="editing && currentRoutingLink"
+						@click="copyRoutingLink">
+						{{ t('integration_openstreetmap', 'Copy direction link') }}
+						<template #icon>
+							<ClipboardCheckOutlineIcon v-if="copied" fill-color="green" />
+							<ClipboardTextOutlineIcon v-else />
+						</template>
+					</NcButton>
+					<span v-if="!editing && profileDisplayName" class="profile">
 						<component :is="profileIcon" />
 						{{ profileDisplayName }}
 					</span>
-					|
+					<RoutingProfilePicker v-else
+						:value.sync="selectedRoutingProfile"
+						class="profile-select" />
 					<span v-if="formattedDistance" :title="richObject.distance">
 						{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
 					</span>
 					<span v-else>
 						{{ t('integration_openstreetmap', 'Unknown distance') }}
 					</span>
-					|
 					<span v-if="formattedDuration" :title="richObject.duration">
 						{{ t('integration_openstreetmap', 'Duration: {duration}', { duration: formattedDuration }) }}
 					</span>
@@ -72,32 +88,62 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
-				:markers="richObject.waypoints"
-				:lines="routeGeojsons"
-				@line-click="onRouteClicked" />
+				:markers="editing ? undefined : richObject.waypoints"
+				:lines="editing ? undefined : routeGeojsons"
+				@line-click="onRouteClicked">
+				<template #default="{ map }">
+					<DirectionsPlugin v-if="editing"
+						:map="map"
+						:profile="selectedRoutingProfile?.id ?? undefined"
+						:initial-waypoints="richObject.queryPoints.map(p => [p[1], p[0]])"
+						@waypoint-change="onWaypointChange"
+						@route-fetch="onRouteFetched" />
+				</template>
+			</MaplibreMap>
 		</div>
 	</div>
 </template>
 
 <script>
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import ClipboardCheckOutlineIcon from 'vue-material-design-icons/ClipboardCheckOutline.vue'
+import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
+
 import MarkerIcon from '../components/icons/MarkerIcon.vue'
 import MarkerRedIcon from '../components/icons/MarkerRedIcon.vue'
 import MarkerGreenIcon from '../components/icons/MarkerGreenIcon.vue'
 
-import MaplibreMap from '../components/map/MaplibreMap.vue'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
-import { routingProfiles } from '../mapUtils.js'
+import MaplibreMap from '../components/map/MaplibreMap.vue'
+import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
+import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
+
+import { routingProfiles, getRoutingLink } from '../mapUtils.js'
 
 import moment from '@nextcloud/moment'
+import { showError } from '@nextcloud/dialogs'
+
+import VueClipboard from 'vue-clipboard2'
+import Vue from 'vue'
+Vue.use(VueClipboard)
 
 export default {
 	name: 'MaplibreRouteReferenceWidget',
 
 	components: {
+		RoutingProfilePicker,
+		NcButton,
+		DirectionsPlugin,
 		MarkerGreenIcon,
 		MarkerRedIcon,
 		MarkerIcon,
 		MaplibreMap,
+		PencilIcon,
+		CloseIcon,
+		ClipboardCheckOutlineIcon,
+		ClipboardTextOutlineIcon,
 	},
 
 	props: {
@@ -118,6 +164,11 @@ export default {
 	data() {
 		return {
 			selectedRouteIndex: 0,
+			editing: false,
+			editingWaypoints: [],
+			editingRoute: null,
+			copied: false,
+			selectedRoutingProfile: routingProfiles[this.richObject.profile] ?? routingProfiles.car,
 		}
 	},
 
@@ -126,16 +177,18 @@ export default {
 			return this.richObject.routes.map(r => r.geojson)
 		},
 		selectedRoute() {
-			return this.richObject.routes[this.selectedRouteIndex]
+			return this.editing
+				? this.editingRoute
+				: this.richObject.routes[this.selectedRouteIndex]
 		},
 		formattedDuration() {
-			if (this.selectedRoute.duration) {
+			if (this.selectedRoute?.duration) {
 				return this.getFormattedDuration(this.selectedRoute)
 			}
 			return null
 		},
 		formattedDistance() {
-			if (this.selectedRoute.distance) {
+			if (this.selectedRoute?.distance) {
 				return this.getFormattedDistance(this.selectedRoute)
 			}
 			return null
@@ -161,13 +214,17 @@ export default {
 			if (this.mapCenter) {
 				return undefined
 			}
-			const lats = this.selectedRoute.geojson.features.reduce((acc, value) => {
+			if (this.richObject.routes.length === 0) {
+				return undefined
+			}
+			const route = this.richObject.routes[this.selectedRouteIndex]
+			const lats = route.geojson.features.reduce((acc, value) => {
 				return [
 					...acc,
 					...value.geometry.coordinates.map(p => p[1]),
 				]
 			}, [])
-			const lons = this.selectedRoute.geojson.features.reduce((acc, value) => {
+			const lons = route.geojson.features.reduce((acc, value) => {
 				return [
 					...acc,
 					...value.geometry.coordinates.map(p => p[0]),
@@ -198,6 +255,12 @@ export default {
 		mapCenter() {
 			return this.richObject.map_center
 		},
+		currentRoutingLink() {
+			if (!this.editing) {
+				return
+			}
+			return getRoutingLink(this.editingWaypoints, this.selectedRoutingProfile, this.richObject.type)
+		},
 	},
 
 	mounted() {
@@ -207,6 +270,29 @@ export default {
 	},
 
 	methods: {
+		async copyRoutingLink() {
+			console.debug('[osm] copy link', this.currentRoutingLink)
+			try {
+				await this.$copyText(this.currentRoutingLink)
+				this.copied = true
+				setTimeout(() => {
+					this.copied = false
+				}, 5000)
+			} catch (error) {
+				console.error(error)
+				showError(t('integration_openstreetmap', 'Link could not be copied to clipboard'))
+			}
+		},
+		onWaypointChange(waypoints) {
+			this.editingWaypoints = waypoints
+		},
+		onRouteFetched(routes) {
+			if (routes && routes.length > 0) {
+				this.editingRoute = routes[0]
+			} else {
+				this.editingRoute = null
+			}
+		},
 		getFormattedDuration(route) {
 			const mDuration = moment.duration(route.duration, 'seconds')
 			if (route.duration < 60 * 60) {
@@ -232,7 +318,7 @@ export default {
 			this.routeGeojsons.forEach(g => {
 				this.$set(g, 'opacity', 0.3)
 			})
-			this.$set(this.selectedRoute.geojson, 'opacity', 1)
+			this.$set(this.routeGeojsons[this.selectedRouteIndex], 'opacity', 1)
 		},
 		setRoutesPopupContent() {
 			this.richObject.routes.forEach(r => {
@@ -275,11 +361,17 @@ export default {
 
 		&--info {
 			display: flex;
+			align-items: center;
 			gap: 10px;
 			.profile {
 				display: flex;
 				align-items: center;
 				gap: 4px;
+			}
+			.profile-select {
+				margin: 0 !important;
+				width: 200px !important;
+				min-width: 170px !important;
 			}
 		}
 

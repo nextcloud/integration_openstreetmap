@@ -18,6 +18,10 @@ export default {
 			type: String,
 			default: 'routed-car',
 		},
+		initialWaypoints: {
+			type: Array,
+			default: () => [],
+		},
 	},
 
 	data() {
@@ -83,6 +87,10 @@ export default {
 				this.$emit('route-fetch', event.data.routes)
 			})
 			console.debug('[osm] directions init', this.directions)
+			if (this.waypointsBackup.length === 0 && this.initialWaypoints.length > 0) {
+				this.directions.setWaypoints(this.initialWaypoints)
+				this.updateWaypoints()
+			}
 		},
 		updateWaypoints() {
 			this.$emit('waypoint-change', this.directions.waypoints)

@@ -4,25 +4,8 @@
 			{{ t('integration_openstreetmap', 'Map directions (by OSRM)') }}
 		</h2>
 		<div class="header">
-			<NcSelect
-				v-model="selectedProfile"
-				class="profile-select"
-				:options="profileList"
-				:aria-label-combobox="t('integration_openstreetmap', 'Routing profile')"
-				:placeholder="t('integration_openstreetmap', 'Routing profile')">
-				<template #option="option">
-					<span class="profile-option">
-						<component :is="option.icon" />
-						<span>{{ option.label }}</span>
-					</span>
-				</template>
-				<template #selected-option="option">
-					<span class="profile-option">
-						<component :is="option.icon" />
-						<span>{{ option.label }}</span>
-					</span>
-				</template>
-			</NcSelect>
+			<RoutingProfilePicker :value.sync="selectedProfile"
+				class="profile-select" />
 			<div v-if="hint">
 				{{ hint }}
 			</div>
@@ -101,32 +84,20 @@ import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
+import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
 
 import moment from '@nextcloud/moment'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
-import { routingProfiles } from '../mapUtils.js'
+import { routingProfiles, routingLinkTypes, getRoutingLink } from '../mapUtils.js'
 
-const linkTypes = {
-	osrm_osm_de: {
-		id: 'osrm_osm_de',
-		label: 'https://routing.openstreetmap.de',
-	},
-	osrm_org: {
-		id: 'osrm_org',
-		label: 'https://map.project-osrm.org',
-	},
-	graphhopper_com: {
-		id: 'graphhopper_com',
-		label: 'https://graphhopper.com/maps',
-	},
-}
-const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
+const linkTypesArray = Object.values(routingLinkTypes)
 
 export default {
 	name: 'DirectionCustomPickerElement',
 
 	components: {
+		RoutingProfilePicker,
 		DirectionsPlugin,
 		MaplibreMap,
 		NcButton,
@@ -148,7 +119,7 @@ export default {
 
 	data() {
 		return {
-			selectedRoutingLinkTypeId: getLastMapState()?.routingLinkType ? getLastMapState().routingLinkType : linkTypes.osrm_org.id,
+			selectedRoutingLinkTypeId: getLastMapState()?.routingLinkType ? getLastMapState().routingLinkType : routingLinkTypes.osrm_org.id,
 			showMap: false,
 			lastMapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
@@ -172,7 +143,7 @@ export default {
 			return undefined
 		},
 		selectedLinkType() {
-			return linkTypes[this.selectedRoutingLinkTypeId] ?? null
+			return routingLinkTypes[this.selectedRoutingLinkTypeId] ?? null
 		},
 		lastCenter() {
 			if (this.lastMapState?.lat && this.lastMapState?.lon) {
@@ -192,35 +163,7 @@ export default {
 			return null
 		},
 		currentLink() {
-			if (this.waypoints === null || this.waypoints.length < 2) {
-				return null
-			}
-			console.debug('currentLink www', this.waypoints)
-
-			let link
-			const fragments = []
-			const queryParams = []
-			if (this.selectedRoutingLinkTypeId === null || this.selectedRoutingLinkTypeId === linkTypes.osrm_org.id) {
-				link = 'https://map.project-osrm.org/'
-				queryParams.push(...this.waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
-				queryParams.push('srv=' + this.selectedProfile.srv)
-			} else if (this.selectedRoutingLinkTypeId === linkTypes.osrm_osm_de.id) {
-				link = 'https://routing.openstreetmap.de/'
-				queryParams.push(...this.waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
-				queryParams.push('srv=' + this.selectedProfile.srv)
-			} else if (this.selectedRoutingLinkTypeId === linkTypes.graphhopper_com.id) {
-				link = 'https://graphhopper.com/maps/'
-				queryParams.push(...this.waypoints.map(w => `point=${w[1]}%2C${w[0]}`))
-				queryParams.push('profile=' + this.selectedProfile.ghpProfile)
-			}
-
-			if (queryParams.length > 0) {
-				link += '?' + queryParams.join('&')
-			}
-			if (fragments.length > 0) {
-				link += '#' + fragments.join('&')
-			}
-
+			const link = getRoutingLink(this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId)
 			console.debug('[osm] current link', link)
 			return link
 		},
@@ -326,12 +269,6 @@ export default {
 </style>
 
 <style scoped lang="scss">
-.profile-option {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-}
-
 .direction-picker-content {
 	width: 100%;
 	display: flex;
