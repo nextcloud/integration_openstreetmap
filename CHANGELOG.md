@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.0.1 – 2024-09-05
+
+### Added
+
+- Password confirmation in the admin settings
+- Link preview support for routing/direction links (OSRM, GraphHopper, OpenStreetMap, google, waze)
+- New smart picker provider for routing/directions
+
+### Changed
+
+- Max NC version is now 31
+- Update OSM raster tile server URLs
+- Bring back vector MapTiler OSM tile server (it now works)
+- Proxy vector tiles via the server
+
 ## 2.0.0 – 2024-07-21
 
 ### Added
