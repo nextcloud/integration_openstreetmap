@@ -85,7 +85,7 @@ class OsmAPIController extends OCSController {
 			$response = new DataDisplayResponse($this->osmAPIService->getRasterTile($service, $x, $y, $z, $s));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Raster tile not found', ['exception' => $e]);
 			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
@@ -104,7 +104,7 @@ class OsmAPIController extends OCSController {
 			$response = new DataDisplayResponse($this->osmAPIService->getMapTilerFont($fontstack, $range, $key));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Font not found', ['exception' => $e]);
 			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}

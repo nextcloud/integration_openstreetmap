@@ -126,9 +126,9 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/[a-zA-Z]+\/\d+#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => (int) $matches[1],
-				'lat' => (float) $matches[2],
-				'lon' => (float) $matches[3],
+				'zoom' => (int)$matches[1],
+				'lat' => (float)$matches[2],
+				'lon' => (float)$matches[3],
 			];
 		}
 

@@ -145,13 +145,13 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 			parse_str($query, $params);
 
 			if (isset($params['z'])) {
-				$result['zoom'] = (int) $params['z'];
+				$result['zoom'] = (int)$params['z'];
 			}
 			if (isset($params['ll'])) {
 				$coords = explode(',', $params['ll']);
 				if (count($coords) >= 2 && is_numeric($coords[0]) && is_numeric($coords[1])) {
-					$result['lat'] = (float) $coords[0];
-					$result['lon'] = (float) $coords[1];
+					$result['lat'] = (float)$coords[0];
+					$result['lon'] = (float)$coords[1];
 				}
 			}
 			if (isset($params['q'])) {
@@ -159,11 +159,11 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 				if (count($coords) >= 2 && is_numeric($coords[0]) && is_numeric($coords[1])) {
 					// center map on marker only if no map center provided as 'll' link query param
 					if (!isset($result['lat'], $result['lon'])) {
-						$result['lat'] = (float) $coords[0];
-						$result['lon'] = (float) $coords[1];
+						$result['lat'] = (float)$coords[0];
+						$result['lon'] = (float)$coords[1];
 					}
-					$result['markerLat'] = (float) $coords[0];
-					$result['markerLon'] = (float) $coords[1];
+					$result['markerLat'] = (float)$coords[0];
+					$result['markerLon'] = (float)$coords[1];
 				}
 			}
 			// one of 'q' and 'll' must be set
@@ -183,19 +183,19 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 				preg_match('/^(?:https?:\/\/)?(?:www\.)?maps\.google\.com\/maps\/api\/staticmap\?center=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)&zoom=(\d+).*&markers=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)/i', $url, $matches);
 				if (count($matches) > 5) {
 					return [
-						'lat' => (float) $matches[1],
-						'lon' => (float) $matches[2],
-						'zoom' => (int) $matches[3],
-						'markerLat' => (float) $matches[4],
-						'markerLon' => (float) $matches[5],
+						'lat' => (float)$matches[1],
+						'lon' => (float)$matches[2],
+						'zoom' => (int)$matches[3],
+						'markerLat' => (float)$matches[4],
+						'markerLon' => (float)$matches[5],
 					];
 				}
 				preg_match('/^(?:https?:\/\/)?(?:www\.)?maps\.google\.com\/maps\/api\/staticmap\?center=([+-]?\d+\.\d+)%2C([+-]?\d+\.\d+)&zoom=(\d+)/i', $url, $matches);
 				if (count($matches) > 3) {
 					return [
-						'zoom' => (int) $matches[3],
-						'lat' => (float) $matches[1],
-						'lon' => (float) $matches[2],
+						'zoom' => (int)$matches[3],
+						'lat' => (float)$matches[1],
+						'lon' => (float)$matches[2],
 					];
 				}
 			}
@@ -204,21 +204,21 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/place\/.*\/@([+-]?\d+\.\d+),([+-]?\d+\.\d+),(\d+(?:\.\d+)?)z/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'zoom' => (int) $matches[3],
-				'markerLat' => (float) $matches[1],
-				'markerLon' => (float) $matches[2],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'zoom' => (int)$matches[3],
+				'markerLat' => (float)$matches[1],
+				'markerLon' => (float)$matches[2],
 			];
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?google\.[a-z]+\/maps\/search\/([+-]?\d+\.\d+),([+-]?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 2) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'markerLat' => (float) $matches[1],
-				'markerLon' => (float) $matches[2],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'markerLat' => (float)$matches[1],
+				'markerLon' => (float)$matches[2],
 			];
 		}
 

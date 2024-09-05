@@ -102,27 +102,27 @@ class BingReferenceProvider implements IReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/\?cp=([+-]?\d+\.\d+)%7E([+-]?\d+\.\d+)&lvl=(\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'zoom' => (int) $matches[3],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'zoom' => (int)$matches[3],
 			];
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/\?cp=([+-]?\d+\.\d+)~([+-]?\d+\.\d+)&lvl=(\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'zoom' => (int) $matches[3],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'zoom' => (int)$matches[3],
 			];
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?bing\.com\/maps\/?\?osid=[-a-z0-9]+&cp=([+-]?\d+\.\d+)~([+-]?\d+\.\d+)&lvl=(\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'zoom' => (int) $matches[3],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'zoom' => (int)$matches[3],
 				// not accurate
 				//				'markerLat' => (float) $matches[1],
 				//				'markerLon' => (float) $matches[2],

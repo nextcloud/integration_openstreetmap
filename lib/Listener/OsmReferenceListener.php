@@ -69,11 +69,11 @@ class OsmReferenceListener implements IEventListener {
 		if ($lastLat !== '' && $lastLon !== '' && $lastZoom !== ''
 			&& $lastPitch !== '' && $lastBearing !== '' && $lastMapStyle !== '') {
 			$this->initialState->provideInitialState('last-map-state', [
-				'lat' => (float) $lastLat,
-				'lon' => (float) $lastLon,
-				'zoom' => (int) $lastZoom,
-				'pitch' => (float) $lastPitch,
-				'bearing' => (float) $lastBearing,
+				'lat' => (float)$lastLat,
+				'lon' => (float)$lastLon,
+				'zoom' => (int)$lastZoom,
+				'pitch' => (float)$lastPitch,
+				'bearing' => (float)$lastBearing,
 				'mapStyle' => $lastMapStyle,
 				'terrain' => $lastTerrain,
 				'linkType' => $lastLinkType,

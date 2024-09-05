@@ -90,7 +90,7 @@ class UtilsService {
 					return $elements[0]->getAttribute('content');
 				}
 			}
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->warning('Google short link redirect error: ' . $e->getMessage(), ['app' => Application::APP_ID]);
 		}
 
@@ -111,7 +111,7 @@ class UtilsService {
 			if ($respCode < 400 && $response->getHeader('Location')) {
 				return $response->getHeader('Location');
 			}
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->warning('Google short link decode error: ' . $e->getMessage(), ['app' => Application::APP_ID]);
 		}
 

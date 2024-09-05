@@ -178,9 +178,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			$result = [
-				'zoom' => (int) $matches[1],
-				'lat' => (float) $matches[2],
-				'lon' => (float) $matches[3],
+				'zoom' => (int)$matches[1],
+				'lat' => (float)$matches[2],
+				'lon' => (float)$matches[3],
 			];
 			return $this->getFragmentInfo($url, $result);
 		}
@@ -188,11 +188,11 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/\?mlat=(-?\d+\.\d+)&mlon=(-?\d+\.\d+)#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+.\d+)/i', $url, $matches);
 		if (count($matches) > 5) {
 			$result = [
-				'zoom' => (int) $matches[3],
-				'lat' => (float) $matches[4],
-				'lon' => (float) $matches[5],
-				'markerLat' => (float) $matches[1],
-				'markerLon' => (float) $matches[2],
+				'zoom' => (int)$matches[3],
+				'lat' => (float)$matches[4],
+				'lon' => (float)$matches[5],
+				'markerLat' => (float)$matches[1],
+				'markerLon' => (float)$matches[2],
 			];
 			return $this->getFragmentInfo($url, $result);
 		}
@@ -206,11 +206,11 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?\?pin=(-?\d+\.\d+),(-?\d+\.\d+)#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 5) {
 			$result = [
-				'zoom' => (int) $matches[3],
-				'lat' => (float) $matches[4],
-				'lon' => (float) $matches[5],
-				'markerLat' => (float) $matches[1],
-				'markerLon' => (float) $matches[2],
+				'zoom' => (int)$matches[3],
+				'lat' => (float)$matches[4],
+				'lon' => (float)$matches[5],
+				'markerLat' => (float)$matches[1],
+				'markerLon' => (float)$matches[2],
 			];
 			return $this->getFragmentInfo($url, $result);
 		}
@@ -218,9 +218,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			$result = [
-				'zoom' => (int) $matches[1],
-				'lat' => (float) $matches[2],
-				'lon' => (float) $matches[3],
+				'zoom' => (int)$matches[1],
+				'lat' => (float)$matches[2],
+				'lon' => (float)$matches[3],
 			];
 			return $this->getFragmentInfo($url, $result);
 		}
@@ -228,11 +228,11 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=(-?\d+\.\d+)&mlon=(-?\d+\.\d+)&zoom=(\d+)$/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'zoom' => (int) $matches[3],
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'markerLat' => (float) $matches[1],
-				'markerLon' => (float) $matches[2],
+				'zoom' => (int)$matches[3],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'markerLat' => (float)$matches[1],
+				'markerLon' => (float)$matches[2],
 			];
 		}
 
@@ -248,10 +248,10 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		$fragment = parse_url($url, PHP_URL_FRAGMENT);
 		parse_str($fragment, $params);
 		if (isset($params['pitch'])) {
-			$urlInfo['pitch'] = (int) $params['pitch'];
+			$urlInfo['pitch'] = (int)$params['pitch'];
 		}
 		if (isset($params['bearing'])) {
-			$urlInfo['bearing'] = (int) $params['bearing'];
+			$urlInfo['bearing'] = (int)$params['bearing'];
 		}
 		if (isset($params['style'])) {
 			$urlInfo['style'] = $params['style'];

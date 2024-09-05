@@ -125,9 +125,9 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?wego\.here\.com\/.*\?map=([+-]?\d+\.\d+),([+-]?\d+\.\d+),(\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			return [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
-				'zoom' => (int) $matches[3],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
+				'zoom' => (int)$matches[3],
 			];
 		}
 
@@ -135,12 +135,12 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?share\.here\.com\/l\/([+-]?\d+\.\d+),([+-]?\d+\.\d+)/i', $url, $matches);
 		if (count($matches) > 2) {
 			$coords = [
-				'lat' => (float) $matches[1],
-				'lon' => (float) $matches[2],
+				'lat' => (float)$matches[1],
+				'lon' => (float)$matches[2],
 			];
 			preg_match('/z=(\d+)/i', $url, $matches);
 			if (count($matches) > 1) {
-				$coords['zoom'] = (int) $matches[1];
+				$coords['zoom'] = (int)$matches[1];
 			}
 			preg_match('/(p=yes)/i', $url, $matches);
 			if (count($matches) > 1) {

@@ -88,10 +88,10 @@ class DuckduckgoReferenceProvider implements IReferenceProvider {
 		if (count($matches) > 4) {
 			return [
 				'boundingbox' => [
-					(float) $matches[1],
-					(float) $matches[3],
-					(float) $matches[2],
-					(float) $matches[4],
+					(float)$matches[1],
+					(float)$matches[3],
+					(float)$matches[2],
+					(float)$matches[4],
 				],
 			];
 		}

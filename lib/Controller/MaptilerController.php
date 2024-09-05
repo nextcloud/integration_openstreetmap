@@ -48,7 +48,7 @@ class MaptilerController extends Controller {
 			$response = new JSONResponse($this->mapService->getMapTilerStyle($version, $key));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Style not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}
@@ -67,7 +67,7 @@ class MaptilerController extends Controller {
 			$response = new DataDisplayResponse($this->mapService->getMapTilerFont($fontstack, $range, $key));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Font not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}
@@ -85,7 +85,7 @@ class MaptilerController extends Controller {
 			$response = new JSONResponse($this->mapService->getMapTilerTiles($version, $key));
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Tiles not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}
@@ -112,7 +112,7 @@ class MaptilerController extends Controller {
 			);
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Tile not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}
@@ -140,7 +140,7 @@ class MaptilerController extends Controller {
 			}
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Sprite not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}
@@ -162,7 +162,7 @@ class MaptilerController extends Controller {
 			);
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->debug('Resource not found', ['exception' => $e]);
 			return new JSONResponse(['exception' => $e->getMessage()], Http::STATUS_NOT_FOUND);
 		}

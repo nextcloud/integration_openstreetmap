@@ -44,7 +44,7 @@ class RoutingService {
 		}
 
 		$options = [];
-		return (string) $this->client->get($url, $options)->getBody();
+		return (string)$this->client->get($url, $options)->getBody();
 	}
 
 	public function computeOsrmRoute(

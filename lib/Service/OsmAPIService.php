@@ -247,7 +247,7 @@ class OsmAPIService {
 					return json_decode($body, true) ?: [];
 				}
 			}
-		} catch (ClientException | ServerException $e) {
+		} catch (ClientException|ServerException $e) {
 			$responseBody = $e->getResponse()->getBody();
 			$parsedResponseBody = json_decode($responseBody, true);
 			if ($e->getResponse()->getStatusCode() === 404) {
@@ -260,7 +260,7 @@ class OsmAPIService {
 				'error' => $e->getMessage(),
 				'body' => $parsedResponseBody,
 			];
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 			$this->logger->warning('Osm API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
