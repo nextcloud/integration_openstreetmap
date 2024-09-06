@@ -20,10 +20,11 @@
     "Enable navigation link" : "Navigációs hivatkozás engedélyezése",
     "Search on the map" : "Keresés a térképen",
     "Link type" : "Hivatkozás típusa",
+    "Search with Nominatim to get an OpenStreetMap link" : "Keresés a Nominatimmal egy OpenStreetMap hivatkozás készítéséhez",
+    "Link could not be copied to clipboard" : "A hivatkozást nem sikerült a vágólapra másolni",
     "Include marker" : "Jelölő hozzáadása",
     "Generate location link" : "Helyinformációs hivatkozás létrehozása",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Térkép",
-    "Search with Nominatim to get an OpenStreetMap link" : "Keresés a Nominatimmal egy OpenStreetMap hivatkozás készítéséhez"
+    "Google maps" : "Google Térkép"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

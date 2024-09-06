@@ -22,10 +22,11 @@ OC.L10N.register(
     "Enable navigation link" : "Cumasaigh nasc nascleanúna",
     "Search on the map" : "Cuardaigh ar an léarscáil",
     "Link type" : "Cineál naisc",
+    "Search with Nominatim to get an OpenStreetMap link" : "Déan cuardach le Nominatim chun nasc OpenStreetMap a fháil",
+    "Link could not be copied to clipboard" : "Níorbh fhéidir an nasc a chóipeáil chuig an ngearrthaisce",
     "Include marker" : "Cuir marcóir san áireamh",
     "Generate location link" : "Gin nasc suímh",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google léarscáileanna",
-    "Search with Nominatim to get an OpenStreetMap link" : "Déan cuardach le Nominatim chun nasc OpenStreetMap a fháil"
+    "Google maps" : "Google léarscáileanna"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

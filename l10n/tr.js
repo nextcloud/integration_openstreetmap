@@ -22,10 +22,11 @@ OC.L10N.register(
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
     "Search on the map" : "Harita üzerinde ara",
     "Link type" : "Bağlantı türü",
+    "Search with Nominatim to get an OpenStreetMap link" : "Bir OpenStreetMap bağlantısı almak için Nominatim ile arayın",
+    "Link could not be copied to clipboard" : "Bağlantı panoya kopyalanamadı",
     "Include marker" : "İşaretleyici eklensin",
     "Generate location link" : "Konum bağlantısı oluştur",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google haritalar",
-    "Search with Nominatim to get an OpenStreetMap link" : "Bir OpenStreetMap bağlantısı almak için Nominatim ile arayın"
+    "Google maps" : "Google haritalar"
 },
 "nplurals=2; plural=(n > 1);");

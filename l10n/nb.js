@@ -22,10 +22,11 @@ OC.L10N.register(
     "Enable navigation link" : "Aktiver navigasjonskobling",
     "Search on the map" : "Søk på kartet",
     "Link type" : "Koblingstype",
+    "Search with Nominatim to get an OpenStreetMap link" : "Søk med Nominatim for å få en OpenStreetMap-lenke",
+    "Link could not be copied to clipboard" : "Koblingen kunne ikke kopieres til utklippstavlen",
     "Include marker" : "Inkluder markør",
     "Generate location link" : "Generer plasseringskobling",
     "OsmAnd" : "OsmOg",
-    "Google maps" : "Google maps",
-    "Search with Nominatim to get an OpenStreetMap link" : "Søk med Nominatim for å få en OpenStreetMap-lenke"
+    "Google maps" : "Google maps"
 },
 "nplurals=2; plural=(n != 1);");

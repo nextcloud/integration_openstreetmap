@@ -21,10 +21,11 @@ OC.L10N.register(
     "Enable navigation link" : "Укључи линк за навигацију",
     "Search on the map" : "Претражи на мапи",
     "Link type" : "Тип линка",
+    "Search with Nominatim to get an OpenStreetMap link" : "Претражите са Nominatim да бисте добили OpenStreetMap линк",
+    "Link could not be copied to clipboard" : "Линк не може да се копира у клипборд",
     "Include marker" : "Укључи и маркер",
     "Generate location link" : "Генериши линк на локацију",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google мапе",
-    "Search with Nominatim to get an OpenStreetMap link" : "Претражите са Nominatim да бисте добили OpenStreetMap линк"
+    "Google maps" : "Google мапе"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

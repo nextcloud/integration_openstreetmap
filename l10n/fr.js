@@ -21,10 +21,11 @@ OC.L10N.register(
     "Enable navigation link" : "Activer le lien de navigation",
     "Search on the map" : "Rechercher sur la carte",
     "Link type" : "Type de lien",
+    "Search with Nominatim to get an OpenStreetMap link" : "Rechercher avec Nominatim pour obtenir un lien OpenStreetMap",
+    "Link could not be copied to clipboard" : "Le lien n'a pas pu être copié dans le presse-papiers",
     "Include marker" : "Inclure le marqueur",
     "Generate location link" : "Générer un lien de localisation",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Maps",
-    "Search with Nominatim to get an OpenStreetMap link" : "Rechercher avec Nominatim pour obtenir un lien OpenStreetMap"
+    "Google maps" : "Google Maps"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -22,10 +22,11 @@ OC.L10N.register(
     "Enable navigation link" : "Enable navigation link",
     "Search on the map" : "Search on the map",
     "Link type" : "Link type",
+    "Search with Nominatim to get an OpenStreetMap link" : "Search with Nominatim to get an OpenStreetMap link",
+    "Link could not be copied to clipboard" : "Link could not be copied to clipboard",
     "Include marker" : "Include marker",
     "Generate location link" : "Generate location link",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
-    "Search with Nominatim to get an OpenStreetMap link" : "Search with Nominatim to get an OpenStreetMap link"
+    "Google maps" : "Google maps"
 },
 "nplurals=2; plural=(n != 1);");

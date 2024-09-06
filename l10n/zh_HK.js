@@ -22,10 +22,11 @@ OC.L10N.register(
     "Enable navigation link" : "啟用導覽連結",
     "Search on the map" : "在地圖上搜尋",
     "Link type" : "連結類型",
+    "Search with Nominatim to get an OpenStreetMap link" : "使用 Nominatim 搜尋以取得 OpenStreetMap 連結",
+    "Link could not be copied to clipboard" : "連結無法複製到剪貼板",
     "Include marker" : "包含標記",
     "Generate location link" : "產生位置連結",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google 地圖",
-    "Search with Nominatim to get an OpenStreetMap link" : "使用 Nominatim 搜尋以取得 OpenStreetMap 連結"
+    "Google maps" : "Google 地圖"
 },
 "nplurals=1; plural=0;");

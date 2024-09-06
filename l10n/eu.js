@@ -21,10 +21,11 @@ OC.L10N.register(
     "Enable navigation link" : "Gaitu nabigazio esteka",
     "Search on the map" : "Bilatu mapan",
     "Link type" : "Esteka mota",
+    "Search with Nominatim to get an OpenStreetMap link" : "Bilatu Nominatim-en bidez OpenStreetMap esteka bat lortzeko",
+    "Link could not be copied to clipboard" : "Ezin izan da esteka arbelean kopiatu",
     "Include marker" : "Gehitu markatzailea",
     "Generate location link" : "Sortu kokapen-esteka",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
-    "Search with Nominatim to get an OpenStreetMap link" : "Bilatu Nominatim-en bidez OpenStreetMap esteka bat lortzeko"
+    "Google maps" : "Google maps"
 },
 "nplurals=2; plural=(n != 1);");

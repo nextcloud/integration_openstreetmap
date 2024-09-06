@@ -16,8 +16,8 @@ OC.L10N.register(
     "Enable OpenStreetMap link previews" : "Käytä OpenStreetMap-linkkien esikatselua",
     "Enable navigation link" : "Näytä navigointipalkissa",
     "Search on the map" : "Etsi kartalta",
+    "Search with Nominatim to get an OpenStreetMap link" : "Etsi Nominatimilla saadaksesi OpenStreetMap-linkin",
     "Include marker" : "Sisällytä merkki",
-    "Generate location link" : "Luo sijaintilinkki",
-    "Search with Nominatim to get an OpenStreetMap link" : "Etsi Nominatimilla saadaksesi OpenStreetMap-linkin"
+    "Generate location link" : "Luo sijaintilinkki"
 },
 "nplurals=2; plural=(n != 1);");

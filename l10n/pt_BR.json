@@ -20,10 +20,11 @@
     "Enable navigation link" : "Ativar link de navegação",
     "Search on the map" : "Pesquisar no mapa",
     "Link type" : "Tipo de link",
+    "Search with Nominatim to get an OpenStreetMap link" : "Pesquise com o Nominatim para obter um link do OpenStreetMap",
+    "Link could not be copied to clipboard" : "Link não pode ser copiado para a área de transferência",
     "Include marker" : "Incluir marcador",
     "Generate location link" : "Gerar link de localização",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Mapas do Google",
-    "Search with Nominatim to get an OpenStreetMap link" : "Pesquise com o Nominatim para obter um link do OpenStreetMap"
+    "Google maps" : "Mapas do Google"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

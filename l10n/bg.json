@@ -18,8 +18,8 @@
     "Prefer simple OpenStreetMap frame" : "Предпочитание за проста рамка на OpenStreetMap",
     "Enable navigation link" : "Активиране на връзка за навигация",
     "Search on the map" : "Търсене в/на/ картата",
+    "Search with Nominatim to get an OpenStreetMap link" : "Търсене с Nominatim, за получаване на връзка към OpenStreetMap",
     "Include marker" : "Включване на маркер",
-    "Generate location link" : "Генериране на връзка към местоположение",
-    "Search with Nominatim to get an OpenStreetMap link" : "Търсене с Nominatim, за получаване на връзка към OpenStreetMap"
+    "Generate location link" : "Генериране на връзка към местоположение"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
