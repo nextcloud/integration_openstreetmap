@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enable navigation link" : "Активиране на връзка за навигация",
     "Search on the map" : "Търсене в/на/ картата",
     "Search with Nominatim to get an OpenStreetMap link" : "Търсене с Nominatim, за получаване на връзка към OpenStreetMap",
+    "Link could not be copied to clipboard" : "Връзката не можа да бъде копирана в клипборда",
     "Include marker" : "Включване на маркер",
     "Generate location link" : "Генериране на връзка към местоположение"
 },

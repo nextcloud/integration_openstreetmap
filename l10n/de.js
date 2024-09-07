@@ -22,6 +22,7 @@ OC.L10N.register(
     "Search on the map" : "In der Karte suchen",
     "Link type" : "Linktyp",
     "Search with Nominatim to get an OpenStreetMap link" : "Suche mit Nominatim, um einen OpenStreetMap-Link zu erhalten.",
+    "Link could not be copied to clipboard" : "Link konnte nicht in die Zwischenablage kopiert werden",
     "Include marker" : "Markierung einfügen",
     "Generate location link" : "Standortlink generieren",
     "OsmAnd" : "OsmAnd",

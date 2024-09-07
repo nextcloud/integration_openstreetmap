@@ -1,6 +1,7 @@
 { "translations": {
     "OpenStreetMap" : "OpenStreetMap",
     "Map location (by OpenStreetMap)" : "Localización no mapa (por OpenStreetMap)",
+    "Map directions (by OSRM)" : "Indicacións do mapa (por OSRM)",
     "OpenStreetMap locations" : "Localizacións en OpenStreetMap",
     "Bad HTTP method" : "Método HTTP incorrecto",
     "Bad credentials" : "Credenciais incorrectas",
@@ -18,13 +19,28 @@
     "Enable OpenStreetMap link previews" : "Activar as vistas previas das ligazóns de OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Preferir un cadro único de OpenStreetMap",
     "Enable navigation link" : "Activar a ligazón de navegación",
+    "Routing profile" : "Perfil da ruta",
     "Search on the map" : "Buscar no mapa",
+    "Distance: {distance}" : "Distancia: {distance}",
+    "Duration: {duration}" : "Duración: {duration}",
     "Link type" : "Tipo de ligazón",
+    "Generate direction link" : "Xerar a ligazón de dirección",
     "Search with Nominatim to get an OpenStreetMap link" : "Buscar con Nominatim para obter unha ligazón de OpenStreetMap",
+    "Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged." : "Premer no mapa para engadir puntos de referencia. Prema nos puntos de referencia para eliminalos. Os puntos de referencia poden ser arrastrados.",
+    "Click on the map to set the start location" : "Prema no mapa para definir o lugar de inicio",
+    "Click on the map to add a waypoint" : "Prema no mapa para engadir un punto de referencia",
+    "Cancel edition" : "Cancelar a edición",
+    "Edit route" : "Editar a ruta",
+    "Copy direction link" : "Copiar a ligazón de dirección",
+    "Unknown distance" : "Distancia descoñecida",
+    "Unknown duration" : "Duración descoñecida",
     "Link could not be copied to clipboard" : "Non foi posíbel copiar a ligazón ao portapapeis",
     "Include marker" : "Incluír o marcador",
-    "Generate location link" : "Xerar unha ligazón de localización",
+    "Generate location link" : "Xerar a ligazón de localización",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps"
+    "Google maps" : "Google maps",
+    "By car" : "En coche",
+    "By bike" : "En bicicleta",
+    "By foot" : "A pé"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

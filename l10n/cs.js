@@ -22,6 +22,7 @@ OC.L10N.register(
     "Search on the map" : "Hledat na mapě",
     "Link type" : "Typ odkazu",
     "Search with Nominatim to get an OpenStreetMap link" : "Hledat pomocí Nominatim a získat tak odkaz do OpenStreetMap",
+    "Link could not be copied to clipboard" : "Odkaz se nepodařilo zkopírovat do schránky",
     "Include marker" : "Včetně popisovače",
     "Generate location link" : "Vytvořit odkaz na umístění",
     "OsmAnd" : "OsmAnd",

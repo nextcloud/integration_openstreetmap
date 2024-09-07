@@ -1,6 +1,7 @@
 { "translations": {
     "OpenStreetMap" : "OpenStreetMap",
     "Map location (by OpenStreetMap)" : "Harita konumu (OpenStreetMap ile)",
+    "Map directions (by OSRM)" : "Harita yönlendirmeleri (OSRM ile)",
     "OpenStreetMap locations" : "OpenStreetMap konumları",
     "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
@@ -18,13 +19,28 @@
     "Enable OpenStreetMap link previews" : "OpenStreetMap bağlantıları ön izlenebilsin",
     "Prefer simple OpenStreetMap frame" : "Basit OpenStreetMap çerçevesi kullanılsın",
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
+    "Routing profile" : "Yönlendirme profili",
     "Search on the map" : "Harita üzerinde ara",
+    "Distance: {distance}" : "Uzaklık: {distance}",
+    "Duration: {duration}" : "Süre: {duration}",
     "Link type" : "Bağlantı türü",
+    "Generate direction link" : "Yönlendirme bağlantısı oluştur",
     "Search with Nominatim to get an OpenStreetMap link" : "Bir OpenStreetMap bağlantısı almak için Nominatim ile arayın",
+    "Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged." : "Durak eklemek için harita üzerine tıklayın. Durakları silmek için üzerine tıklayın. Duraklar sürüklenebilir.",
+    "Click on the map to set the start location" : "Başlangıç konumunu görüntülemek için harita üzerine tıklayın",
+    "Click on the map to add a waypoint" : "Bir durak eklemek için harita üzerine tıklayın",
+    "Cancel edition" : "Düzeltmekten vazgeç",
+    "Edit route" : "Rotayı düzenle",
+    "Copy direction link" : "Yönlendirme bağlantısını kopyala",
+    "Unknown distance" : "Uzaklık bilinmiyor",
+    "Unknown duration" : "Süre bilinmiyor",
     "Link could not be copied to clipboard" : "Bağlantı panoya kopyalanamadı",
     "Include marker" : "İşaretleyici eklensin",
     "Generate location link" : "Konum bağlantısı oluştur",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google haritalar"
+    "Google maps" : "Google haritalar",
+    "By car" : "Otomobil",
+    "By bike" : "Bisiklet",
+    "By foot" : "Yürüyüş"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
