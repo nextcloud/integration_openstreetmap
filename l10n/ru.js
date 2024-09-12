@@ -6,6 +6,7 @@ OC.L10N.register(
     "Connected accounts" : "Подключённые учётные записи",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "Интеграция OpenStreetMap предоставляет поставщика поиска местоположений, поставщика ссылок для отображения ссылок на местоположения из различных картографических сервисов (OpenStreetMap, Google Maps...) и компонент настраиваемого выбора ссылок для быстрой вставки ссылки на местоположение путем поиска или выбора точки на (потрясающей) интерактивной карте.",
     "Enable searching for locations" : "Включить поиск местоположений",
+    "Proxy map tiles/vectors requests via Nextcloud" : "Запросы прокси-карт плиток/векторов через Nextcloud",
     "OpenStreetMap options saved" : "Параметры OpenStreetMap сохранены",
     "Failed to save OpenStreetMap options" : "Не удалось сохранить параметры OpenStreetMap",
     "Enable navigation link" : "Включить ссылку для навигации",
