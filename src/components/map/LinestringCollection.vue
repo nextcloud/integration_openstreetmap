@@ -99,7 +99,7 @@ export default {
 		this.init()
 	},
 
-	destroyed() {
+	unmounted() {
 		console.debug('[osm] destroy line', this.layerId)
 		this.releaseEvents()
 		this.remove()

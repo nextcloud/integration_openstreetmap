@@ -62,7 +62,7 @@
 						{{ profileDisplayName }}
 					</span>
 					<RoutingProfilePicker v-else
-						:value.sync="selectedRoutingProfile"
+						v-model="selectedRoutingProfile"
 						class="profile-select" />
 					<span v-if="formattedDistance" :title="richObject.distance">
 						{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
@@ -125,9 +125,8 @@ import { routingProfiles, getRoutingLink } from '../mapUtils.js'
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
 
-import VueClipboard from 'vue-clipboard2'
-import Vue from 'vue'
-Vue.use(VueClipboard)
+import useClipboard from 'vue-clipboard3'
+const { toClipboard } = useClipboard()
 
 export default {
 	name: 'MaplibreRouteReferenceWidget',
@@ -273,7 +272,8 @@ export default {
 		async copyRoutingLink() {
 			console.debug('[osm] copy link', this.currentRoutingLink)
 			try {
-				await this.$copyText(this.currentRoutingLink)
+				// await this.$copyText(this.currentRoutingLink)
+				await toClipboard(this.currentRoutingLink)
 				this.copied = true
 				setTimeout(() => {
 					this.copied = false
@@ -316,9 +316,9 @@ export default {
 		},
 		updateRouteOpacities() {
 			this.routeGeojsons.forEach(g => {
-				this.$set(g, 'opacity', 0.3)
+				g.opacity = 0.3
 			})
-			this.$set(this.routeGeojsons[this.selectedRouteIndex], 'opacity', 1)
+			this.routeGeojsons[this.selectedRouteIndex].opacity = 1
 		},
 		setRoutesPopupContent() {
 			this.richObject.routes.forEach(r => {
@@ -329,12 +329,20 @@ export default {
 				if (r.duration) {
 					popupContent += '\n' + t('integration_openstreetmap', 'Duration: {duration}', { duration: this.getFormattedDuration(r) })
 				}
-				this.$set(r.geojson, 'popupContent', popupContent.trim())
+				r.geojson.popupContent = popupContent.trim()
 			})
 		},
 	},
 }
 </script>
+
+<style lang="scss">
+// fixed by https://github.com/nextcloud-libraries/nextcloud-vue/pull/6108
+// which will take time to be adopted by all apps in which widgets are displayed
+.widget-custom > div {
+	width: 100%;
+}
+</style>
 
 <style scoped lang="scss">
 .route-reference {

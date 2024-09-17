@@ -4,7 +4,7 @@
 			{{ t('integration_openstreetmap', 'Map directions (by OSRM)') }}
 		</h2>
 		<div class="header">
-			<RoutingProfilePicker :value.sync="selectedProfile"
+			<RoutingProfilePicker v-model="selectedProfile"
 				class="profile-select" />
 			<div v-if="hint">
 				{{ hint }}
@@ -54,12 +54,12 @@
 		<div class="footer">
 			<NcSelect
 				class="type-select"
-				:value="selectedLinkType"
+				:model-value="selectedLinkType"
 				:options="linkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
-				@input="onLinkTypeSelect" />
+				@update:model-value="onLinkTypeSelect" />
 			<div class="spacer" />
 			<NcButton
 				class="submit-button"
@@ -220,6 +220,7 @@ export default {
 			this.waypoints = waypoints
 		},
 		onLinkTypeSelect(selected) {
+			console.debug('[osm] selected link type', selected)
 			this.selectedRoutingLinkTypeId = selected?.id ?? null
 		},
 		onMapSubmit() {
@@ -232,7 +233,7 @@ export default {
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const routingLinkType = this.selectedRoutingLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, routingLinkType })
-			this.$emit('submit', this.currentLink)
+			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onMapStateChange(e) {
 			if (e.centerLat !== undefined && e.centerLng !== undefined) {
@@ -265,6 +266,13 @@ export default {
 // TODO fix this in nc/vue
 .modal-container__content .reference-picker-modal--content {
 	height: 100%;
+}
+// fixed by https://github.com/nextcloud-libraries/nextcloud-vue/pull/6108
+// which will take time to be adopted by all apps in which the smart picker can be used
+.custom-element-wrapper > div {
+	width: 100%;
+	overflow-y: auto;
+	display: flex;
 }
 </style>
 
@@ -301,7 +309,7 @@ export default {
 		width: 100%;
 		height: 2000px;
 
-		::v-deep .maplibregl-map {
+		:deep(.maplibregl-map) {
 			border-radius: var(--border-radius-large);
 		}
 	}

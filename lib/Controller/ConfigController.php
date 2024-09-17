@@ -15,7 +15,6 @@ use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
-use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
 
@@ -65,7 +64,7 @@ class ConfigController extends Controller {
 	 * @param array $values
 	 * @return DataResponse
 	 */
-	#[PasswordConfirmationRequired]
+	// #[PasswordConfirmationRequired]
 	public function setSensitiveAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
 			$this->config->setAppValue(Application::APP_ID, $key, $value);

@@ -118,6 +118,15 @@ export default {
 }
 </script>
 
+<style lang="scss">
+// fixed by https://github.com/nextcloud-libraries/nextcloud-vue/pull/6108
+// which will take time to be adopted by all apps in which widgets are displayed
+.widget-custom > div {
+	width: 100%;
+}
+</style>
+
+
 <style scoped lang="scss">
 .location-reference {
 	width: 100%;

@@ -9,9 +9,15 @@
  * @copyright Julien Veyssier 2023
  */
 
-import Vue from 'vue'
-import './bootstrap.js'
+// import Vue from 'vue'
+import { createApp } from 'vue'
 import PersonalSettings from './components/PersonalSettings.vue'
 
-const VueSettings = Vue.extend(PersonalSettings)
-new VueSettings().$mount('#osm_prefs')
+// Vue.mixin({ methods: { t, n } })
+
+// const VueSettings = Vue.extend(PersonalSettings)
+// new VueSettings().$mount('#osm_prefs')
+
+const app = createApp(PersonalSettings)
+app.mixin({ methods: { t, n } })
+app.mount('#osm_prefs')

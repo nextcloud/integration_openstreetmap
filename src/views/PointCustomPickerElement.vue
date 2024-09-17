@@ -31,15 +31,15 @@
 			@map-state-change="onMapStateChange" />
 		<div class="footer">
 			<NcSelect
-				:value="selectedLinkType"
+				:model-value="selectedLinkType"
 				:options="linkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
-				@input="onLinkTypeSelect" />
+				@update:model-value="onLinkTypeSelect" />
 			<NcCheckboxRadioSwitch
 				class="marker-checkbox"
-				:checked.sync="includeMarker">
+				v-model="includeMarker">
 				{{ t('integration_openstreetmap', 'Include marker') }}
 			</NcCheckboxRadioSwitch>
 			<div class="spacer" />
@@ -227,7 +227,7 @@ export default {
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const linkType = this.selectedLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType })
-			this.$emit('submit', this.currentLink)
+			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onSearchSubmit(link) {
 			setLastMapState({ mapStyle: this.currentMapStyle })
@@ -268,6 +268,13 @@ export default {
 .modal-container__content .reference-picker-modal--content {
 	height: 100%;
 }
+// fixed by https://github.com/nextcloud-libraries/nextcloud-vue/pull/6108
+// which will take time to be adopted by all apps in which the smart picker can be used
+.custom-element-wrapper > div {
+	width: 100%;
+	overflow-y: auto;
+	display: flex;
+}
 </style>
 
 <style scoped lang="scss">
@@ -292,7 +299,7 @@ export default {
 		width: 100%;
 		height: 2000px;
 
-		::v-deep .maplibregl-map {
+		:deep(.maplibregl-map) {
 			border-radius: var(--border-radius-large);
 		}
 	}
