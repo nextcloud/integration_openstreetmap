@@ -38,7 +38,7 @@ class BingReferenceProvider implements IReferenceProvider {
 		private IConfig $config,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

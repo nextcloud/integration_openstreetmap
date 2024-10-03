@@ -38,7 +38,7 @@ class OsmReferenceListener implements IEventListener {
 	public function __construct(
 		private IConfig $config,
 		private IInitialState $initialState,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

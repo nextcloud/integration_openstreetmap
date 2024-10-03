@@ -48,7 +48,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private UtilsService $utilsService,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

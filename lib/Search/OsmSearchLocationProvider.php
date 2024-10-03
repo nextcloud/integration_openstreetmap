@@ -43,7 +43,7 @@ class OsmSearchLocationProvider implements IProvider {
 		private IL10N $l10n,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
-		private OsmAPIService $osmAPIService
+		private OsmAPIService $osmAPIService,
 	) {
 	}
 

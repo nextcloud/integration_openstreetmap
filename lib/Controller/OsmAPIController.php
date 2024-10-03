@@ -35,7 +35,7 @@ class OsmAPIController extends OCSController {
 		private OsmAPIService $osmAPIService,
 		private RoutingService $routingService,
 		private LoggerInterface $logger,
-		private ?string $userId
+		private ?string $userId,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -53,7 +53,7 @@ class OsmAPIController extends OCSController {
 	#[NoAdminRequired]
 	public function nominatimSearch(
 		string $q, int $limit = 10, string $rformat = 'json',
-		?int $polygon_geojson = null, ?int $addressdetails = null, ?int $namedetails = null, ?int $extratags = null
+		?int $polygon_geojson = null, ?int $addressdetails = null, ?int $namedetails = null, ?int $extratags = null,
 	): DataResponse {
 		$extraParams = [
 			'polygon_geojson' => $polygon_geojson,

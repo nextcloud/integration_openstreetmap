@@ -27,7 +27,7 @@ class OsmAPIService {
 	public function __construct(
 		private LoggerInterface $logger,
 		private IL10N $l10n,
-		IClientService $clientService
+		IClientService $clientService,
 	) {
 		$this->client = $clientService->newClient();
 	}
@@ -104,7 +104,7 @@ class OsmAPIService {
 	}
 
 	public function getLinkFromOsmId(int $osmId, string $osmType): string {
-		return 'https://www.openstreetmap.org/'. urlencode($osmType) . '/' . $osmId;
+		return 'https://www.openstreetmap.org/' . urlencode($osmType) . '/' . $osmId;
 	}
 
 	/**
@@ -133,7 +133,7 @@ class OsmAPIService {
 		if (count($result) === 1) {
 			return $result[0];
 		}
-		$this->logger->debug('Osm API error : no response for lookup ' .$locationType . '/' . $locationId, ['app' => Application::APP_ID]);
+		$this->logger->debug('Osm API error : no response for lookup ' . $locationType . '/' . $locationId, ['app' => Application::APP_ID]);
 		return null;
 	}
 

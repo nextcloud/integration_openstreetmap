@@ -45,7 +45,7 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 		private IL10N $l10n,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

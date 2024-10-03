@@ -18,14 +18,14 @@ class RoutingService {
 	private IClient $client;
 
 	public function __construct(
-		IClientService $clientService
+		IClientService $clientService,
 	) {
 		$this->client = $clientService->newClient();
 	}
 
 	public function getOsrmRoute(
 		string $coordinates, ?string $profile = null, ?bool $alternatives = null,
-		?string $geometries = null, ?bool $steps = null, ?string $overview = null
+		?string $geometries = null, ?bool $steps = null, ?string $overview = null,
 	): string {
 		// OSRM URL example:
 		// https://routing.openstreetmap.de/routed-bike/route/v1/driving/3.862452,43.6978777;3.8613428,43.6665244?overview=false&geometries=geojson&steps=true
@@ -48,7 +48,7 @@ class RoutingService {
 	}
 
 	public function computeOsrmRoute(
-		array $points, ?string $profile = null, bool $alternatives = true, ?string $geometries = null, bool $steps = true
+		array $points, ?string $profile = null, bool $alternatives = true, ?string $geometries = null, bool $steps = true,
 	): ?array {
 		$pointsPath = implode(
 			';',

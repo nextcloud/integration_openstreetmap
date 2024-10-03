@@ -78,6 +78,52 @@
             "time": "2022-12-30T00:23:10+00:00"
         },
         {
+            "name": "kubawerlos/php-cs-fixer-custom-fixers",
+            "version": "v3.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers.git",
+                "reference": "8701394f0c7cd450ac4fa577d24589122c1d5d5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kubawerlos/php-cs-fixer-custom-fixers/zipball/8701394f0c7cd450ac4fa577d24589122c1d5d5e",
+                "reference": "8701394f0c7cd450ac4fa577d24589122c1d5d5e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-filter": "*",
+                "ext-tokenizer": "*",
+                "friendsofphp/php-cs-fixer": "^3.61.1",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6.4 || ^10.5.29"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpCsFixerCustomFixers\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kuba Werłos",
+                    "email": "werlos@gmail.com"
+                }
+            ],
+            "description": "A set of custom fixers for PHP CS Fixer",
+            "support": {
+                "issues": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers/issues",
+                "source": "https://github.com/kubawerlos/php-cs-fixer-custom-fixers/tree/v3.22.0"
+            },
+            "time": "2024-08-16T20:44:35+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.12.0",
             "source": {
@@ -139,19 +185,20 @@
         },
         {
             "name": "nextcloud/coding-standard",
-            "version": "v1.2.3",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud/coding-standard.git",
-                "reference": "bc9c53a5306114b60c4363057aff9c2ed10a54da"
+                "reference": "e88acb0df6217b808d1632286ddfec9267a102e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud/coding-standard/zipball/bc9c53a5306114b60c4363057aff9c2ed10a54da",
-                "reference": "bc9c53a5306114b60c4363057aff9c2ed10a54da",
+                "url": "https://api.github.com/repos/nextcloud/coding-standard/zipball/e88acb0df6217b808d1632286ddfec9267a102e4",
+                "reference": "e88acb0df6217b808d1632286ddfec9267a102e4",
                 "shasum": ""
             },
             "require": {
+                "kubawerlos/php-cs-fixer-custom-fixers": "^3.22",
                 "php": "^7.3|^8.0",
                 "php-cs-fixer/shim": "^3.17"
             },
@@ -174,9 +221,9 @@
             "description": "Nextcloud coding standards for the php cs fixer",
             "support": {
                 "issues": "https://github.com/nextcloud/coding-standard/issues",
-                "source": "https://github.com/nextcloud/coding-standard/tree/v1.2.3"
+                "source": "https://github.com/nextcloud/coding-standard/tree/v1.3.1"
             },
-            "time": "2024-08-23T14:32:32+00:00"
+            "time": "2024-09-19T09:07:10+00:00"
         },
         {
             "name": "nextcloud/ocp",
@@ -184,12 +231,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "af6804a42651acb58a0b63cc4ecade65e90e8f37"
+                "reference": "95de3516904b65613a8fb226874f967bedbd932f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/af6804a42651acb58a0b63cc4ecade65e90e8f37",
-                "reference": "af6804a42651acb58a0b63cc4ecade65e90e8f37",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/95de3516904b65613a8fb226874f967bedbd932f",
+                "reference": "95de3516904b65613a8fb226874f967bedbd932f",
                 "shasum": ""
             },
             "require": {
@@ -221,20 +268,20 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/master"
             },
-            "time": "2024-09-04T00:40:08+00:00"
+            "time": "2024-10-01T00:48:14+00:00"
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.1.0",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "683130c2ff8c2739f4822ff7ac5c873ec529abd1"
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/683130c2ff8c2739f4822ff7ac5c873ec529abd1",
-                "reference": "683130c2ff8c2739f4822ff7ac5c873ec529abd1",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
                 "shasum": ""
             },
             "require": {
@@ -277,9 +324,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.1.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
             },
-            "time": "2024-07-01T20:03:41+00:00"
+            "time": "2024-09-29T13:56:26+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -772,16 +819,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.20",
+            "version": "9.6.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "49d7820565836236411f5dc002d16dd689cde42f"
+                "reference": "de6abf3b6f8dd955fac3caad3af7a9504e8c2ffa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/49d7820565836236411f5dc002d16dd689cde42f",
-                "reference": "49d7820565836236411f5dc002d16dd689cde42f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/de6abf3b6f8dd955fac3caad3af7a9504e8c2ffa",
+                "reference": "de6abf3b6f8dd955fac3caad3af7a9504e8c2ffa",
                 "shasum": ""
             },
             "require": {
@@ -796,7 +843,7 @@
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=7.3",
-                "phpunit/php-code-coverage": "^9.2.31",
+                "phpunit/php-code-coverage": "^9.2.32",
                 "phpunit/php-file-iterator": "^3.0.6",
                 "phpunit/php-invoker": "^3.1.1",
                 "phpunit/php-text-template": "^2.0.4",
@@ -855,7 +902,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.20"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.21"
             },
             "funding": [
                 {
@@ -871,20 +918,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-10T11:45:39+00:00"
+            "time": "2024-09-19T10:50:18+00:00"
         },
         {
             "name": "psalm/phar",
-            "version": "5.25.0",
+            "version": "5.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "d42708449bd2d99ec6509924332fd94263974b20"
+                "reference": "8a38e7ad04499a0ccd2c506fd1da6fc01fff4547"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/d42708449bd2d99ec6509924332fd94263974b20",
-                "reference": "d42708449bd2d99ec6509924332fd94263974b20",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/8a38e7ad04499a0ccd2c506fd1da6fc01fff4547",
+                "reference": "8a38e7ad04499a0ccd2c506fd1da6fc01fff4547",
                 "shasum": ""
             },
             "require": {
@@ -904,9 +951,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/5.25.0"
+                "source": "https://github.com/psalm/phar/tree/5.26.1"
             },
-            "time": "2024-06-19T20:02:02+00:00"
+            "time": "2024-09-09T16:22:43+00:00"
         },
         {
             "name": "psr/clock",

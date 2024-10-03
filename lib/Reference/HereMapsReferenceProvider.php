@@ -43,7 +43,7 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 		private IURLGenerator $urlGenerator,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

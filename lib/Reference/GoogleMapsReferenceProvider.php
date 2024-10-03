@@ -45,7 +45,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private UtilsService $utilsService,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 
