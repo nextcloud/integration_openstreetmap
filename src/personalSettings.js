@@ -10,8 +10,8 @@
  */
 
 import Vue from 'vue'
-import './bootstrap.js'
 import PersonalSettings from './components/PersonalSettings.vue'
+Vue.mixin({ methods: { t, n } })
 
 const VueSettings = Vue.extend(PersonalSettings)
 new VueSettings().$mount('#osm_prefs')

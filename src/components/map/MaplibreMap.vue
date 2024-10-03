@@ -397,11 +397,11 @@ export default {
 }
 </script>
 <style lang="scss">
+@import 'maplibre-gl/dist/maplibre-gl.css';
 @import '../../../css/maplibre.scss';
 </style>
 
 <style scoped lang="scss">
-@import '~maplibre-gl/dist/maplibre-gl.css';
 
 .map-wrapper {
 	position: relative;

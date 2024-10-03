@@ -10,8 +10,8 @@
  */
 
 import Vue from 'vue'
-import './bootstrap.js'
 import AdminSettings from './components/AdminSettings.vue'
+Vue.mixin({ methods: { t, n } })
 
 const VueSettings = Vue.extend(AdminSettings)
 new VueSettings().$mount('#osm_prefs')

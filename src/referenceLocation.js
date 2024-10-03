@@ -20,16 +20,11 @@
  */
 
 import { registerWidget, registerCustomPickerElement, NcCustomPickerRenderResult } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { linkTo } from '@nextcloud/router'
-import { getRequestToken } from '@nextcloud/auth'
-
-__webpack_nonce__ = btoa(getRequestToken()) // eslint-disable-line
-__webpack_public_path__ = linkTo('integration_openstreetmap', 'js/') // eslint-disable-line
 
 registerWidget('integration_openstreetmap_route', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
+	const { default: Vue } = await import('vue')
 	Vue.mixin({ methods: { t, n } })
-	const { default: MaplibreRouteReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreRouteReferenceWidget.vue')
+	const { default: MaplibreRouteReferenceWidget } = await import('./views/MaplibreRouteReferenceWidget.vue')
 	const ReferenceWidgetComponent = MaplibreRouteReferenceWidget
 
 	const Widget = Vue.extend(ReferenceWidgetComponent)
@@ -43,16 +38,16 @@ registerWidget('integration_openstreetmap_route', async (el, { richObjectType, r
 })
 
 registerWidget('integration_openstreetmap_location', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-lazy" */'vue')
+	const { default: Vue } = await import('vue')
 	Vue.mixin({ methods: { t, n } })
-	const { loadState } = await import(/* webpackChunkName: "reference-lazy" */'@nextcloud/initial-state')
+	const { loadState } = await import('@nextcloud/initial-state')
 	const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
 	let ReferenceWidgetComponent
 	if (preferOsmFrame) {
-		const { default: OsmFrameReferenceWidget } = await import(/* webpackChunkName: "reference-frame-lazy" */'./views/OsmFrameReferenceWidget.vue')
+		const { default: OsmFrameReferenceWidget } = await import('./views/OsmFrameReferenceWidget.vue')
 		ReferenceWidgetComponent = OsmFrameReferenceWidget
 	} else {
-		const { default: MaplibreLocationReferenceWidget } = await import(/* webpackChunkName: "reference-maplibre-lazy" */'./views/MaplibreLocationReferenceWidget.vue')
+		const { default: MaplibreLocationReferenceWidget } = await import('./views/MaplibreLocationReferenceWidget.vue')
 		ReferenceWidgetComponent = MaplibreLocationReferenceWidget
 	}
 
@@ -67,8 +62,8 @@ registerWidget('integration_openstreetmap_location', async (el, { richObjectType
 })
 
 registerCustomPickerElement('openstreetmap-point', async (el, { providerId, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-picker-lazy" */'vue')
-	const { default: PointCustomPickerElement } = await import(/* webpackChunkName: "reference-picker-lazy" */'./views/PointCustomPickerElement.vue')
+	const { default: Vue } = await import('vue')
+	const { default: PointCustomPickerElement } = await import('./views/PointCustomPickerElement.vue')
 	Vue.mixin({ methods: { t, n } })
 
 	const Element = Vue.extend(PointCustomPickerElement)
@@ -84,8 +79,8 @@ registerCustomPickerElement('openstreetmap-point', async (el, { providerId, acce
 })
 
 registerCustomPickerElement('openstreetmap-direction', async (el, { providerId, accessible }) => {
-	const { default: Vue } = await import(/* webpackChunkName: "reference-picker-lazy" */'vue')
-	const { default: DirectionCustomPickerElement } = await import(/* webpackChunkName: "reference-direction-picker-lazy" */'./views/DirectionCustomPickerElement.vue')
+	const { default: Vue } = await import('vue')
+	const { default: DirectionCustomPickerElement } = await import('./views/DirectionCustomPickerElement.vue')
 	Vue.mixin({ methods: { t, n } })
 
 	const Element = Vue.extend(DirectionCustomPickerElement)
