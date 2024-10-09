@@ -28,6 +28,7 @@ use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
+use OCP\IAppConfig;
 use OCP\IConfig;
 
 class BingReferenceProvider implements IReferenceProvider {
@@ -36,6 +37,7 @@ class BingReferenceProvider implements IReferenceProvider {
 
 	public function __construct(
 		private IConfig $config,
+		private IAppConfig $appConfig,
 		private IReferenceManager $referenceManager,
 		private LinkReferenceProvider $linkReferenceProvider,
 		private ?string $userId,
@@ -46,7 +48,7 @@ class BingReferenceProvider implements IReferenceProvider {
 	 * @inheritDoc
 	 */
 	public function matchReference(string $referenceText): bool {
-		$adminLinkPreviewEnabled = $this->config->getAppValue(Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		$userLinkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;

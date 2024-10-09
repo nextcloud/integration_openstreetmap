@@ -31,6 +31,7 @@ use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -43,6 +44,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	public function __construct(
 		private OsmAPIService $osmAPIService,
 		private IConfig $config,
+		private IAppConfig $appConfig,
 		private IL10N $l10n,
 		private IURLGenerator $urlGenerator,
 		private IReferenceManager $referenceManager,
@@ -93,7 +95,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	 * @inheritDoc
 	 */
 	public function matchReference(string $referenceText): bool {
-		$adminLinkPreviewEnabled = $this->config->getAppValue(Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		$userLinkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;

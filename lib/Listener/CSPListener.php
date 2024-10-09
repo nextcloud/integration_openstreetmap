@@ -27,7 +27,7 @@ use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Http\EmptyContentSecurityPolicy;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\IConfig;
+use OCP\IAppConfig;
 use OCP\IRequest;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 
@@ -38,7 +38,7 @@ class CSPListener implements IEventListener {
 
 	public function __construct(
 		private IRequest $request,
-		private IConfig $config,
+		private IAppConfig $appConfig,
 	) {
 	}
 
@@ -56,7 +56,7 @@ class CSPListener implements IEventListener {
 			->addAllowedFrameDomain('https://www.openstreetmap.org')
 			->addAllowedImageDomain('https://*.tile.openstreetmap.org');
 
-		$proxyOsm = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
+		$proxyOsm = $this->appConfig->getValueString(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
 		if (!$proxyOsm) {
 			$policy
 				->addAllowedConnectDomain('https://*.openstreetmap.org')
