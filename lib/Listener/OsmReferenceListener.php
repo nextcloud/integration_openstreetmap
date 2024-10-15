@@ -27,6 +27,7 @@ use OCP\AppFramework\Services\IInitialState;
 use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\Util;
 
@@ -37,6 +38,7 @@ class OsmReferenceListener implements IEventListener {
 
 	public function __construct(
 		private IConfig $config,
+		private IAppConfig $appConfig,
 		private IInitialState $initialState,
 		private ?string $userId,
 	) {
@@ -47,7 +49,7 @@ class OsmReferenceListener implements IEventListener {
 			return;
 		}
 
-		$maptilerApiKey = $this->config->getAppValue(Application::APP_ID, 'maptiler_api_key', Application::DEFAULT_MAPTILER_API_KEY) ?: Application::DEFAULT_MAPTILER_API_KEY;
+		$maptilerApiKey = $this->appConfig->getValueString(Application::APP_ID, 'maptiler_api_key', Application::DEFAULT_MAPTILER_API_KEY) ?: Application::DEFAULT_MAPTILER_API_KEY;
 		$userConfig = [
 			'maptiler_api_key' => $maptilerApiKey,
 		];
@@ -55,7 +57,7 @@ class OsmReferenceListener implements IEventListener {
 
 		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
-		$proxyMapRequests = $this->config->getAppValue(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
+		$proxyMapRequests = $this->appConfig->getValueString(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
 		$this->initialState->provideInitialState('proxy-map-requests', $proxyMapRequests);
 
 		$lastLat = $this->config->getUserValue($this->userId, Application::APP_ID, 'lat');

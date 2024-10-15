@@ -17,6 +17,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IAppConfig;
 use OCP\IConfig;
 
 use OCP\IRequest;
@@ -28,6 +29,7 @@ class ConfigController extends Controller {
 		string $appName,
 		IRequest $request,
 		private IConfig $config,
+		private IAppConfig $appConfig,
 		private ?string $userId,
 	) {
 		parent::__construct($appName, $request);
@@ -55,7 +57,7 @@ class ConfigController extends Controller {
 			if (in_array($key, ['maptiler_api_key'], true)) {
 				return new DataResponse([], Http::STATUS_BAD_REQUEST);
 			}
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
+			$this->appConfig->setValueString(Application::APP_ID, $key, $value);
 		}
 
 		return new DataResponse([]);
@@ -68,7 +70,7 @@ class ConfigController extends Controller {
 	#[PasswordConfirmationRequired]
 	public function setSensitiveAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
+			$this->appConfig->setValueString(Application::APP_ID, $key, $value, false, true);
 		}
 
 		return new DataResponse([]);
