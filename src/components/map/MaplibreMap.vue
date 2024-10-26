@@ -57,6 +57,7 @@ import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
 import VMarker from './VMarker.vue'
 import PolygonFill from './PolygonFill.vue'
 import LinestringCollection from './LinestringCollection.vue'
+import '../../../css/maplibre.scss'
 
 const DEFAULT_MAP_MAX_ZOOM = 22
 
@@ -398,7 +399,6 @@ export default {
 </script>
 <style lang="scss">
 @import 'maplibre-gl/dist/maplibre-gl.css';
-@import '../../../css/maplibre.scss';
 </style>
 
 <style scoped lang="scss">
