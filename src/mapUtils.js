@@ -18,6 +18,7 @@ export const routingProfiles = {
 		label: t('integration_openstreetmap', 'By car'),
 		srv: 0,
 		ghpProfile: 'car',
+		osmandProfile: 'car',
 		icon: CarIcon,
 	},
 	bike: {
@@ -25,6 +26,7 @@ export const routingProfiles = {
 		label: t('integration_openstreetmap', 'By bike'),
 		srv: 1,
 		ghpProfile: 'bike',
+		osmandProfile: 'bicycle',
 		icon: BicycleIcon,
 	},
 	foot: {
@@ -32,6 +34,7 @@ export const routingProfiles = {
 		label: t('integration_openstreetmap', 'By foot'),
 		srv: 2,
 		ghpProfile: 'foot',
+		osmandProfile: 'pedestrian',
 		icon: WalkIcon,
 	},
 }
@@ -48,6 +51,10 @@ export const routingLinkTypes = {
 	graphhopper_com: {
 		id: 'graphhopper_com',
 		label: 'https://graphhopper.com/maps',
+	},
+	osmand_net: {
+		id: 'osmand_net',
+		label: 'https://osmand.net/map/navigate',
 	},
 }
 
@@ -73,6 +80,20 @@ export function getRoutingLink(waypoints, profile = routingProfiles.car, linkTyp
 		link = 'https://graphhopper.com/maps/'
 		queryParams.push(...waypoints.map(w => `point=${w[1]}%2C${w[0]}`))
 		queryParams.push('profile=' + selectedProfile.ghpProfile)
+	} else if (linkTypeId === routingLinkTypes.osmand_net.id) {
+		link = 'https://osmand.net/map/navigate/'
+		const startW = waypoints[0]
+		const endW = waypoints[waypoints.length - 1]
+		queryParams.push(`start=${startW[1]},${startW[0]}`)
+		queryParams.push(`end=${endW[1]},${endW[0]}`)
+		if (waypoints.length > 2) {
+			const vias = waypoints.slice(1, waypoints.length - 1)
+			queryParams.push('via=' + vias.map(v => `${v[1]},${v[0]}`).join(';'))
+		}
+		queryParams.push('profile=' + selectedProfile.osmandProfile)
+		const centerLat = waypoints.map(w => w[1]).reduce((acc, e) => acc + e, 0) / waypoints.length
+		const centerLon = waypoints.map(w => w[0]).reduce((acc, e) => acc + e, 0) / waypoints.length
+		fragments.push(`14/${centerLat}/${centerLon}`)
 	}
 
 	if (queryParams.length > 0) {
