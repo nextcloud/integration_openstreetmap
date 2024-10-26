@@ -52,6 +52,9 @@
 			</template>
 		</MaplibreMap>
 		<div class="footer">
+			<label for="extension-select">
+				{{ t('integration_openstreetmap', 'Link type') }}
+			</label>
 			<NcSelect
 				class="type-select"
 				:value="selectedLinkType"
@@ -279,6 +282,7 @@ export default {
 	h2 {
 		display: flex;
 		align-items: center;
+		margin-top: 0;
 	}
 
 	.header {
@@ -323,6 +327,7 @@ export default {
 
 		.type-select {
 			width: 350px;
+			margin: 0;
 		}
 	}
 }

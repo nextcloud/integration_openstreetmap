@@ -31,6 +31,7 @@
 			@map-state-change="onMapStateChange" />
 		<div class="footer">
 			<NcSelect
+				class="type-select"
 				:value="selectedLinkType"
 				:options="linkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
@@ -281,6 +282,7 @@ export default {
 	h2 {
 		display: flex;
 		align-items: center;
+		margin-top: 0;
 	}
 
 	.generic-search {
@@ -314,6 +316,10 @@ export default {
 
 		.marker-checkbox {
 			margin-left: 16px;
+		}
+
+		.type-select {
+			margin: 0;
 		}
 	}
 }
