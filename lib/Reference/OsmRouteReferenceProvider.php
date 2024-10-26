@@ -143,6 +143,42 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 		// https://map.project-osrm.org/?z=9&center=50.572772%2C8.094177&loc=50.979182%2C7.910156&loc=50.162824%2C8.338623&hl=en&alt=0&srv=1
 		// https://www.google.*/maps/dir/43.6577236,3.8765911/43.6637695,3.8992984/@43.6600832,3.8897232,14z/data=blabla?entry=ttu&g_ep=blabla
 		// https://www.waze.com/*/live-map/directions?...=&to=ll.43.65818541%2C3.88821602&from=ll.43.64247306%2C3.85920525
+		// https://osmand.net/map/navigate/?start=43.679527,3.928256&end=43.685827,3.928707&via=43.682615,3.926282;43.684105,3.930037&profile=pedestrian#16/43.6818/3.9262
+
+		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/navigate\/\?.*start=(-?\d+\.\d+),(-?\d+\.\d+)/i', $url) === 1) {
+			$query = parse_url($url, PHP_URL_QUERY);
+			parse_str($query, $parsedQuery);
+			if (isset($parsedQuery['start'], $parsedQuery['end'])) {
+				$osmandProfiles = [
+					'car' => 'car',
+					'pedestrian' => 'foot',
+					'bicycle' => 'bike',
+				];
+				$profile = 'car';
+				if (isset($parsedQuery['profile']) && isset($osmandProfiles[$parsedQuery['profile']])) {
+					$profile = $osmandProfiles[$parsedQuery['profile']];
+				}
+				preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $parsedQuery['start'], $fromMatches);
+				preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $parsedQuery['end'], $toMatches);
+				$formattedVias = [];
+				if (isset($parsedQuery['via'])) {
+					$vias = explode(';', $parsedQuery['via']);
+					foreach ($vias as $via) {
+						if (preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $via, $viaMatches) === 1) {
+							$formattedVias[] = [(float)$viaMatches[1], (float)$viaMatches[2]];
+						}
+					}
+				}
+				return [
+					'profile' => $profile,
+					'points' => [
+						[(float)$fromMatches[1], (float)$fromMatches[2]],
+						...$formattedVias,
+						[(float)$toMatches[1], (float)$toMatches[2]],
+					],
+				];
+			}
+		}
 
 		if (preg_match('/^(?:https?:\/\/)?(?:www\.)?waze\.com\/[a-z-_]+\/live-map\/directions\?/i', $url) === 1) {
 			$query = parse_url($url, PHP_URL_QUERY);
