@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "OpenStreetMap" : "OpenStreetMap",
     "Map location (by OpenStreetMap)" : "Localisation sur carte (par OpenStreetMap)",
+    "Map directions (by OSRM)" : "Itinéraires cartographier (par OSRM)",
     "OpenStreetMap locations" : "Localisations sur OpenStreetMap",
     "Bad HTTP method" : "Mauvaise méthode HTTP",
     "Bad credentials" : "Identifiants incorrects",
@@ -28,10 +29,17 @@ OC.L10N.register(
     "Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged." : "Cliquez sur la carte pour ajouter des points de passage. Cliquez sur les points de passage pour les supprimer. Les points de passage peuvent être déplacés.",
     "Click on the map to set the start location" : "Cliquez sur la carte pour définir le lieu de départ",
     "Cancel edition" : "Annuler l'édition",
+    "Edit route" : "Modifier l'itinéraire",
+    "Copy direction link" : "Copier le lien de direction",
+    "Unknown distance" : "Distance inconnue",
+    "Unknown duration" : "Durée inconnue",
     "Link could not be copied to clipboard" : "Le lien n'a pas pu être copié dans le presse-papiers",
     "Include marker" : "Inclure le marqueur",
     "Generate location link" : "Générer un lien de localisation",
     "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Maps"
+    "Google maps" : "Google Maps",
+    "By car" : "En voiture",
+    "By bike" : "En vélo",
+    "By foot" : "A pied"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
