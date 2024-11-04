@@ -15,7 +15,7 @@
     "OpenStreetMap options saved" : "OpenStreetMap ayarları kaydedildi",
     "Failed to save OpenStreetMap options" : "OpenStreetMap ayarları kaydedilemedi",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Uyarı, birleşik arama çubuğuna yazdığınız her şey OpenStreetMap Nominatim hizmetine gönderilecek.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Bir Nextcloud yöneticisi OpenStreetMap birleşik arama hizmetini devre dışı bırakmış",
+    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Bir Nextcloud yöneticisi OpenStreetMap birleşik arama hizmetini kullanımdan kaldırmış",
     "Enable OpenStreetMap link previews" : "OpenStreetMap bağlantıları ön izlenebilsin",
     "Prefer simple OpenStreetMap frame" : "Basit OpenStreetMap çerçevesi kullanılsın",
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
