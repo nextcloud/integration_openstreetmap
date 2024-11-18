@@ -35,7 +35,7 @@ registerWidget('integration_openstreetmap_route', async (el, { richObjectType, r
 			accessible,
 		},
 	}).$mount(el)
-})
+}, () => {}, { hasInteractiveView: false })
 
 registerWidget('integration_openstreetmap_location', async (el, { richObjectType, richObject, accessible }) => {
 	const { default: Vue } = await import('vue')
@@ -59,7 +59,7 @@ registerWidget('integration_openstreetmap_location', async (el, { richObjectType
 			accessible,
 		},
 	}).$mount(el)
-})
+}, () => {}, { hasInteractiveView: false })
 
 registerCustomPickerElement('openstreetmap-point', async (el, { providerId, accessible }) => {
 	const { default: Vue } = await import('vue')
