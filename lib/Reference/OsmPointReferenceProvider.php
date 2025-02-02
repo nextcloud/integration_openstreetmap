@@ -141,6 +141,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				if (isset($coords['terrain'])) {
 					$pointInfo['terrain'] = $coords['terrain'];
 				}
+				if (isset($coords['globe'])) {
+					$pointInfo['globe'] = $coords['globe'];
+				}
 				$pointInfo['map_center'] = [
 					'lat' => $coords['lat'],
 					'lon' => $coords['lon'],
@@ -260,6 +263,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		}
 		if (isset($params['terrain'])) {
 			$urlInfo['terrain'] = true;
+		}
+		if (isset($params['globe'])) {
+			$urlInfo['globe'] = true;
 		}
 		return $urlInfo;
 	}

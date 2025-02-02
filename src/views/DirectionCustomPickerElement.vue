@@ -41,6 +41,7 @@
 			:bearing="lastMapState?.bearing ?? undefined"
 			:map-style="lastMapState?.mapStyle ?? undefined"
 			:use-terrain="!!lastMapState?.terrain ?? undefined"
+			:use-globe="!!lastMapState?.globe ?? undefined"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange">
 			<template #default="{ map }">
@@ -233,8 +234,9 @@ export default {
 			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
+			const globe = this.currentMapGlobe ? '1' : ''
 			const routingLinkType = this.selectedRoutingLinkTypeId
-			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, routingLinkType })
+			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, routingLinkType })
 			this.$emit('submit', this.currentLink)
 		},
 		onMapStateChange(e) {
@@ -258,6 +260,9 @@ export default {
 			}
 			if ([true, false].includes(e.terrain)) {
 				this.currentMapTerrain = e.terrain
+			}
+			if ([true, false].includes(e.globe)) {
+				this.currentMapGlobe = e.globe
 			}
 		},
 	},

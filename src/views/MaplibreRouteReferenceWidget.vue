@@ -88,6 +88,7 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
+				:use-globe="useGlobe"
 				:markers="editing ? undefined : richObject.waypoints"
 				:lines="editing ? undefined : routeGeojsons"
 				@line-click="onRouteClicked">
@@ -251,6 +252,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

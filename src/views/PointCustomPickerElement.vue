@@ -26,6 +26,7 @@
 			:bearing="lastMapState?.bearing ?? undefined"
 			:map-style="lastMapState?.mapStyle ?? undefined"
 			:use-terrain="!!lastMapState?.terrain ?? undefined"
+			:use-globe="!!lastMapState?.globe ?? undefined"
 			:marker="currentMarker"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange" />
@@ -119,6 +120,7 @@ export default {
 			currentBearing: getLastMapState()?.bearing ?? null,
 			currentMapStyle: getLastMapState()?.mapStyle ?? null,
 			currentMapTerrain: !!getLastMapState()?.terrain,
+			currentMapGlobe: !!getLastMapState()?.globe,
 			selectedLinkTypeId: getLastMapState()?.linkType ? getLastMapState().linkType : linkTypes.osm.id,
 			showMap: false,
 			lastMapState: getLastMapState(),
@@ -193,6 +195,9 @@ export default {
 			if (this.currentMapTerrain) {
 				fragments.push('terrain')
 			}
+			if (this.currentMapGlobe) {
+				fragments.push('globe')
+			}
 
 			if (queryParams.length > 0) {
 				link += '?' + queryParams.join('&')
@@ -226,8 +231,9 @@ export default {
 			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
+			const globe = this.currentMapGlobe ? '1' : ''
 			const linkType = this.selectedLinkTypeId
-			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType })
+			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType })
 			this.$emit('submit', this.currentLink)
 		},
 		onSearchSubmit(link) {
@@ -258,6 +264,9 @@ export default {
 			}
 			if ([true, false].includes(e.terrain)) {
 				this.currentMapTerrain = e.terrain
+			}
+			if ([true, false].includes(e.globe)) {
+				this.currentMapGlobe = e.globe
 			}
 		},
 	},

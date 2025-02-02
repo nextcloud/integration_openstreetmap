@@ -41,6 +41,7 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
+				:use-globe="useGlobe"
 				:area="richObject.geojson" />
 		</div>
 	</div>
@@ -104,6 +105,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

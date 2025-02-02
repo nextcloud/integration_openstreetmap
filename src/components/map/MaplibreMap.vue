@@ -40,7 +40,7 @@
 <script>
 import maplibregl, {
 	Map, NavigationControl, ScaleControl, GeolocateControl,
-	FullscreenControl, TerrainControl,
+	FullscreenControl, TerrainControl, GlobeControl,
 } from 'maplibre-gl'
 import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
@@ -72,6 +72,10 @@ export default {
 
 	props: {
 		useTerrain: {
+			type: Boolean,
+			default: false,
+		},
+		useGlobe: {
 			type: Boolean,
 			default: false,
 		},
@@ -137,6 +141,7 @@ export default {
 			mousePositionControl: null,
 			scaleControl: null,
 			terrainControl: null,
+			globeControl: null,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
 			// https://api.maptiler.com/resources/logo.svg
 			maptilerLogoUrl: generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg'),
@@ -163,6 +168,9 @@ export default {
 			} else {
 				this.map.setTerrain()
 			}
+		},
+		useGlobe(newValue) {
+			this.globeControl._toggleProjection()
 		},
 		pitch(newValue) {
 			this.map.setPitch(newValue)
@@ -277,6 +285,21 @@ export default {
 			this.map.addControl(this.terrainControl, 'top-right')
 			this.terrainControl._terrainButton.addEventListener('click', () => {
 				this.$emit('map-state-change', { terrain: !!this.map.getTerrain() })
+			})
+
+			this.globeControl = new GlobeControl()
+			this.map.addControl(this.globeControl, 'top-right')
+			this.globeControl._globeButton.addEventListener('click', () => {
+				this.$emit('map-state-change', { globe: this.map.getProjection()?.type === 'globe' })
+			})
+
+			this.map.on('style.load', () => {
+				if (this.useGlobe) {
+					this.map.setProjection({
+						type: 'globe',
+					})
+				}
+				this.globeControl._updateGlobeIcon()
 			})
 
 			this.handleMapEvents()
