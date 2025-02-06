@@ -177,6 +177,8 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		// https://osmand.net/map#17/43.61599/3.87524
 		// https://osmand.net/map?pin=43.6954,3.8754#7/43.6954/3.8754
 		// https://osm.org/?mlat=52.51629&mlon=13.37755&zoom=12
+		// https://omaps.app/IyqbLiFkiD
+		// https://omaps.app/IyqbLiFkiD/Etang_de_Thau
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+.\d+)/i', $url, $matches);
 		if (count($matches) > 3) {
 			$result = [
@@ -197,6 +199,15 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 				'markerLon' => (float)$matches[2],
 			];
 			return $this->getFragmentInfo($url, $result);
+		}
+
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?omaps\.app\/([0-9a-zA-Z]+)(\/[^\/]+)?$/i', $url, $matches);
+		if (count($matches) > 1) {
+			$encodedCoords = $matches[1];
+			$result = $this->utilsService->decodeOrganicMapsShortLink($encodedCoords);
+			$result['markerLat'] = $result['lat'];
+			$result['markerLon'] = $result['lon'];
+			return $result;
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/go\/([0-9a-zA-Z\-\~]+)$/i', $url, $matches);
