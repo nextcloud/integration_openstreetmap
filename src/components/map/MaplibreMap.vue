@@ -288,6 +288,10 @@ export default {
 				if (this.useTerrain) {
 					this.terrainControl._toggleTerrain()
 				}
+
+				this.map.setProjection({
+					type: 'globe',
+				})
 				setTimeout(() => {
 					this.emitMapState()
 					this.emitMapBounds()
