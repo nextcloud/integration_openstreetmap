@@ -50,32 +50,5 @@
 				<referencedClass name="OC\Collaboration\Reference\LinkReferenceProvider" />
 			</errorLevel>
 		</UndefinedClass>
-		<UndefinedDocblockClass>
-			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
-				<referencedClass name="Doctrine\DBAL\Exception" />
-				<referencedClass name="Doctrine\DBAL\Exception\UniqueConstraintViolationException" />
-				<referencedClass name="Doctrine\DBAL\Platforms\AbstractPlatform" />
-				<referencedClass name="Doctrine\DBAL\Schema\Schema" />
-				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-				<referencedClass name="Doctrine\DBAL\Schema\Table" />
-				<referencedClass name="OC\DB\ConnectionAdapter" />
-				<referencedClass name="OC\User\NoUserException" />
-				<referencedClass name="OCA\Circles\CirclesManager" />
-				<referencedClass name="OCA\Circles\Model\Member" />
-				<referencedClass name="OCA\DAV\CardDAV\PhotoCache" />
-				<referencedClass name="OCA\FederatedFileSharing\AddressHandler" />
-			</errorLevel>
-		</UndefinedDocblockClass>
-		<UndefinedInterfaceMethod>
-			<errorLevel type="suppress">
-				<referencedMethod name="OCP\IDBConnection::getInner" />
-			</errorLevel>
-		</UndefinedInterfaceMethod>
-		<InvalidThrow>
-			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Exception\UniqueConstraintViolationException" />
-			</errorLevel>
-		</InvalidThrow>
 	</issueHandlers>
 </psalm>
