@@ -347,6 +347,9 @@ export default {
 					// terrain is not disabled anymore by maplibre when switching tile layers
 					// it is still needed to add the source as it goes away when switching from a vector to a raster one
 					this.addTerrainSource()
+					this.map.setProjection({
+						type: 'globe',
+					})
 				})
 			}, 500)
 		},
