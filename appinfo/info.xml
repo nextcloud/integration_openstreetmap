@@ -11,15 +11,15 @@ component to quickly insert a location link by searching or selecting a point on
 	<author>Julien Veyssier</author>
 	<namespace>Osm</namespace>
 	<documentation>
-		<developer>https://github.com/julien-nc/integration_openstreetmap</developer>
+		<developer>https://github.com/nextcloud/integration_openstreetmap</developer>
 	</documentation>
 	<category>integration</category>
-	<website>https://github.com/julien-nc/integration_openstreetmap</website>
-	<bugs>https://github.com/julien-nc/integration_openstreetmap/issues</bugs>
-	<screenshot>https://github.com/julien-nc/integration_openstreetmap/raw/main/img/screenshot1.jpg</screenshot>
-	<screenshot>https://github.com/julien-nc/integration_openstreetmap/raw/main/img/screenshot2.jpg</screenshot>
-	<screenshot>https://github.com/julien-nc/integration_openstreetmap/raw/main/img/screenshot3.jpg</screenshot>
-	<screenshot>https://github.com/julien-nc/integration_openstreetmap/raw/main/img/screenshot4.jpg</screenshot>
+	<website>https://github.com/nextcloud/integration_openstreetmap</website>
+	<bugs>https://github.com/nextcloud/integration_openstreetmap/issues</bugs>
+	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot1.jpg</screenshot>
+	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot2.jpg</screenshot>
+	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot3.jpg</screenshot>
+	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot4.jpg</screenshot>
 	<dependencies>
 		<nextcloud min-version="30" max-version="32"/>
 	</dependencies>
