@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.1.0 – 2025-05-23
+
+### Added
+
+- Add support for osmand.net/map/navigate routing links in reference widget
+- Add osmand as direction result link type in direction picker
+- Add support for organic maps location links like https://omaps.app/IyqbLiFkiD or https://omaps.app/IyqbLiFkiD/Etang_de_Thau @julien-nc [#15](https://github.com/nextcloud/integration_openstreetmap/pull/15)
+- Use the globe projection that was introduced in MapLibre
+
+### Changed
+
+- Update npm pkgs
+- Add origin header to tile proxy requests to the maptiler API keys can be restricted to NC's domain
+- Switch to IAppConfig, declare api key as sensitive @julien-nc [#11](https://github.com/nextcloud/integration_openstreetmap/pull/11)
+- Disable interactive widget switch
+- Switch to Psalm 6 @julien-nc [#16](https://github.com/nextcloud/integration_openstreetmap/pull/16)
+
+### Fixed
+
+- Fix sketchy content-type in proxy
+
 ## 2.0.1 – 2024-09-05
 
 ### Added
