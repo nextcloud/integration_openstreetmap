@@ -45,17 +45,17 @@ class OsmAPIService {
 	public function getRasterTile(string $service, int $x, int $y, int $z, ?string $s = null): ?string {
 		$options = [];
 		if ($service === 'osm') {
-			$url = 'https://tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			$url = 'https://tile.openstreetmap.org/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.png';
 		} elseif ($service === 'osm-highres') {
-			$url = 'https://tile.osmand.net/hd/' . $z . '/' . $x . '/' . $y . '.png';
+			$url = 'https://tile.osmand.net/hd/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.png';
 		} elseif ($service === 'esri-topo') {
-			$url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/' . $z . '/' . $y . '/' . $x;
+			$url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/' . strval($z) . '/' . strval($y) . '/' . strval($x);
 		} elseif ($service === 'watercolor') {
-			$url = 'https://tiles.stadiamaps.com/styles/stamen_watercolor/' . $z . '/' . $x . '/' . $y . '.jpg';
+			$url = 'https://tiles.stadiamaps.com/styles/stamen_watercolor/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.jpg';
 			// see https://docs.stadiamaps.com/authentication
 			$options['headers'] = ['Origin' => 'https://nextcloud.local'];
 		} else {
-			$url = 'https://tile.openstreetmap.org/' . $z . '/' . $x . '/' . $y . '.png';
+			$url = 'https://tile.openstreetmap.org/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.png';
 		}
 		$body = $this->client->get($url, $options)->getBody();
 		if (is_resource($body)) {
@@ -99,20 +99,20 @@ class OsmAPIService {
 	 */
 	public function getLinkFromCoordinates(float $lat, float $lon, int $zoom = 12, bool $includeMarker = true): string {
 		if ($includeMarker) {
-			return 'https://www.openstreetmap.org/?mlat=' . $lat . '&mlon=' . $lon . '#map=' . $zoom . '/' . $lat . '/' . $lon;
+			return 'https://www.openstreetmap.org/?mlat=' . strval($lat) . '&mlon=' . strval($lon) . '#map=' . strval($zoom) . '/' . strval($lat) . '/' . strval($lon);
 		}
-		return 'https://www.openstreetmap.org/#map=' . $zoom . '/' . $lat . '/' . $lon;
+		return 'https://www.openstreetmap.org/#map=' . strval($zoom) . '/' . strval($lat) . '/' . strval($lon);
 	}
 
 	public function getLinkFromOsmId(int $osmId, string $osmType): string {
-		return 'https://www.openstreetmap.org/' . urlencode($osmType) . '/' . $osmId;
+		return 'https://www.openstreetmap.org/' . urlencode($osmType) . '/' . strval($osmId);
 	}
 
 	/**
 	 * @param string $userId
 	 * @param int $locationId
 	 * @param string $locationType
-	 * @return array
+	 * @return array|null
 	 */
 	public function getLocationInfo(string $userId, int $locationId, string $locationType): ?array {
 		// example:
@@ -123,7 +123,7 @@ class OsmAPIService {
 				? 'W'
 				: 'N');
 		$params = [
-			'osm_ids' => $prefix . $locationId,
+			'osm_ids' => $prefix . strval($locationId),
 			'format' => 'json',
 			'addressdetails' => 1,
 			'extratags' => 1,
@@ -134,7 +134,7 @@ class OsmAPIService {
 		if (count($result) === 1) {
 			return $result[0];
 		}
-		$this->logger->debug('Osm API error : no response for lookup ' . $locationType . '/' . $locationId, ['app' => Application::APP_ID]);
+		$this->logger->debug('Osm API error : no response for lookup ' . $locationType . '/' . strval($locationId), ['app' => Application::APP_ID]);
 		return null;
 	}
 
