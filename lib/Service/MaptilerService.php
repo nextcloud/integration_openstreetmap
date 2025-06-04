@@ -127,7 +127,7 @@ class MaptilerService {
 	 * @throws Exception
 	 */
 	public function getMapTilerTile(string $version, int $x, int $y, int $z, string $ext, ?string $key = null): array {
-		$url = 'https://api.maptiler.com/tiles/' . $version . '/' . $z . '/' . $x . '/' . $y . '.' . $ext;
+		$url = 'https://api.maptiler.com/tiles/' . $version . '/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.' . $ext;
 		if ($key !== null) {
 			$url .= '?key=' . $key;
 		}
