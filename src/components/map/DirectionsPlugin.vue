@@ -51,7 +51,8 @@ export default {
 		this.init()
 	},
 
-	destroyed() {
+	unmounted() {
+		console.debug('[osm] directions plugin map unmounted', this.map)
 		if (this.directions) {
 			this.directions.destroy()
 		}

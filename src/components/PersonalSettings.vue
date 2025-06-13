@@ -7,9 +7,9 @@
 		<div id="osm-content">
 			<div id="osm-search-block">
 				<NcCheckboxRadioSwitch
-					:checked="state.search_location_enabled && state.admin_search_location_enabled"
+					:model-value="state.search_location_enabled && state.admin_search_location_enabled"
 					:disabled="!state.admin_search_location_enabled"
-					@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
+					@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
 					{{ t('integration_openstreetmap', 'Enable searching for locations') }}
 				</NcCheckboxRadioSwitch>
 				<br>
@@ -22,19 +22,19 @@
 					{{ t('integration_tmdb', 'A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider') }}
 				</p>
 				<NcCheckboxRadioSwitch
-					:checked="state.link_preview_enabled"
-					@update:checked="onCheckboxChanged($event, 'link_preview_enabled')">
+					:model-value="state.link_preview_enabled"
+					@update:model-value="onCheckboxChanged($event, 'link_preview_enabled')">
 					{{ t('integration_openstreetmap', 'Enable OpenStreetMap link previews') }}
 				</NcCheckboxRadioSwitch>
 				<NcCheckboxRadioSwitch v-if="state.link_preview_enabled"
-					:checked="state.prefer_simple_osm_iframe"
-					@update:checked="onCheckboxChanged($event, 'prefer_simple_osm_iframe')">
+					:model-value="state.prefer_simple_osm_iframe"
+					@update:model-value="onCheckboxChanged($event, 'prefer_simple_osm_iframe')">
 					{{ t('integration_openstreetmap', 'Prefer simple OpenStreetMap frame') }}
 				</NcCheckboxRadioSwitch>
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked="state.navigation_enabled"
-				@update:checked="onCheckboxChanged($event, 'navigation_enabled')">
+				:model-value="state.navigation_enabled"
+				@update:model-value="onCheckboxChanged($event, 'navigation_enabled')">
 				{{ t('integration_openstreetmap', 'Enable navigation link') }}
 			</NcCheckboxRadioSwitch>
 		</div>
@@ -46,7 +46,7 @@ import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline
 
 import OsmIcon from './icons/OsmIcon.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'

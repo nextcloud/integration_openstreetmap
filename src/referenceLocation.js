@@ -19,27 +19,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { registerWidget, registerCustomPickerElement, NcCustomPickerRenderResult } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { registerWidget, registerCustomPickerElement, NcCustomPickerRenderResult } from '@nextcloud/vue/components/NcRichText'
 
 registerWidget('integration_openstreetmap_route', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import('vue')
-	Vue.mixin({ methods: { t, n } })
+	const { createApp } = await import('vue')
 	const { default: MaplibreRouteReferenceWidget } = await import('./views/MaplibreRouteReferenceWidget.vue')
-	const ReferenceWidgetComponent = MaplibreRouteReferenceWidget
 
-	const Widget = Vue.extend(ReferenceWidgetComponent)
-	new Widget({
-		propsData: {
+	const app = createApp(
+		MaplibreRouteReferenceWidget,
+		{
 			richObjectType,
 			richObject,
 			accessible,
 		},
-	}).$mount(el)
+	)
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
 }, () => {}, { hasInteractiveView: false })
 
 registerWidget('integration_openstreetmap_location', async (el, { richObjectType, richObject, accessible }) => {
-	const { default: Vue } = await import('vue')
-	Vue.mixin({ methods: { t, n } })
+	const { createApp } = await import('vue')
 	const { loadState } = await import('@nextcloud/initial-state')
 	const preferOsmFrame = loadState('integration_openstreetmap', 'prefer-osm-frame')
 	let ReferenceWidgetComponent
@@ -51,46 +50,52 @@ registerWidget('integration_openstreetmap_location', async (el, { richObjectType
 		ReferenceWidgetComponent = MaplibreLocationReferenceWidget
 	}
 
-	const Widget = Vue.extend(ReferenceWidgetComponent)
-	new Widget({
-		propsData: {
+	const app = createApp(
+		ReferenceWidgetComponent,
+		{
 			richObjectType,
 			richObject,
 			accessible,
 		},
-	}).$mount(el)
+	)
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
 }, () => {}, { hasInteractiveView: false })
 
 registerCustomPickerElement('openstreetmap-point', async (el, { providerId, accessible }) => {
-	const { default: Vue } = await import('vue')
+	const { createApp } = await import('vue')
 	const { default: PointCustomPickerElement } = await import('./views/PointCustomPickerElement.vue')
-	Vue.mixin({ methods: { t, n } })
 
-	const Element = Vue.extend(PointCustomPickerElement)
-	const vueElement = new Element({
-		propsData: {
+	const app = createApp(
+		PointCustomPickerElement,
+		{
 			providerId,
 			accessible,
 		},
-	}).$mount(el)
-	return new NcCustomPickerRenderResult(vueElement.$el, vueElement)
+	)
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
+
+	return new NcCustomPickerRenderResult(el, app)
 }, (el, renderResult) => {
-	renderResult.object.$destroy()
+	renderResult.object.unmount()
 })
 
 registerCustomPickerElement('openstreetmap-direction', async (el, { providerId, accessible }) => {
-	const { default: Vue } = await import('vue')
+	const { createApp } = await import('vue')
 	const { default: DirectionCustomPickerElement } = await import('./views/DirectionCustomPickerElement.vue')
-	Vue.mixin({ methods: { t, n } })
 
-	const Element = Vue.extend(DirectionCustomPickerElement)
-	const vueElement = new Element({
-		propsData: {
+	const app = createApp(
+		DirectionCustomPickerElement,
+		{
 			providerId,
 			accessible,
 		},
-	}).$mount(el)
-	return new NcCustomPickerRenderResult(vueElement.$el, vueElement)
+	)
+	app.mixin({ methods: { t, n } })
+	app.mount(el)
+
+	return new NcCustomPickerRenderResult(el, app)
 }, (el, renderResult) => {
-	renderResult.object.$destroy()
+	renderResult.object.unmount()
 })
