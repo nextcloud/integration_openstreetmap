@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_openstreetmap",
     {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "Zła metoda HTTP",
     "Bad credentials" : "Złe poświadczenia",
     "Connected accounts" : "Połączone konta",

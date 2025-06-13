@@ -1,4 +1,5 @@
 { "translations": {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "Zła metoda HTTP",
     "Bad credentials" : "Złe poświadczenia",
     "Connected accounts" : "Połączone konta",
