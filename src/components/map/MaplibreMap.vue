@@ -176,7 +176,7 @@ export default {
 		this.initMap()
 	},
 
-	destroyed() {
+	unmounted() {
 		this.map.remove()
 	},
 

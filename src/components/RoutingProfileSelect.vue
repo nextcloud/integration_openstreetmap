@@ -1,10 +1,10 @@
 <template>
 	<NcSelect
-		:value="value"
+		:model-value="value"
 		:options="profileList"
 		:aria-label-combobox="t('integration_openstreetmap', 'Routing profile')"
 		:placeholder="t('integration_openstreetmap', 'Routing profile')"
-		@input="$emit('update:value', $event)">
+		@update:model-value="$emit('update:value', $event)">
 		<template #option="option">
 			<span class="profile-option">
 				<component :is="option.icon" />
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import { routingProfiles } from '../mapUtils.js'
 
 export default {

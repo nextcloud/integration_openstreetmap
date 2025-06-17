@@ -13,6 +13,7 @@ module.exports = {
 		'jsdoc/tag-lines': 'off',
 		'vue/first-attribute-linebreak': 'off',
 		'import/extensions': 'off',
-		'n/no-missing-import': 'off'
+		'n/no-missing-import': 'off',
+		'vue/no-v-model-argument': 'off'
 	}
 }

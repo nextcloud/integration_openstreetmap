@@ -32,21 +32,21 @@
 		<div class="footer">
 			<NcSelect
 				class="type-select"
-				:value="selectedLinkType"
+				:model-value="selectedLinkType"
 				:options="linkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
-				@input="onLinkTypeSelect" />
+				@update:model-value="onLinkTypeSelect" />
 			<NcCheckboxRadioSwitch
-				class="marker-checkbox"
-				:checked.sync="includeMarker">
+				v-model="includeMarker"
+				class="marker-checkbox">
 				{{ t('integration_openstreetmap', 'Include marker') }}
 			</NcCheckboxRadioSwitch>
 			<div class="spacer" />
 			<NcButton
 				class="submit-button"
-				type="primary"
+				variant="primary"
 				:disabled="currentCenter === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate location link') }}
@@ -61,13 +61,13 @@
 <script>
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
-import { getProvider, NcSearch } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getProvider, NcSearch } from '@nextcloud/vue/components/NcRichText'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 
@@ -228,14 +228,14 @@ export default {
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const linkType = this.selectedLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType })
-			this.$emit('submit', this.currentLink)
+			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onSearchSubmit(link) {
 			setLastMapState({ mapStyle: this.currentMapStyle })
 			const fragments = []
 			fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
 			const finalLink = link + '#' + fragments.join('&')
-			this.$emit('submit', finalLink)
+			this.$el.dispatchEvent(new CustomEvent('submit', { detail: finalLink, bubbles: true }))
 		},
 		onMapStateChange(e) {
 			if (e.centerLat !== undefined && e.centerLng !== undefined) {
@@ -294,7 +294,7 @@ export default {
 		width: 100%;
 		height: 2000px;
 
-		::v-deep .maplibregl-map {
+		:deep(.maplibregl-map) {
 			border-radius: var(--border-radius-large);
 		}
 	}
