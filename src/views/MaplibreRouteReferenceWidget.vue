@@ -114,7 +114,7 @@ import MarkerIcon from '../components/icons/MarkerIcon.vue'
 import MarkerRedIcon from '../components/icons/MarkerRedIcon.vue'
 import MarkerGreenIcon from '../components/icons/MarkerGreenIcon.vue'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'

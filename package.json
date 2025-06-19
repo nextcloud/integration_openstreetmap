@@ -47,9 +47,9 @@
 		"@nextcloud/l10n": "^3.1.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^3.0.0",
-		"@nextcloud/vue": "^9.0.0-alpha.5",
+		"@nextcloud/vue": "^9.0.0-rc.2",
 		"maplibre-gl": "^4.1.0",
-		"vue": "^3.5.6",
+		"vue": "^3.5.17",
 		"vue-clipboard3": "^2.0.0",
 		"vue-material-design-icons": "^5.1.2"
 	},

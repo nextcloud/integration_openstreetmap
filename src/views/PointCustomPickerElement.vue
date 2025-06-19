@@ -60,13 +60,13 @@
 <script>
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 
-import { getProvider, NcSearch } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { getProvider, NcSearch } from '@nextcloud/vue/components/NcRichText'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 

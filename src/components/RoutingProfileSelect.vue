@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import { routingProfiles } from '../mapUtils.js'
 
 export default {

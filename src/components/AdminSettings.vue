@@ -35,7 +35,7 @@ import KeyIcon from 'vue-material-design-icons/Key.vue'
 
 import OsmIcon from './icons/OsmIcon.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'

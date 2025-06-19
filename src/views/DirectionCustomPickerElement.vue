@@ -79,8 +79,8 @@
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
 import HelpIcon from 'vue-material-design-icons/Help.vue'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
