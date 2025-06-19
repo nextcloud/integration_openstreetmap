@@ -45,7 +45,7 @@
 			<div class="spacer" />
 			<NcButton
 				class="submit-button"
-				type="primary"
+				variant="primary"
 				:disabled="currentCenter === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate location link') }}

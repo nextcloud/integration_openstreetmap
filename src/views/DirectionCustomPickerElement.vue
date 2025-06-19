@@ -63,7 +63,7 @@
 			<div class="spacer" />
 			<NcButton
 				class="submit-button"
-				type="primary"
+				variant="primary"
 				:disabled="currentLink === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate direction link') }}
