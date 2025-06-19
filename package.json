@@ -38,7 +38,7 @@
 		"npm": "^9.0.0"
 	},
 	"dependencies": {
-		"@maplibre/maplibre-gl-directions": "^0.7.1",
+		"@maplibre/maplibre-gl-directions": "^0.8.0",
 		"@maplibre/maplibre-gl-geocoder": "^1.5.0",
 		"@nextcloud/auth": "^2.0.0",
 		"@nextcloud/axios": "^2.0.0",
@@ -48,7 +48,7 @@
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^3.0.0",
 		"@nextcloud/vue": "^9.0.0-rc.2",
-		"maplibre-gl": "^4.1.0",
+		"maplibre-gl": "^5.6.0",
 		"vue": "^3.5.17",
 		"vue-clipboard3": "^2.0.0",
 		"vue-material-design-icons": "^5.1.2"
@@ -59,9 +59,8 @@
 		"@nextcloud/eslint-config": "^8.0.0",
 		"@nextcloud/stylelint-config": "^3.0.1",
 		"@nextcloud/vite-config": "^2.2.2",
-		"eslint-webpack-plugin": "^4.0.0",
 		"stylelint-webpack-plugin": "^5.0.0",
 		"vite-plugin-eslint": "^1.8.1",
-		"vite-plugin-stylelint": "^5.3.1"
+		"vite-plugin-stylelint": "^6.0.0"
 	}
 }

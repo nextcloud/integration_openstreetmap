@@ -1,7 +1,7 @@
 <template>
 	<div class="point-picker-content">
 		<h2>
-			{{ t('integration_openstreetmap', 'Map location (by OpenStreetMap)') }}
+			{{ t('integration_openstreetmap', '111Map location (by OpenStreetMap)') }}
 		</h2>
 		<!--a v-if="currentLink"
 			:href="currentLink"
@@ -38,8 +38,8 @@
 				input-id="extension-select"
 				@update:model-value="onLinkTypeSelect" />
 			<NcCheckboxRadioSwitch
-				class="marker-checkbox"
-				v-model="includeMarker">
+				v-model="includeMarker"
+				class="marker-checkbox">
 				{{ t('integration_openstreetmap', 'Include marker') }}
 			</NcCheckboxRadioSwitch>
 			<div class="spacer" />

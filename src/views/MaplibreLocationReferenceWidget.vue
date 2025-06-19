@@ -126,7 +126,6 @@ export default {
 }
 </style>
 
-
 <style scoped lang="scss">
 .location-reference {
 	width: 100%;
