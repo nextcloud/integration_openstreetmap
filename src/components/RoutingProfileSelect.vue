@@ -38,6 +38,8 @@ export default {
 		},
 	},
 
+	emits: ['update:value'],
+
 	data() {
 		return {
 		}

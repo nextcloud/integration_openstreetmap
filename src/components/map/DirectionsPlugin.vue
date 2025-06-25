@@ -24,6 +24,11 @@ export default {
 		},
 	},
 
+	emits: [
+		'waypoint-change',
+		'route-fetch',
+	],
+
 	data() {
 		return {
 			ready: false,

@@ -36,11 +36,11 @@
 		<MaplibreMap v-if="showMap"
 			class="direction-map"
 			:center="lastCenter"
-			:zoom="lastMapState?.zoom ?? undefined"
-			:pitch="lastMapState?.pitch ?? undefined"
-			:bearing="lastMapState?.bearing ?? undefined"
-			:map-style="lastMapState?.mapStyle ?? undefined"
-			:use-terrain="!!lastMapState?.terrain ?? undefined"
+			:zoom="lastMapState?.zoom"
+			:pitch="lastMapState?.pitch"
+			:bearing="lastMapState?.bearing"
+			:map-style="lastMapState?.mapStyle"
+			:use-terrain="!!lastMapState?.terrain"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange">
 			<template #default="{ map }">
