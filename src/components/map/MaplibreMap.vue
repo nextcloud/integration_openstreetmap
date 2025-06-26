@@ -129,6 +129,12 @@ export default {
 		},
 	},
 
+	emits: [
+		'line-click',
+		'map-state-change',
+		'map-bounds-change',
+	],
+
 	data() {
 		return {
 			map: null,
@@ -176,7 +182,7 @@ export default {
 		this.initMap()
 	},
 
-	destroyed() {
+	unmounted() {
 		this.map.remove()
 	},
 

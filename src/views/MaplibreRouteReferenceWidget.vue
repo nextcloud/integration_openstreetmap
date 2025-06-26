@@ -62,7 +62,7 @@
 						{{ profileDisplayName }}
 					</span>
 					<RoutingProfilePicker v-else
-						:value.sync="selectedRoutingProfile"
+						v-model="selectedRoutingProfile"
 						class="profile-select" />
 					<span v-if="formattedDistance" :title="richObject.distance">
 						{{ t('integration_openstreetmap', 'Distance: {distance}', { distance: formattedDistance }) }}
@@ -114,7 +114,7 @@ import MarkerIcon from '../components/icons/MarkerIcon.vue'
 import MarkerRedIcon from '../components/icons/MarkerRedIcon.vue'
 import MarkerGreenIcon from '../components/icons/MarkerGreenIcon.vue'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
@@ -124,10 +124,6 @@ import { routingProfiles, getRoutingLink } from '../mapUtils.js'
 
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
-
-import VueClipboard from 'vue-clipboard2'
-import Vue from 'vue'
-Vue.use(VueClipboard)
 
 export default {
 	name: 'MaplibreRouteReferenceWidget',
@@ -273,7 +269,7 @@ export default {
 		async copyRoutingLink() {
 			console.debug('[osm] copy link', this.currentRoutingLink)
 			try {
-				await this.$copyText(this.currentRoutingLink)
+				await navigator.clipboard.writeText(this.currentRoutingLink)
 				this.copied = true
 				setTimeout(() => {
 					this.copied = false
@@ -316,9 +312,9 @@ export default {
 		},
 		updateRouteOpacities() {
 			this.routeGeojsons.forEach(g => {
-				this.$set(g, 'opacity', 0.3)
+				g.opacity = 0.3
 			})
-			this.$set(this.routeGeojsons[this.selectedRouteIndex], 'opacity', 1)
+			this.routeGeojsons[this.selectedRouteIndex].opacity = 1
 		},
 		setRoutesPopupContent() {
 			this.richObject.routes.forEach(r => {
@@ -329,7 +325,7 @@ export default {
 				if (r.duration) {
 					popupContent += '\n' + t('integration_openstreetmap', 'Duration: {duration}', { duration: this.getFormattedDuration(r) })
 				}
-				this.$set(r.geojson, 'popupContent', popupContent.trim())
+				r.geojson.popupContent = popupContent.trim()
 			})
 		},
 	},

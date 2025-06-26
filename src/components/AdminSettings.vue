@@ -17,13 +17,13 @@
 					@input="onInput">
 			</div>
 			<NcCheckboxRadioSwitch
-				:checked="state.search_location_enabled"
-				@update:checked="onCheckboxChanged($event, 'search_location_enabled')">
+				:model-value="state.search_location_enabled"
+				@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
 				{{ t('integration_openstreetmap', 'Enable searching for locations') }}
 			</NcCheckboxRadioSwitch>
 			<NcCheckboxRadioSwitch
-				:checked="state.proxy_osm"
-				@update:checked="onCheckboxChanged($event, 'proxy_osm')">
+				:model-value="state.proxy_osm"
+				@update:model-value="onCheckboxChanged($event, 'proxy_osm')">
 				{{ t('integration_openstreetmap', 'Proxy map tiles/vectors requests via Nextcloud') }}
 			</NcCheckboxRadioSwitch>
 		</div>
@@ -35,7 +35,7 @@ import KeyIcon from 'vue-material-design-icons/Key.vue'
 
 import OsmIcon from './icons/OsmIcon.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'

@@ -4,7 +4,7 @@
 			{{ t('integration_openstreetmap', 'Map directions (by OSRM)') }}
 		</h2>
 		<div class="header">
-			<RoutingProfilePicker :value.sync="selectedProfile"
+			<RoutingProfilePicker v-model="selectedProfile"
 				class="profile-select" />
 			<div v-if="hint">
 				{{ hint }}
@@ -36,11 +36,11 @@
 		<MaplibreMap v-if="showMap"
 			class="direction-map"
 			:center="lastCenter"
-			:zoom="lastMapState?.zoom ?? undefined"
-			:pitch="lastMapState?.pitch ?? undefined"
-			:bearing="lastMapState?.bearing ?? undefined"
-			:map-style="lastMapState?.mapStyle ?? undefined"
-			:use-terrain="!!lastMapState?.terrain ?? undefined"
+			:zoom="lastMapState?.zoom"
+			:pitch="lastMapState?.pitch"
+			:bearing="lastMapState?.bearing"
+			:map-style="lastMapState?.mapStyle"
+			:use-terrain="!!lastMapState?.terrain"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange">
 			<template #default="{ map }">
@@ -57,16 +57,16 @@
 			</label>
 			<NcSelect
 				class="type-select"
-				:value="selectedLinkType"
+				:model-value="selectedLinkType"
 				:options="linkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
-				@input="onLinkTypeSelect" />
+				@update:model-value="onLinkTypeSelect" />
 			<div class="spacer" />
 			<NcButton
 				class="submit-button"
-				type="primary"
+				variant="primary"
 				:disabled="currentLink === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate direction link') }}
@@ -82,8 +82,8 @@
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
 import HelpIcon from 'vue-material-design-icons/Help.vue'
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
@@ -223,6 +223,7 @@ export default {
 			this.waypoints = waypoints
 		},
 		onLinkTypeSelect(selected) {
+			console.debug('[osm] selected link type', selected)
 			this.selectedRoutingLinkTypeId = selected?.id ?? null
 		},
 		onMapSubmit() {
@@ -235,7 +236,7 @@ export default {
 			const terrain = this.currentMapTerrain ? '1' : ''
 			const routingLinkType = this.selectedRoutingLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, routingLinkType })
-			this.$emit('submit', this.currentLink)
+			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onMapStateChange(e) {
 			if (e.centerLat !== undefined && e.centerLng !== undefined) {
@@ -305,7 +306,7 @@ export default {
 		width: 100%;
 		height: 2000px;
 
-		::v-deep .maplibregl-map {
+		:deep(.maplibregl-map) {
 			border-radius: var(--border-radius-large);
 		}
 	}

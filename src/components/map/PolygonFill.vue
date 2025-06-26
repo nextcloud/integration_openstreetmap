@@ -77,7 +77,7 @@ export default {
 		this.init()
 	},
 
-	destroyed() {
+	unmounted() {
 		this.remove()
 	},
 
