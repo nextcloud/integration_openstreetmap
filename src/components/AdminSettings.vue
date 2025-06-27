@@ -5,17 +5,19 @@
 			{{ t('integration_openstreetmap', 'OpenStreetMap integration') }}
 		</h2>
 		<div id="osm-content">
-			<div class="line">
-				<label for="maptiler-api-key">
-					<KeyIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Maptiler API key') }}
-				</label>
-				<input id="maptiler-api-key"
-					v-model="state.maptiler_api_key"
-					type="password"
-					placeholder="…"
-					@input="onInput">
-			</div>
+			<NcTextField
+				id="maptiler-api-key"
+				v-model="state.maptiler_api_key"
+				type="password"
+				:label="t('integration_openstreetmap', 'Maptiler API key')"
+				:show-trailing-button="!!state.maptiler_api_key"
+				class="input"
+				@update:model-value="onInput"
+				@trailing-button-click="state.maptiler_api_key = '' ; onInput()">
+				<template #icon>
+					<KeyIcon :size="20" />
+				</template>
+			</NcTextField>
 			<NcCheckboxRadioSwitch
 				:model-value="state.search_location_enabled"
 				@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
@@ -36,6 +38,7 @@ import KeyIcon from 'vue-material-design-icons/Key.vue'
 import OsmIcon from './icons/OsmIcon.vue'
 
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
@@ -53,6 +56,7 @@ export default {
 		OsmIcon,
 		KeyIcon,
 		NcCheckboxRadioSwitch,
+		NcTextField,
 	},
 
 	props: [],
@@ -114,31 +118,19 @@ export default {
 <style scoped lang="scss">
 #osm_prefs {
 	#osm-content {
-		margin-left: 40px;
+		margin: 16px 0 0 40px;
 	}
-	h2,
-	.line,
-	.settings-hint {
+	h2 {
 		display: flex;
 		align-items: center;
+		justify-content: start;
 		.icon {
-			margin-right: 4px;
+			margin-right: 8px;
 		}
 	}
 
-	h2 .icon {
-		margin-right: 8px;
-	}
-
-	.line {
-		> label {
-			width: 300px;
-			display: flex;
-			align-items: center;
-		}
-		> input {
-			width: 300px;
-		}
+	.input {
+		width: 400px;
 	}
 }
 </style>

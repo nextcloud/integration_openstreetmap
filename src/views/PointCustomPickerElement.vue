@@ -287,6 +287,7 @@ export default {
 
 	.generic-search {
 		margin-bottom: 12px;
+		padding: 0 !important;
 		width: 100%;
 	}
 

@@ -18,9 +18,10 @@
 					{{ t('integration_openstreetmap', 'Duration: {duration}', { duration: formattedDuration }) }}
 				</span>
 			</div>
-			<NcButton :title="helpText">
+			<NcButton :title="helpText"
+				variant="tertiary">
 				<template #icon>
-					<HelpIcon />
+					<HelpCircleOutlineIcon />
 				</template>
 			</NcButton>
 		</div>
@@ -80,7 +81,7 @@
 
 <script>
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
-import HelpIcon from 'vue-material-design-icons/Help.vue'
+import HelpCircleOutlineIcon from 'vue-material-design-icons/HelpCircleOutline.vue'
 
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
@@ -106,7 +107,7 @@ export default {
 		NcButton,
 		NcSelect,
 		ArrowRightIcon,
-		HelpIcon,
+		HelpCircleOutlineIcon,
 	},
 
 	props: {
