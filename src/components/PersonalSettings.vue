@@ -6,21 +6,20 @@
 		</h2>
 		<div id="osm-content">
 			<div id="osm-search-block">
+				<NcNoteCard v-if="state.search_location_enabled && state.admin_search_location_enabled"
+					type="info">
+					{{ t('integration_openstreetmap', 'Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap\'s Nominatim service.') }}
+				</NcNoteCard>
+				<NcNoteCard v-if="state.admin_search_location_enabled === false"
+					type="info">
+					{{ t('integration_tmdb', 'An administrator has disabled the OpenStreetMap Unified Search provider') }}
+				</NcNoteCard>
 				<NcCheckboxRadioSwitch
 					:model-value="state.search_location_enabled && state.admin_search_location_enabled"
 					:disabled="!state.admin_search_location_enabled"
 					@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
 					{{ t('integration_openstreetmap', 'Enable searching for locations') }}
 				</NcCheckboxRadioSwitch>
-				<br>
-				<p v-if="state.search_location_enabled && state.admin_search_location_enabled" class="settings-hint">
-					<InformationOutlineIcon :size="20" class="icon" />
-					{{ t('integration_openstreetmap', 'Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap\'s Nominatim service.') }}
-				</p>
-				<p v-if="state.admin_search_location_enabled === false" class="settings-hint">
-					<InformationOutlineIcon :size="20" class="icon" />
-					{{ t('integration_tmdb', 'A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider') }}
-				</p>
 				<NcCheckboxRadioSwitch
 					:model-value="state.link_preview_enabled"
 					@update:model-value="onCheckboxChanged($event, 'link_preview_enabled')">
@@ -42,11 +41,10 @@
 </template>
 
 <script>
-import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
-
 import OsmIcon from './icons/OsmIcon.vue'
 
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
@@ -60,7 +58,7 @@ export default {
 	components: {
 		OsmIcon,
 		NcCheckboxRadioSwitch,
-		InformationOutlineIcon,
+		NcNoteCard,
 	},
 
 	props: [],
@@ -108,30 +106,14 @@ export default {
 <style scoped lang="scss">
 #osm_prefs {
 	#osm-content {
-		margin-left: 40px;
+		margin: 16px 0 0 40px;
 	}
-	h2,
-	.line,
-	.settings-hint {
+	h2 {
 		display: flex;
 		align-items: center;
+		justify-content: start;
 		.icon {
-			margin-right: 4px;
-		}
-	}
-
-	h2 .icon {
-		margin-right: 8px;
-	}
-
-	.line {
-		> label {
-			width: 300px;
-			display: flex;
-			align-items: center;
-		}
-		> input {
-			width: 300px;
+			margin-right: 8px;
 		}
 	}
 }
