@@ -14,7 +14,6 @@
     "Enable searching for locations" : "Aktiver søking etter plasseringer",
     "Proxy map tiles/vectors requests via Nextcloud" : "Forespørsler om proxy-kartfliser/vektorer via Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Advarsel, alt du skriver i Enhetlig Søk-menyen vil bli sendt til OpenStreetMaps Nominatim-tjeneste.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "En Nextcloud-administrator har deaktivert OpenStreetMap Enhetlig Søk-leverandøren",
     "Enable OpenStreetMap link previews" : "Aktiver forhåndsvisning av OpenStreetMap-koblinger",
     "Prefer simple OpenStreetMap frame" : "Foretrekk enkel OpenStreetMap-ramme",
     "Enable navigation link" : "Aktiver navigasjonskobling",

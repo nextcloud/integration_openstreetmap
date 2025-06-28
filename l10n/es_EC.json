@@ -13,7 +13,6 @@
     "Maptiler API key" : "Clave de API de Maptiler",
     "Enable searching for locations" : "Habilitar búsqueda de ubicaciones",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Advertencia, todo lo que escribas en el menú de Búsqueda Unificada se enviará al servicio Nominatim de OpenStreetMap.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Un administrador de Nextcloud ha deshabilitado el proveedor de Búsqueda Unificada de OpenStreetMap",
     "Enable OpenStreetMap link previews" : "Habilitar vistas previas de enlaces de OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Preferir marco simple de OpenStreetMap",
     "Enable navigation link" : "Habilitar enlace de navegación",

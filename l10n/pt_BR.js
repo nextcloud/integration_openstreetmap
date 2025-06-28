@@ -17,7 +17,6 @@ OC.L10N.register(
     "Enable searching for locations" : "Ativar pesquisa de locais",
     "Proxy map tiles/vectors requests via Nextcloud" : "Usar Nextcloud como proxy para solicitações de blocos/vetores de mapas",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Atenção, tudo que você digitar no menu Pesquisa Unificada será enviado para o serviço Nominatim do OpenStreetMap.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Um administrador do Nextcloud desativou o provedor do OpenStreetMap para Pesquisa Unificada",
     "Enable OpenStreetMap link previews" : "Ativar visualizações de links do OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Preferir um quadro simples do OpenStreetMap",
     "Enable navigation link" : "Ativar link de navegação",

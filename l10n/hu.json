@@ -14,7 +14,6 @@
     "Enable searching for locations" : "Helyadatok keresésének az engedélyezése",
     "Proxy map tiles/vectors requests via Nextcloud" : "Térkép-, ill. vektor kérések közvetítése a Nextcloudon keresztül",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Figyelem, az összes, az egyesített keresési menüben beírt szöveg elküldésre kerül az OpenStreetMap Nominatim szolgáltatásának.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "A Nextcloud rendszergazdája letiltotta az OpenStreetMap egyesített keresési szolgáltatóját",
     "Enable OpenStreetMap link previews" : "OpenStreetMap hivatkozások előnézetének engedélyezése",
     "Prefer simple OpenStreetMap frame" : "Egyszerű OpenStreetMap keret előnyben",
     "Enable navigation link" : "Navigációs hivatkozás engedélyezése",

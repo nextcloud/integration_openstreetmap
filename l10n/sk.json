@@ -15,7 +15,6 @@
     "Enable searching for locations" : "Povoliť vyhľadávanie umiestnení",
     "Proxy map tiles/vectors requests via Nextcloud" : "Žiadosti o proxy dlaždice/vektory cez Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Upozornenie, všetko, čo zadáte do ponuky Unified Search, bude odoslané do služby Nominatim OpenStreetMap.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Správca Nextcloud zakázal poskytovateľa OpenStreetMap Unified Search",
     "Enable OpenStreetMap link previews" : "Povoliť ukážku odkazov OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Preferovať jednoduchý náhľad OpenStreetMap",
     "Enable navigation link" : "Povoliť navigačný odkaz",

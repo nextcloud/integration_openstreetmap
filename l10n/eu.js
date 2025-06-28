@@ -17,7 +17,6 @@ OC.L10N.register(
     "Enable searching for locations" : "Gaitu kokapenak bilatzea",
     "Proxy map tiles/vectors requests via Nextcloud" : "Proxy mapa lauzen/bektoreen eskaerak Nextcloud bidez",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Abisua: bilaketa bateratuaren menuan idazten duzun guztia OpenStreetMap-en Nominatim zerbitzura bidaliko da.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Nextcloud-eko administratzaile batek OpenStreetMap-en bilatzaile bateratua hornitzailea desgaitu du",
     "Enable OpenStreetMap link previews" : "Gaitu OpenStreetMap esteken aurrebista",
     "Prefer simple OpenStreetMap frame" : "Nahiago OpenStreetMap marko sinplea",
     "Enable navigation link" : "Gaitu nabigazio esteka",

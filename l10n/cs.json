@@ -15,7 +15,6 @@
     "Enable searching for locations" : "Zapnout vyhledávání v umístěních",
     "Proxy map tiles/vectors requests via Nextcloud" : "Směrovat požadavky na mapové dlaždice/vektory skrze Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Varování: vše co napíšete do kolonky sjednoceného vyhledávání v rámci Nextcloud, bude odesíláno i do služby OpenStreetMap Nominatim",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Správce vámi využívané instance Nextcloud vypnul ve sjednoceném vyhledávání poskytovatele pro OpenStreetMap",
     "Enable OpenStreetMap link previews" : "Zapnout náhledy odkazů do OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Upřednostňovat jednoduchý rámeček s OpenStreetMap",
     "Enable navigation link" : "Zapnout navigační odkaz",

@@ -17,7 +17,6 @@ OC.L10N.register(
     "Enable searching for locations" : "تمكين البحث عن أماكن",
     "Proxy map tiles/vectors requests via Nextcloud" : "طلبات المربعات tiles أو المتجهات vectors لخريطة الوكيل عبر نكست كلاود",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "تحذير ، كل ما تكتبه في قائمة البحث الموحد سيتم إرسالة إلى خدمة Nominatim الخاصة بـ OpenStreetMap.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "قام مسؤول النظام الخاص بـ نكست كلاود بتعطيل مزود البحث الموحد في خرائط \"OpenStreetMap\"",
     "Enable OpenStreetMap link previews" : "تمكين معاينة روابط \"أوبن ستريت ماب\"",
     "Prefer simple OpenStreetMap frame" : "تفضيل إطار \"أوبت ستريت ماب\" البسيط",
     "Enable navigation link" : "تميكن رابط التنقُّل",

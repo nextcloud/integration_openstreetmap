@@ -17,7 +17,6 @@ OC.L10N.register(
     "Enable searching for locations" : "Укључи претрагу локација",
     "Proxy map tiles/vectors requests via Nextcloud" : "Прослеђуј захтеве за плочицама/векторима мате кроз Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Упозорење, све што куцате у менију Обједињене претраге се шаље OpenStreetMap Nominatim сервису.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Nextcloud администратор је искључио OpenStreetMap пружаоца Обједињене претраге",
     "Enable OpenStreetMap link previews" : "Укључи OpenStreetMap прегледе линкова",
     "Prefer simple OpenStreetMap frame" : "Преферирај прости OpenStreetMap оквир",
     "Enable navigation link" : "Укључи линк за навигацију",

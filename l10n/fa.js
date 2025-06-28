@@ -15,7 +15,6 @@ OC.L10N.register(
     "Maptiler API key" : "Maptiler API key",
     "Enable searching for locations" : "Enable searching for locations",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider",
     "Enable OpenStreetMap link previews" : "Enable OpenStreetMap link previews",
     "Prefer simple OpenStreetMap frame" : "Prefer simple OpenStreetMap frame",
     "Enable navigation link" : "Enable navigation link",

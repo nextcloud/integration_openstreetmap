@@ -12,7 +12,6 @@
     "Failed to save OpenStreetMap options" : "Det gick inte att spara OpenStreetMap-alternativ",
     "Enable searching for locations" : "Aktivera sökning efter platser",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Varning, allt du skriver i Unified Sök-menyn kommer att skickas till OpenStreetMaps Nominatim-tjänst.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "En Nextcloud-administratör har avaktiverat OpenStreetMap Unified Search-providern",
     "Enable OpenStreetMap link previews" : "Aktivera förhandsvisningar av OpenStreetMap-länkar",
     "Prefer simple OpenStreetMap frame" : "Föredrar enkel OpenStreetMap-ram",
     "Enable navigation link" : "Aktivera navigeringslänk",

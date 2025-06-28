@@ -15,7 +15,6 @@
     "Enable searching for locations" : "Cumasaigh cuardach do shuímh",
     "Proxy map tiles/vectors requests via Nextcloud" : "Iarratais ar thíleanna léarscáile seachfhreastalaí/veicteora trí Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Rabhadh, seolfar gach rud a chlóscríobhann tú sa roghchlár Cuardach Aontuithe chuig seirbhís Nominatim OpenStreetMap.",
-    "A Nextcloud administrator has disabled the OpenStreetMap Unified Search provider" : "Dhíchumasaigh riarthóir Nextcloud soláthraí Cuardach Aontuithe OpenStreetMap",
     "Enable OpenStreetMap link previews" : "Cumasaigh réamhamhairc naisc OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Is fearr fráma OpenStreetMap simplí",
     "Enable navigation link" : "Cumasaigh nasc nascleanúna",
