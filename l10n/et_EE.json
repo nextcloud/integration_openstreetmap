@@ -15,6 +15,7 @@
     "Enable searching for locations" : "Kasuta asukohtade otsingut",
     "Proxy map tiles/vectors requests via Nextcloud" : "Nextcloud on kasutusel puhverserverina kaardipaanide päringute jaoks",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Hoiatus - kõik sinu poolt koondotsingusse sisestatu saadetakse OpenStreetMapi Nominatimi veebiteenusele.",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "Selle Nextcloudi serveri peakasutaja on keelanud OpenStreetMapi koondotsingu kasutamise",
     "Enable OpenStreetMap link previews" : "Kasuta OpenStreetMapi linkide eelvaateid",
     "Prefer simple OpenStreetMap frame" : "Eelista lihtsat OpenStreetMapi siselehte",
     "Enable navigation link" : "Lisa menüülink",

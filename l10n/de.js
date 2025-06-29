@@ -17,6 +17,7 @@ OC.L10N.register(
     "Enable searching for locations" : "Suche nach Orten aktivieren",
     "Proxy map tiles/vectors requests via Nextcloud" : "Proxy-Kartenkacheln/Vektoranfragen über Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Achtung: Alles, was du im Menü einheitliche Suche eingibst, wird an den Nominatim-Dienst von OpenStreetMap gesendet.",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "Die Administration hat den Anbieter für die einheitliche Suche von OpenStreetMap deaktiviert",
     "Enable OpenStreetMap link previews" : "OpenStreetMap-Linkvorschauen aktivieren",
     "Prefer simple OpenStreetMap frame" : "Einen einfachen OpenStreetMap-Frame bevorzugen",
     "Enable navigation link" : "Navigations-Link aktivieren",
