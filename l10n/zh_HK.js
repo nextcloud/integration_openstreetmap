@@ -17,6 +17,7 @@ OC.L10N.register(
     "Enable searching for locations" : "啟用位置搜尋",
     "Proxy map tiles/vectors requests via Nextcloud" : "透過 Nextcloud 代理地圖圖磚/向量請求",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "警告，您在統一搜尋選單中輸入的所有東西都會傳送到 OpenStreetMap 的 Nominatim 服務。",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "管理員已停用 OpenStreetMap 統一搜尋提供者",
     "Enable OpenStreetMap link previews" : "啟用 OpenStreetMap 連結預覽",
     "Prefer simple OpenStreetMap frame" : "偏好簡單的 OpenStreetMap 框架",
     "Enable navigation link" : "啟用導覽連結",
