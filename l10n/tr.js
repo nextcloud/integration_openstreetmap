@@ -17,6 +17,7 @@ OC.L10N.register(
     "Enable searching for locations" : "Konumlarda arama yapılabilsin",
     "Proxy map tiles/vectors requests via Nextcloud" : "Proxy harita parça ve vektör istekleri Nextcloud üzerinden geçirilsin",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Uyarı, birleşik arama çubuğuna yazdığınız her şey OpenStreetMap Nominatim hizmetine gönderilecek.",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "Bir yönetici OpenStreetMap birleşik arama hizmetini kullanımdan kaldırmış",
     "Enable OpenStreetMap link previews" : "OpenStreetMap bağlantıları ön izlenebilsin",
     "Prefer simple OpenStreetMap frame" : "Basit OpenStreetMap çerçevesi kullanılsın",
     "Enable navigation link" : "Gezinme bağlantısı kullanılsın",
