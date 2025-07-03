@@ -17,6 +17,7 @@ OC.L10N.register(
     "Enable searching for locations" : "Cumasaigh cuardach do shuímh",
     "Proxy map tiles/vectors requests via Nextcloud" : "Iarratais ar thíleanna léarscáile seachfhreastalaí/veicteora trí Nextcloud",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "Rabhadh, seolfar gach rud a chlóscríobhann tú sa roghchlár Cuardach Aontuithe chuig seirbhís Nominatim OpenStreetMap.",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "Tá riarthóir tar éis an soláthraí Cuardaigh Aontaithe OpenStreetMap a dhíchumasú.",
     "Enable OpenStreetMap link previews" : "Cumasaigh réamhamhairc naisc OpenStreetMap",
     "Prefer simple OpenStreetMap frame" : "Is fearr fráma OpenStreetMap simplí",
     "Enable navigation link" : "Cumasaigh nasc nascleanúna",
