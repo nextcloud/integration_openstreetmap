@@ -32,6 +32,7 @@ OC.L10N.register(
     "Link type" : "連結類型",
     "Generate direction link" : "產生方向連結",
     "Link could not be copied to clipboard" : "連結無法複製到剪貼板",
+    "Cancel edition" : "取消版本",
     "Edit route" : "編輯路線",
     "Copy direction link" : "複製方向連結",
     "Unknown distance" : "距離不詳",
