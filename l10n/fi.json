@@ -15,7 +15,20 @@
     "Enable navigation link" : "Näytä navigointipalkissa",
     "Search on the map" : "Etsi kartalta",
     "Search with Nominatim to get an OpenStreetMap link" : "Etsi Nominatimilla saadaksesi OpenStreetMap-linkin",
+    "Click on the map to set the start location" : "Napsauta karttaa lisätäksesi aloitussijainnin",
+    "Distance: {distance}" : "Etäisyys: {distance}",
+    "Duration: {duration}" : "Kesto: {duration}",
+    "Link type" : "Linkkityyppi",
+    "Generate direction link" : "Luo suuntaohjelinkki",
+    "Link could not be copied to clipboard" : "Linkkiä ei voitu kopioida leikepöydälle",
+    "Edit route" : "Muokkaa reittiä",
+    "Copy direction link" : "Kopioi suuntaohjelinkki",
+    "Unknown distance" : "Tuntematon etäisyys",
+    "Unknown duration" : "Tuntematon kesto",
     "Include marker" : "Sisällytä merkki",
-    "Generate location link" : "Luo sijaintilinkki"
+    "Generate location link" : "Luo sijaintilinkki",
+    "By car" : "Autolla",
+    "By bike" : "Pyörällä",
+    "By foot" : "Kävellen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
