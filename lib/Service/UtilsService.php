@@ -141,7 +141,7 @@ class UtilsService {
 			$response = $client->get($url, $options);
 			$respCode = $response->getStatusCode();
 			if ($respCode < 400) {
-				$body = $response->getBody();
+				$body = (string)$response->getBody();
 				$dom = new DomDocument();
 				$dom->loadHTML($body);
 				$xpath = new DOMXpath($dom);
