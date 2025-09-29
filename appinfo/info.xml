@@ -21,7 +21,7 @@ component to quickly insert a location link by searching or selecting a point on
 	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot3.jpg</screenshot>
 	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot4.jpg</screenshot>
 	<dependencies>
-		<nextcloud min-version="30" max-version="32"/>
+		<nextcloud min-version="32" max-version="33"/>
 	</dependencies>
 	<settings>
 		<admin>OCA\Osm\Settings\Admin</admin>

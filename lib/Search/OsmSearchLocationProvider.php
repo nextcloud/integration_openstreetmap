@@ -32,12 +32,13 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Search\IExternalProvider;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
-class OsmSearchLocationProvider implements IProvider {
+class OsmSearchLocationProvider implements IProvider, IExternalProvider {
 
 	public function __construct(
 		private IAppManager $appManager,
@@ -144,5 +145,9 @@ class OsmSearchLocationProvider implements IProvider {
 
 	protected function getThumbnailUrl(array $entry): string {
 		return $this->urlGenerator->imagePath(Application::APP_ID, 'logo.svg');
+	}
+
+	public function isExternalProvider(): bool {
+		return true;
 	}
 }
