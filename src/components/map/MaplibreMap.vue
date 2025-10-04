@@ -9,29 +9,9 @@
 			class="osm-integration-map" />
 		<div v-if="map"
 			class="map-content">
-			<VMarker v-if="marker"
-				:map="map"
-				:lng-lat="marker" />
-			<VMarker v-for="(m, i) in markers"
-				:key="'marker-' + i"
-				:map="map"
-				:color="m.color"
-				:lng-lat="m.location" />
 			<!-- some stuff go away when changing the style -->
 			<div v-if="mapLoaded">
 				<slot name="default" :map="map" />
-				<PolygonFill v-if="area"
-					layer-id="target-object"
-					:geojson="area"
-					:map="map"
-					:fill-opacity="0.25" />
-				<LinestringCollection v-for="(line, i) in lines"
-					:key="'line-' + i"
-					:layer-id="'line-' + i"
-					:geojson="line"
-					:opacity="line.opacity"
-					:map="map"
-					@click="$emit('line-click', i)" />
 			</div>
 		</div>
 	</div>
@@ -54,9 +34,6 @@ import {
 import { MousePositionControl, TileControl } from '../../mapControls.js'
 import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
 
-import VMarker from './VMarker.vue'
-import PolygonFill from './PolygonFill.vue'
-import LinestringCollection from './LinestringCollection.vue'
 import '../../../css/maplibre.scss'
 
 const DEFAULT_MAP_MAX_ZOOM = 22
@@ -65,23 +42,12 @@ export default {
 	name: 'MaplibreMap',
 
 	components: {
-		LinestringCollection,
-		PolygonFill,
-		VMarker,
 	},
 
 	props: {
 		useTerrain: {
 			type: Boolean,
 			default: false,
-		},
-		marker: {
-			type: Object,
-			default: null,
-		},
-		markers: {
-			type: Array,
-			default: () => [],
 		},
 		bbox: {
 			type: Object,
@@ -110,10 +76,6 @@ export default {
 		area: {
 			type: Object,
 			default: null,
-		},
-		lines: {
-			type: Array,
-			default: () => [],
 		},
 		unit: {
 			type: String,

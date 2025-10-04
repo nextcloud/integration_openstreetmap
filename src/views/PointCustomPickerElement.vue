@@ -26,9 +26,14 @@
 			:bearing="lastMapState?.bearing"
 			:map-style="lastMapState?.mapStyle"
 			:use-terrain="!!lastMapState?.terrain"
-			:marker="currentMarker"
 			:all-move-events="true"
-			@map-state-change="onMapStateChange" />
+			@map-state-change="onMapStateChange">
+			<template #default="{ map }">
+				<VMarker v-if="currentMarker"
+					:map="map"
+					:lng-lat="currentMarker" />
+			</template>
+		</MaplibreMap>
 		<div class="footer">
 			<NcSelect
 				class="type-select"
@@ -66,6 +71,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 
 import MaplibreMap from '../components/map/MaplibreMap.vue'
+import VMarker from '../components/map/VMarker.vue'
 
 import { getProvider, NcSearch } from '@nextcloud/vue/components/NcRichText'
 
@@ -91,6 +97,7 @@ export default {
 	name: 'PointCustomPickerElement',
 
 	components: {
+		VMarker,
 		MaplibreMap,
 		NcButton,
 		NcSearch,
