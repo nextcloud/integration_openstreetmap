@@ -142,11 +142,12 @@ class MaptilerService {
 
 	/**
 	 * @param string $version
+	 * @param string $size
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getMapTilerSpriteJson(string $version): array {
-		$url = 'https://api.maptiler.com/maps/' . $version . '/sprite.json';
+	public function getMapTilerSpriteJson(string $version, string $size): array {
+		$url = 'https://api.maptiler.com/maps/' . $version . '/sprite' . $size . '.json';
 		$body = $this->client->get($url, $this->getVectorProxyRequestOptions())->getBody();
 		if (is_resource($body)) {
 			$content = stream_get_contents($body);
@@ -160,12 +161,13 @@ class MaptilerService {
 
 	/**
 	 * @param string $version
+	 * @param string $size
 	 * @param string $ext
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getMapTilerSpriteImage(string $version, string $ext): array {
-		$url = 'https://api.maptiler.com/maps/' . $version . '/sprite.' . $ext;
+	public function getMapTilerSpriteImage(string $version, string $size, string $ext): array {
+		$url = 'https://api.maptiler.com/maps/' . $version . '/sprite' . $size . '.' . $ext;
 		$response = $this->client->get($url, $this->getVectorProxyRequestOptions());
 		$body = $response->getBody();
 		$headers = $response->getHeaders();
