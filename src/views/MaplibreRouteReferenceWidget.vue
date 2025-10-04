@@ -88,6 +88,7 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
+				:use-globe="useGlobe"
 				@line-click="onRouteClicked">
 				<template #default="{ map }">
 					<DirectionsPlugin v-if="editing"
@@ -261,6 +262,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

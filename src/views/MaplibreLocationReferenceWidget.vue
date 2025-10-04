@@ -39,7 +39,8 @@
 				:pitch="pitch"
 				:bearing="bearing"
 				:map-style="style"
-				:use-terrain="useTerrain">
+				:use-terrain="useTerrain"
+				:use-globe="useGlobe">
 				<template #default="{ map }">
 					<VMarker v-if="markerCoords"
 						:map="map"
@@ -117,6 +118,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center
