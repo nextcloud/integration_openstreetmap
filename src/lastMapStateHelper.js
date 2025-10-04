@@ -10,15 +10,15 @@ export function getLastMapState() {
 	return window._osm_last_map_state
 }
 
-export function setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType, routingLinkType }) {
-	const state = { lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType, routingLinkType }
+export function setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }) {
+	const state = { lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }
 	Object.keys(state).forEach(k => {
 		if (state[k] !== undefined) {
 			window._osm_last_map_state[k] = state[k]
 		}
 	})
 	const req = {
-		values: { lat, lon, zoom, pitch, bearing, mapStyle, terrain, linkType, routingLinkType },
+		values: { lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType },
 	}
 	const url = generateUrl('/apps/integration_openstreetmap/config')
 	axios.put(url, req).then((response) => {

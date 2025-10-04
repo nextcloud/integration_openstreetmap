@@ -68,6 +68,7 @@ class OsmReferenceListener implements IEventListener {
 		$lastBearing = $this->config->getUserValue($this->userId, Application::APP_ID, 'bearing');
 		$lastMapStyle = $this->config->getUserValue($this->userId, Application::APP_ID, 'mapStyle');
 		$lastTerrain = $this->config->getUserValue($this->userId, Application::APP_ID, 'terrain');
+		$lastGlobe = $this->config->getUserValue($this->userId, Application::APP_ID, 'globe');
 		$lastLinkType = $this->config->getUserValue($this->userId, Application::APP_ID, 'linkType');
 		if ($lastLat !== '' && $lastLon !== '' && $lastZoom !== ''
 			&& $lastPitch !== '' && $lastBearing !== '' && $lastMapStyle !== '') {
@@ -79,6 +80,7 @@ class OsmReferenceListener implements IEventListener {
 				'bearing' => (float)$lastBearing,
 				'mapStyle' => $lastMapStyle,
 				'terrain' => $lastTerrain,
+				'globe' => $lastGlobe,
 				'linkType' => $lastLinkType,
 			]);
 		}

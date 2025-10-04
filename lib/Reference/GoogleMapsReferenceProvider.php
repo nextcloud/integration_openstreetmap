@@ -97,6 +97,9 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 					if (isset($coords['terrain'])) {
 						$pointInfo['terrain'] = $coords['terrain'];
 					}
+					if (isset($coords['globe'])) {
+						$pointInfo['globe'] = $coords['globe'];
+					}
 					$pointInfo['map_center'] = [
 						'lat' => $coords['lat'],
 						'lon' => $coords['lon'],
