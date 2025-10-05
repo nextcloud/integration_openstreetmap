@@ -134,6 +134,9 @@ export default {
 			routeDuration: null,
 			selectedProfile: routingProfiles.car,
 			helpText: t('integration_openstreetmap', 'Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged.'),
+			currentMapTerrain: !!getLastMapState()?.terrain,
+			currentMapGlobe: !!getLastMapState()?.terrain,
+			currentMapStyle: !!getLastMapState()?.style,
 		}
 	},
 
@@ -168,7 +171,10 @@ export default {
 			return null
 		},
 		currentLink() {
-			const link = getRoutingLink(this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId)
+			const link = getRoutingLink(
+				this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId,
+				this.currentMapTerrain, this.currentMapGlobe, this.currentMapStyle,
+			)
 			console.debug('[osm] current link', link)
 			return link
 		},

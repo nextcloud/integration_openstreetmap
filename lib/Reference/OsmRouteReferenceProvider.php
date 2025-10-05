@@ -119,15 +119,18 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 		);
 		$reference->setImageUrl($logoUrl);
 
+		$routeInfo = [
+			'queryPoints' => $linkInfo['points'],
+			'type' => $linkInfo['type'] ?? 'osrm_org',
+			'profile' => $linkInfo['profile'],
+			'routes' => $routing['routes'],
+			'waypoints' => $routing['waypoints'],
+		];
+		$routeInfo = OsmPointReferenceProvider::getFragmentInfo($referenceText, $routeInfo);
+
 		$reference->setRichObject(
 			self::RICH_OBJECT_TYPE,
-			[
-				'queryPoints' => $linkInfo['points'],
-				'type' => $linkInfo['type'] ?? 'osrm_org',
-				'profile' => $linkInfo['profile'],
-				'routes' => $routing['routes'],
-				'waypoints' => $routing['waypoints'],
-			],
+			$routeInfo,
 		);
 		return $reference;
 	}
