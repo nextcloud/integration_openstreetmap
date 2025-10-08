@@ -216,7 +216,12 @@ export default {
 					debounceSearch: 400,
 					popup: true,
 					showResultsWhileTyping: true,
-					flyTo: { pitch: 0 },
+					flyTo: {
+						pitch: 0,
+						animate: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+							? false
+							: undefined,
+					},
 				}),
 				'top-left',
 			)
