@@ -9,29 +9,9 @@
 			class="osm-integration-map" />
 		<div v-if="map"
 			class="map-content">
-			<VMarker v-if="marker"
-				:map="map"
-				:lng-lat="marker" />
-			<VMarker v-for="(m, i) in markers"
-				:key="'marker-' + i"
-				:map="map"
-				:color="m.color"
-				:lng-lat="m.location" />
 			<!-- some stuff go away when changing the style -->
 			<div v-if="mapLoaded">
 				<slot name="default" :map="map" />
-				<PolygonFill v-if="area"
-					layer-id="target-object"
-					:geojson="area"
-					:map="map"
-					:fill-opacity="0.25" />
-				<LinestringCollection v-for="(line, i) in lines"
-					:key="'line-' + i"
-					:layer-id="'line-' + i"
-					:geojson="line"
-					:opacity="line.opacity"
-					:map="map"
-					@click="$emit('line-click', i)" />
 			</div>
 		</div>
 	</div>
@@ -51,12 +31,9 @@ import {
 	getRasterTileServers,
 	getVectorStyles,
 } from '../../tileServers.js'
-import { MousePositionControl, TileControl } from '../../mapControls.js'
+import { MousePositionControl, TileControl, GlobeControl } from '../../mapControls.js'
 import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
 
-import VMarker from './VMarker.vue'
-import PolygonFill from './PolygonFill.vue'
-import LinestringCollection from './LinestringCollection.vue'
 import '../../../css/maplibre.scss'
 
 const DEFAULT_MAP_MAX_ZOOM = 22
@@ -65,9 +42,6 @@ export default {
 	name: 'MaplibreMap',
 
 	components: {
-		LinestringCollection,
-		PolygonFill,
-		VMarker,
 	},
 
 	props: {
@@ -75,13 +49,9 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		marker: {
-			type: Object,
-			default: null,
-		},
-		markers: {
-			type: Array,
-			default: () => [],
+		useGlobe: {
+			type: Boolean,
+			default: true,
 		},
 		bbox: {
 			type: Object,
@@ -111,10 +81,6 @@ export default {
 			type: Object,
 			default: null,
 		},
-		lines: {
-			type: Array,
-			default: () => [],
-		},
 		unit: {
 			type: String,
 			default: 'metric',
@@ -143,6 +109,8 @@ export default {
 			mousePositionControl: null,
 			scaleControl: null,
 			terrainControl: null,
+			globeControl: null,
+			myUseGlobe: this.useGlobe,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
 			// https://api.maptiler.com/resources/logo.svg
 			maptilerLogoUrl: generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg'),
@@ -169,6 +137,13 @@ export default {
 			} else {
 				this.map.setTerrain()
 			}
+		},
+		useGlobe(newValue) {
+			this.myUseGlobe = newValue
+			this.map.setProjection({
+				type: newValue ? 'globe' : 'mercator',
+			})
+			this.globeControl.updateGlobeIcon(newValue)
 		},
 		pitch(newValue) {
 			this.map.setPitch(newValue)
@@ -241,7 +216,12 @@ export default {
 					debounceSearch: 400,
 					popup: true,
 					showResultsWhileTyping: true,
-					flyTo: { pitch: 0 },
+					flyTo: {
+						pitch: 0,
+						animate: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+							? false
+							: undefined,
+					},
 				}),
 				'top-left',
 			)
@@ -254,9 +234,9 @@ export default {
 				},
 			})
 			const fullscreenControl = new FullscreenControl()
-			this.map.addControl(navigationControl, 'bottom-right')
 			this.map.addControl(this.scaleControl, 'top-left')
 			this.map.addControl(geolocateControl, 'top-left')
+			this.map.addControl(navigationControl, 'top-left')
 
 			// mouse position
 			this.mousePositionControl = new MousePositionControl()
@@ -285,6 +265,19 @@ export default {
 				this.$emit('map-state-change', { terrain: !!this.map.getTerrain() })
 			})
 
+			this.globeControl = new GlobeControl()
+			this.globeControl.on('toggleGlobe', this.toggleGlobe)
+			this.map.addControl(this.globeControl, 'top-right')
+			if (this.myUseGlobe) {
+				this.globeControl.updateGlobeIcon(true)
+			}
+
+			this.map.on('style.load', () => {
+				this.map.setProjection({
+					type: this.myUseGlobe ? 'globe' : 'mercator',
+				})
+			})
+
 			this.handleMapEvents()
 
 			this.map.on('load', () => {
@@ -295,9 +288,6 @@ export default {
 					this.terrainControl._toggleTerrain()
 				}
 
-				this.map.setProjection({
-					type: 'globe',
-				})
 				setTimeout(() => {
 					this.emitMapState()
 					this.emitMapBounds()
@@ -338,6 +328,15 @@ export default {
 				svgIcon.src = imagePath('integration_openstreetmap', mapVectorImages[imgKey])
 			})
 		},
+		toggleGlobe() {
+			this.myUseGlobe = !this.myUseGlobe
+			console.debug('toggleGlobe', this.myUseGlobe)
+			this.$emit('map-state-change', { globe: this.myUseGlobe })
+			this.map.setProjection({
+				type: this.myUseGlobe ? 'globe' : 'mercator',
+			})
+			this.globeControl.updateGlobeIcon(this.myUseGlobe)
+		},
 		reRenderLayersAndTerrain() {
 			// re render the layers
 			this.mapLoaded = false
@@ -353,9 +352,6 @@ export default {
 					// terrain is not disabled anymore by maplibre when switching tile layers
 					// it is still needed to add the source as it goes away when switching from a vector to a raster one
 					this.addTerrainSource()
-					this.map.setProjection({
-						type: 'globe',
-					})
 				})
 			}, 500)
 		},

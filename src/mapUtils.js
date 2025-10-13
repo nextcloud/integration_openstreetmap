@@ -58,7 +58,10 @@ export const routingLinkTypes = {
 	},
 }
 
-export function getRoutingLink(waypoints, profile = routingProfiles.car, linkTypeId = routingLinkTypes.osrm_org.id) {
+export function getRoutingLink(
+	waypoints, profile = routingProfiles.car, linkTypeId = routingLinkTypes.osrm_org.id,
+	terrain = false, globe = true, style = 'street',
+) {
 	if (waypoints === null || waypoints.length < 2) {
 		return null
 	}
@@ -94,6 +97,16 @@ export function getRoutingLink(waypoints, profile = routingProfiles.car, linkTyp
 		const centerLat = waypoints.map(w => w[1]).reduce((acc, e) => acc + e, 0) / waypoints.length
 		const centerLon = waypoints.map(w => w[0]).reduce((acc, e) => acc + e, 0) / waypoints.length
 		fragments.push(`14/${centerLat}/${centerLon}`)
+	}
+
+	if (terrain) {
+		fragments.push('terrain')
+	}
+	if (globe) {
+		fragments.push('globe')
+	}
+	if (style !== 'streets') {
+		fragments.push('style=' + encodeURIComponent(style))
 	}
 
 	if (queryParams.length > 0) {

@@ -88,8 +88,7 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
-				:markers="editing ? undefined : richObject.waypoints"
-				:lines="editing ? undefined : routeGeojsons"
+				:use-globe="useGlobe"
 				@line-click="onRouteClicked">
 				<template #default="{ map }">
 					<DirectionsPlugin v-if="editing"
@@ -98,6 +97,18 @@
 						:initial-waypoints="richObject.queryPoints.map(p => [p[1], p[0]])"
 						@waypoint-change="onWaypointChange"
 						@route-fetch="onRouteFetched" />
+					<LinestringCollection v-for="(line, i) in (editing ? [] : routeGeojsons)"
+						:key="'line-' + i"
+						:layer-id="'line-' + i"
+						:geojson="line"
+						:opacity="line.opacity"
+						:map="map"
+						@click="onRouteClicked(i)" />
+					<VMarker v-for="(m, i) in (editing ? [] : richObject.waypoints)"
+						:key="'marker-' + i"
+						:map="map"
+						:color="m.color"
+						:lng-lat="m.location" />
 				</template>
 			</MaplibreMap>
 		</div>
@@ -119,6 +130,8 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import MaplibreMap from '../components/map/MaplibreMap.vue'
 import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
 import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
+import LinestringCollection from '../components/map/LinestringCollection.vue'
+import VMarker from '../components/map/VMarker.vue'
 
 import { routingProfiles, getRoutingLink } from '../mapUtils.js'
 
@@ -129,6 +142,7 @@ export default {
 	name: 'MaplibreRouteReferenceWidget',
 
 	components: {
+		VMarker,
 		RoutingProfilePicker,
 		NcButton,
 		DirectionsPlugin,
@@ -136,6 +150,7 @@ export default {
 		MarkerRedIcon,
 		MarkerIcon,
 		MaplibreMap,
+		LinestringCollection,
 		PencilIcon,
 		CloseIcon,
 		ClipboardCheckOutlineIcon,
@@ -247,6 +262,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center

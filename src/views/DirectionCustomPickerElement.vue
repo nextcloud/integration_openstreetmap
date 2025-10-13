@@ -42,6 +42,7 @@
 			:bearing="lastMapState?.bearing"
 			:map-style="lastMapState?.mapStyle"
 			:use-terrain="!!lastMapState?.terrain"
+			:use-globe="!!lastMapState?.globe"
 			:all-move-events="true"
 			@map-state-change="onMapStateChange">
 			<template #default="{ map }">
@@ -133,6 +134,9 @@ export default {
 			routeDuration: null,
 			selectedProfile: routingProfiles.car,
 			helpText: t('integration_openstreetmap', 'Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged.'),
+			currentMapTerrain: !!getLastMapState()?.terrain,
+			currentMapGlobe: !!getLastMapState()?.terrain,
+			currentMapStyle: !!getLastMapState()?.style,
 		}
 	},
 
@@ -167,7 +171,10 @@ export default {
 			return null
 		},
 		currentLink() {
-			const link = getRoutingLink(this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId)
+			const link = getRoutingLink(
+				this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId,
+				this.currentMapTerrain, this.currentMapGlobe, this.currentMapStyle,
+			)
 			console.debug('[osm] current link', link)
 			return link
 		},
@@ -235,8 +242,9 @@ export default {
 			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
 			const mapStyle = this.currentMapStyle
 			const terrain = this.currentMapTerrain ? '1' : ''
+			const globe = this.currentMapGlobe ? '1' : ''
 			const routingLinkType = this.selectedRoutingLinkTypeId
-			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, routingLinkType })
+			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, routingLinkType })
 			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onMapStateChange(e) {
@@ -260,6 +268,9 @@ export default {
 			}
 			if ([true, false].includes(e.terrain)) {
 				this.currentMapTerrain = e.terrain
+			}
+			if ([true, false].includes(e.globe)) {
+				this.currentMapGlobe = e.globe
 			}
 		},
 	},

@@ -33,7 +33,6 @@
 			<MaplibreMap
 				class="location--map"
 				scrolling="no"
-				:marker="markerCoords"
 				:bbox="bbox"
 				:center="mapCenter"
 				:zoom="zoom"
@@ -41,18 +40,33 @@
 				:bearing="bearing"
 				:map-style="style"
 				:use-terrain="useTerrain"
-				:area="richObject.geojson" />
+				:use-globe="useGlobe">
+				<template #default="{ map }">
+					<VMarker v-if="markerCoords"
+						:map="map"
+						:lng-lat="markerCoords" />
+					<PolygonFill v-if="richObject.geojson"
+						layer-id="target-object"
+						:geojson="richObject.geojson"
+						:map="map"
+						:fill-opacity="0.25" />
+				</template>
+			</MaplibreMap>
 		</div>
 	</div>
 </template>
 
 <script>
 import MaplibreMap from '../components/map/MaplibreMap.vue'
+import VMarker from '../components/map/VMarker.vue'
+import PolygonFill from '../components/map/PolygonFill.vue'
 
 export default {
 	name: 'MaplibreLocationReferenceWidget',
 
 	components: {
+		PolygonFill,
+		VMarker,
 		MaplibreMap,
 	},
 
@@ -104,6 +118,9 @@ export default {
 		},
 		useTerrain() {
 			return this.richObject.terrain ?? undefined
+		},
+		useGlobe() {
+			return this.richObject.globe ?? undefined
 		},
 		mapCenter() {
 			return this.richObject.map_center
