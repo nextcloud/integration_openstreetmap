@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "OpenStreetMap" : "OpenStreetMap",
     "Map location (by OpenStreetMap)" : "Localisation sur carte (par OpenStreetMap)",
-    "Map directions (by OSRM)" : "Itinéraires cartographier (par OSRM)",
+    "Map directions (by OSRM)" : "Itinéraire (par OSRM)",
     "OpenStreetMap locations" : "Localisations sur OpenStreetMap",
     "Bad HTTP method" : "Mauvaise méthode HTTP",
     "Bad credentials" : "Identifiants incorrects",
