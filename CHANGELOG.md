@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 3.0.0 – 2025-11-03
+
+### Added
+
+- Support NC 33
+- Add globe control, keep globe by default, include globe param in location links @julien-nc [#24](https://github.com/nextcloud/integration_openstreetmap/pull/24)
+- Respect prefers-reduced-motion: no search animation @julien-nc [#24](https://github.com/nextcloud/integration_openstreetmap/pull/24)
+
+### Changed
+
+- Migrate to Vue 3 and nextcloud/vue 9 @julien-nc [#19](https://github.com/nextcloud/integration_openstreetmap/pull/19)
+- Improve icons and settings style @julien-nc [#20](https://github.com/nextcloud/integration_openstreetmap/pull/20)
+- Use new OCP\Search\IExternalProvider @julien-nc [#22](https://github.com/nextcloud/integration_openstreetmap/pull/22)
+- Make the map component more generic @julien-nc [#24](https://github.com/nextcloud/integration_openstreetmap/pull/24)
+- Update composer and npm dependencies, migrate to PhpUnit 12, remove deprecated stuff, use flat eslint config @julien-nc [#25](https://github.com/nextcloud/integration_openstreetmap/pull/25)
+
+### Fixed
+
+- fix sprites url which can be like /sprite@2x.png @julien-nc [#24](https://github.com/nextcloud/integration_openstreetmap/pull/24)
+
 ## 2.1.0 – 2025-05-23
 
 ### Added
