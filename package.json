@@ -1,65 +1,65 @@
 {
-	"name": "integration_openstreetmap",
-	"version": "0.0.1",
-	"description": "OpenStreetMap integration",
-	"main": "index.js",
-	"directories": {
-		"test": "tests"
-	},
-	"type": "module",
-	"scripts": {
-		"build": "NODE_ENV=production vite --mode production build",
-		"dev": "NODE_ENV=production vite --mode development build",
-		"watch": "NODE_ENV=development vite --mode development build --watch",
-		"lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src",
-		"lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src --fix",
-		"stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
-		"stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/julien-nc/integration_openstreetmap"
-	},
-	"keywords": [
-		"osm",
-		"openstreetmap"
-	],
-	"author": "Julien Veyssier",
-	"license": "AGPL-3.0",
-	"bugs": {
-		"url": "https://github.com/julien-nc/integration_openstreetmap/issues"
-	},
-	"homepage": "https://github.com/julien-nc/integration_openstreetmap",
-	"browserslist": [
-		"extends @nextcloud/browserslist-config"
-	],
-	"engines": {
-		"node": "^20.0.0",
-		"npm": "^9.0.0"
-	},
-	"dependencies": {
-		"@maplibre/maplibre-gl-directions": "^0.8.0",
-		"@maplibre/maplibre-gl-geocoder": "^1.5.0",
-		"@nextcloud/auth": "^2.0.0",
-		"@nextcloud/axios": "^2.0.0",
-		"@nextcloud/dialogs": "^7.0.0-rc.1",
-		"@nextcloud/initial-state": "^3.0.0",
-		"@nextcloud/l10n": "^3.1.0",
-		"@nextcloud/moment": "^1.1.1",
-		"@nextcloud/password-confirmation": "^6.0.0-rc.0",
-		"@nextcloud/router": "^3.0.0",
-		"@nextcloud/vue": "^9.0.0-rc.2",
-		"maplibre-gl": "^5.2.0",
-		"vue": "^3.5.16",
-		"vue-material-design-icons": "^5.1.2"
-	},
-	"devDependencies": {
-		"@nextcloud/babel-config": "^1.0.0",
-		"@nextcloud/browserslist-config": "^3.0.0",
-		"@nextcloud/eslint-config": "^8.0.0",
-		"@nextcloud/stylelint-config": "^3.0.1",
-		"@nextcloud/vite-config": "^2.3.5",
-		"vite-plugin-eslint": "^1.8.1",
-		"vite-plugin-stylelint": "^6.0.0"
-	}
+  "name": "integration_openstreetmap",
+  "version": "0.0.1",
+  "description": "OpenStreetMap integration",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "NODE_ENV=production vite --mode production build",
+    "dev": "NODE_ENV=production vite --mode development build",
+    "watch": "NODE_ENV=development vite --mode development build --watch",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.vue src --fix",
+    "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
+    "stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julien-nc/integration_openstreetmap"
+  },
+  "keywords": [
+    "osm",
+    "openstreetmap"
+  ],
+  "author": "Julien Veyssier",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/julien-nc/integration_openstreetmap/issues"
+  },
+  "homepage": "https://github.com/julien-nc/integration_openstreetmap",
+  "browserslist": [
+    "extends @nextcloud/browserslist-config"
+  ],
+  "engines": {
+    "node": "^24.0.0",
+    "npm": "^11.3.0"
+  },
+  "dependencies": {
+    "@maplibre/maplibre-gl-directions": "^0.8.0",
+    "@maplibre/maplibre-gl-geocoder": "^1.5.0",
+    "@nextcloud/auth": "^2.0.0",
+    "@nextcloud/axios": "^2.0.0",
+    "@nextcloud/dialogs": "^7.0.0-rc.1",
+    "@nextcloud/initial-state": "^3.0.0",
+    "@nextcloud/l10n": "^3.1.0",
+    "@nextcloud/moment": "^1.1.1",
+    "@nextcloud/password-confirmation": "^6.0.0-rc.0",
+    "@nextcloud/router": "^3.0.0",
+    "@nextcloud/vue": "^9.0.0-rc.2",
+    "maplibre-gl": "^5.2.0",
+    "vue": "^3.5.16",
+    "vue-material-design-icons": "^5.1.2"
+  },
+  "devDependencies": {
+    "@nextcloud/babel-config": "^1.0.0",
+    "@nextcloud/browserslist-config": "^3.0.0",
+    "@nextcloud/eslint-config": "^8.0.0",
+    "@nextcloud/stylelint-config": "^3.0.1",
+    "@nextcloud/vite-config": "^2.3.5",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-stylelint": "^6.0.0"
+  }
 }
