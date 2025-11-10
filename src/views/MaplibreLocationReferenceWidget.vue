@@ -31,6 +31,8 @@
 				</strong>
 			</a>
 			<MaplibreMap
+				v-model:map-style="mapStyle"
+				v-model:use-terrain="useTerrain"
 				class="location--map"
 				scrolling="no"
 				:bbox="bbox"
@@ -38,8 +40,6 @@
 				:zoom="zoom"
 				:pitch="pitch"
 				:bearing="bearing"
-				:map-style="style"
-				:use-terrain="useTerrain"
 				:use-globe="useGlobe">
 				<template #default="{ map }">
 					<VMarker v-if="markerCoords"
@@ -87,6 +87,8 @@ export default {
 
 	data() {
 		return {
+			mapStyle: this.richObject.style,
+			useTerrain: this.richObject.terrain,
 		}
 	},
 
@@ -112,12 +114,6 @@ export default {
 		},
 		bearing() {
 			return this.richObject.bearing
-		},
-		style() {
-			return this.richObject.style ?? undefined
-		},
-		useTerrain() {
-			return this.richObject.terrain ?? undefined
 		},
 		useGlobe() {
 			return this.richObject.globe ?? undefined

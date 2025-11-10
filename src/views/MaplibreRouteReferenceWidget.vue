@@ -79,6 +79,8 @@
 				</div>
 			</div>
 			<MaplibreMap
+				v-model:map-style="mapStyle"
+				v-model:use-terrain="useTerrain"
 				class="route--map"
 				scrolling="no"
 				:bbox="bbox"
@@ -86,8 +88,6 @@
 				:zoom="zoom"
 				:pitch="pitch"
 				:bearing="bearing"
-				:map-style="style"
-				:use-terrain="useTerrain"
 				:use-globe="useGlobe"
 				@line-click="onRouteClicked">
 				<template #default="{ map }">
@@ -180,6 +180,8 @@ export default {
 			editingRoute: null,
 			copied: false,
 			selectedRoutingProfile: routingProfiles[this.richObject.profile] ?? routingProfiles.car,
+			mapStyle: this.richObject.style,
+			useTerrain: this.richObject.terrain,
 		}
 	},
 
@@ -256,12 +258,6 @@ export default {
 		},
 		bearing() {
 			return this.richObject.bearing
-		},
-		style() {
-			return this.richObject.style ?? undefined
-		},
-		useTerrain() {
-			return this.richObject.terrain ?? undefined
 		},
 		useGlobe() {
 			return this.richObject.globe ?? undefined
