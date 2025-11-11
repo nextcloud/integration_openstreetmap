@@ -100,7 +100,13 @@ export default {
 	},
 
 	emits: [
-		'line-click',
+		'update:center',
+		'update:zoom',
+		'update:pitch',
+		'update:bearing',
+		'update:mapStyle',
+		'update:useTerrain',
+		'update:useGlobe',
 		'map-bounds-change',
 	],
 

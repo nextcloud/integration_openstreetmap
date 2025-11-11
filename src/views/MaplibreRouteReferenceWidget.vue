@@ -88,8 +88,7 @@
 				:use-terrain="richObject.terrain"
 				:use-globe="richObject.globe"
 				class="route--map"
-				scrolling="no"
-				@line-click="onRouteClicked">
+				scrolling="no">
 				<template #default="{ map }">
 					<DirectionsPlugin v-if="editing"
 						:map="map"
