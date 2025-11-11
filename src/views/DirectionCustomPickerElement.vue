@@ -35,16 +35,16 @@
 			…
 		</span-->
 		<MaplibreMap v-if="showMap"
-			class="direction-map"
-			:center="lastCenter"
-			:zoom="lastMapState?.zoom"
-			:pitch="lastMapState?.pitch"
-			:bearing="lastMapState?.bearing"
-			:map-style="lastMapState?.mapStyle"
-			:use-terrain="!!lastMapState?.terrain"
-			:use-globe="!!lastMapState?.globe"
+			v-model:pitch="mapState.pitch"
+			v-model:bearing="mapState.bearing"
+			v-model:map-style="mapState.mapStyle"
+			v-model:use-terrain="mapState.terrain"
+			v-model:use-globe="mapState.globe"
+			v-model:zoom="mapState.zoom"
+			:center="mapCenter"
 			:all-move-events="true"
-			@map-state-change="onMapStateChange">
+			class="direction-map"
+			@update:center="onUpdateCenter">
 			<template #default="{ map }">
 				<DirectionsPlugin
 					:map="map"
@@ -60,7 +60,7 @@
 			<NcSelect
 				class="type-select"
 				:model-value="selectedLinkType"
-				:options="linkTypesArray"
+				:options="routingLinkTypesArray"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
@@ -94,9 +94,7 @@ import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
 import moment from '@nextcloud/moment'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
-import { routingProfiles, routingLinkTypes, getRoutingLink } from '../mapUtils.js'
-
-const linkTypesArray = Object.values(routingLinkTypes)
+import { routingProfiles, routingLinkTypes, routingLinkTypesArray, getRoutingLink } from '../mapUtils.js'
 
 export default {
 	name: 'DirectionCustomPickerElement',
@@ -126,21 +124,27 @@ export default {
 		return {
 			selectedRoutingLinkTypeId: getLastMapState()?.routingLinkType ? getLastMapState().routingLinkType : routingLinkTypes.osrm_org.id,
 			showMap: false,
-			lastMapState: getLastMapState(),
+			mapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
-			linkTypesArray,
+			routingLinkTypesArray,
 			waypoints: null,
 			routeDistance: null,
 			routeDuration: null,
 			selectedProfile: routingProfiles.car,
 			helpText: t('integration_openstreetmap', 'Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged.'),
-			currentMapTerrain: !!getLastMapState()?.terrain,
-			currentMapGlobe: !!getLastMapState()?.terrain,
-			currentMapStyle: !!getLastMapState()?.style,
 		}
 	},
 
 	computed: {
+		mapCenter() {
+			if (this.mapState?.lat && this.mapState?.lon) {
+				return {
+					lat: this.mapState.lat,
+					lon: this.mapState.lon,
+				}
+			}
+			return null
+		},
 		profileList() {
 			return Object.values(routingProfiles)
 		},
@@ -153,15 +157,6 @@ export default {
 		selectedLinkType() {
 			return routingLinkTypes[this.selectedRoutingLinkTypeId] ?? null
 		},
-		lastCenter() {
-			if (this.lastMapState?.lat && this.lastMapState?.lon) {
-				return {
-					lat: this.lastMapState.lat,
-					lon: this.lastMapState.lon,
-				}
-			}
-			return null
-		},
 		hint() {
 			if (this.waypoints === null || this.waypoints.length === 0) {
 				return t('integration_openstreetmap', 'Click on the map to set the start location')
@@ -173,7 +168,7 @@ export default {
 		currentLink() {
 			const link = getRoutingLink(
 				this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId,
-				this.currentMapTerrain, this.currentMapGlobe, this.currentMapStyle,
+				this.mapState.terrain, this.mapState.globe, this.mapState.mapStyle,
 			)
 			console.debug('[osm] current link', link)
 			return link
@@ -235,43 +230,21 @@ export default {
 			this.selectedRoutingLinkTypeId = selected?.id ?? null
 		},
 		onMapSubmit() {
-			const lat = this.currentCenter.lat
-			const lon = this.currentCenter.lon
-			const zoom = this.currentZoom
-			const pitch = this.currentPitch
-			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
-			const mapStyle = this.currentMapStyle
-			const terrain = this.currentMapTerrain ? '1' : ''
-			const globe = this.currentMapGlobe ? '1' : ''
+			const lat = this.mapState.lat
+			const lon = this.mapState.lon
+			const zoom = this.mapState.zoom
+			const pitch = this.mapState.pitch
+			const bearing = this.mapState.bearing ? parseFloat(this.mapState.bearing.toFixed(2)) : this.mapState.bearing
+			const mapStyle = this.mapState.mapStyle
+			const terrain = this.mapState.terrain ? '1' : ''
+			const globe = this.mapState.globe ? '1' : ''
 			const routingLinkType = this.selectedRoutingLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, routingLinkType })
 			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
-		onMapStateChange(e) {
-			if (e.centerLat !== undefined && e.centerLng !== undefined) {
-				this.currentCenter = {
-					lat: parseFloat(e.centerLat.toFixed(6)),
-					lon: parseFloat(e.centerLng.toFixed(6)),
-				}
-			}
-			if (e.zoom !== undefined) {
-				this.currentZoom = Math.floor(e.zoom)
-			}
-			if (e.pitch !== undefined) {
-				this.currentPitch = e.pitch
-			}
-			if (e.bearing !== undefined) {
-				this.currentBearing = e.bearing
-			}
-			if (e.mapStyle !== undefined) {
-				this.currentMapStyle = e.mapStyle
-			}
-			if ([true, false].includes(e.terrain)) {
-				this.currentMapTerrain = e.terrain
-			}
-			if ([true, false].includes(e.globe)) {
-				this.currentMapGlobe = e.globe
-			}
+		onUpdateCenter(center) {
+			this.mapState.lat = center.lat
+			this.mapState.lon = center.lng
 		},
 	},
 }

@@ -19,16 +19,16 @@
 			:search-placeholder="searchPlaceholder"
 			@submit="onSearchSubmit" />
 		<MaplibreMap v-if="showMap"
-			class="point-map"
-			:center="lastCenter"
-			:zoom="lastMapState?.zoom"
-			:pitch="lastMapState?.pitch"
-			:bearing="lastMapState?.bearing"
-			:map-style="lastMapState?.mapStyle"
-			:use-terrain="!!lastMapState?.terrain"
-			:use-globe="!!lastMapState?.globe"
+			v-model:pitch="mapState.pitch"
+			v-model:bearing="mapState.bearing"
+			v-model:map-style="mapState.mapStyle"
+			v-model:use-terrain="mapState.terrain"
+			v-model:use-globe="mapState.globe"
+			v-model:zoom="mapState.zoom"
+			:center="mapCenter"
 			:all-move-events="true"
-			@map-state-change="onMapStateChange">
+			class="point-map"
+			@update:center="onUpdateCenter">
 			<template #default="{ map }">
 				<VMarker v-if="currentMarker"
 					:map="map"
@@ -53,7 +53,7 @@
 			<NcButton
 				class="submit-button"
 				variant="primary"
-				:disabled="currentCenter === null"
+				:disabled="mapCenter === null"
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate location link') }}
 				<template #icon>
@@ -77,22 +77,7 @@ import VMarker from '../components/map/VMarker.vue'
 import { getProvider, NcSearch } from '@nextcloud/vue/components/NcRichText'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
-
-const linkTypes = {
-	osm: {
-		id: 'osm',
-		label: t('integration_openstreetmap', 'OpenStreetMap'),
-	},
-	osmand: {
-		id: 'osmand',
-		label: t('integration_openstreetmap', 'OsmAnd'),
-	},
-	google: {
-		id: 'google',
-		label: t('integration_openstreetmap', 'Google maps'),
-	},
-}
-const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
+import { linkTypes, linkTypesArray } from '../mapUtils.js'
 
 export default {
 	name: 'PointCustomPickerElement',
@@ -121,16 +106,9 @@ export default {
 	data() {
 		return {
 			provider: getProvider(this.providerId),
-			currentCenter: null,
-			currentZoom: null,
-			currentPitch: getLastMapState()?.pitch ?? null,
-			currentBearing: getLastMapState()?.bearing ?? null,
-			currentMapStyle: getLastMapState()?.mapStyle ?? null,
-			currentMapTerrain: !!getLastMapState()?.terrain,
-			currentMapGlobe: !!getLastMapState()?.globe,
 			selectedLinkTypeId: getLastMapState()?.linkType ? getLastMapState().linkType : linkTypes.osm.id,
 			showMap: false,
-			lastMapState: getLastMapState(),
+			mapState: getLastMapState(),
 			searchPlaceholder: t('integration_openstreetmap', 'Search with Nominatim to get an OpenStreetMap link'),
 			includeMarker: true,
 			linkTypesArray,
@@ -141,29 +119,27 @@ export default {
 		selectedLinkType() {
 			return linkTypes[this.selectedLinkTypeId] ?? null
 		},
-		lastCenter() {
-			if (this.lastMapState?.lat && this.lastMapState?.lon) {
+		mapCenter() {
+			if (this.mapState?.lat && this.mapState?.lon) {
 				return {
-					lat: this.lastMapState.lat,
-					lon: this.lastMapState.lon,
+					lat: this.mapState.lat,
+					lon: this.mapState.lon,
 				}
 			}
 			return null
 		},
 		currentMarker() {
 			return this.includeMarker
-				? this.currentCenter
-					? this.currentCenter
-					: this.lastCenter
+				? this.mapCenter
 				: undefined
 		},
 		currentLink() {
-			if (this.currentCenter === null) {
+			if (this.mapCenter === null) {
 				return null
 			}
-			const lat = this.currentCenter.lat
-			const lon = this.currentCenter.lon
-			const zoom = this.currentZoom
+			const lat = parseFloat(this.mapCenter.lat.toFixed(6))
+			const lon = parseFloat(this.mapCenter.lon.toFixed(6))
+			const zoom = Math.floor(this.mapState.zoom)
 
 			let link
 			const fragments = []
@@ -190,19 +166,19 @@ export default {
 				queryParams.push('z=' + zoom)
 			}
 
-			if (parseInt(this.currentPitch) !== 0) {
-				fragments.push('pitch=' + parseInt(this.currentPitch))
+			if (parseInt(this.mapState.pitch) !== 0) {
+				fragments.push('pitch=' + parseInt(this.mapState.pitch))
 			}
-			if (parseInt(this.currentBearing) !== 0) {
-				fragments.push('bearing=' + parseInt(this.currentBearing))
+			if (parseInt(this.mapState.bearing) !== 0) {
+				fragments.push('bearing=' + parseInt(this.mapState.bearing))
 			}
-			if (this.currentMapStyle !== 'streets') {
-				fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
+			if (this.mapState.mapStyle !== 'streets') {
+				fragments.push('style=' + encodeURIComponent(this.mapState.mapStyle))
 			}
-			if (this.currentMapTerrain) {
+			if (this.mapState.terrain) {
 				fragments.push('terrain')
 			}
-			if (this.currentMapGlobe) {
+			if (this.mapState.globe) {
 				fragments.push('globe')
 			}
 
@@ -231,50 +207,28 @@ export default {
 			this.selectedLinkTypeId = selected?.id ?? null
 		},
 		onMapSubmit() {
-			const lat = this.currentCenter.lat
-			const lon = this.currentCenter.lon
-			const zoom = this.currentZoom
-			const pitch = this.currentPitch
-			const bearing = this.currentBearing ? parseFloat(this.currentBearing.toFixed(2)) : this.currentBearing
-			const mapStyle = this.currentMapStyle
-			const terrain = this.currentMapTerrain ? '1' : ''
-			const globe = this.currentMapGlobe ? '1' : ''
+			const lat = this.mapState.lat
+			const lon = this.mapState.lon
+			const zoom = this.mapState.zoom
+			const pitch = this.mapState.pitch
+			const bearing = this.mapState.bearing ? parseFloat(this.mapState.bearing.toFixed(2)) : this.mapState.bearing
+			const mapStyle = this.mapState.mapStyle
+			const terrain = this.mapState.terrain ? '1' : ''
+			const globe = this.mapState.globe ? '1' : ''
 			const linkType = this.selectedLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType })
 			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))
 		},
 		onSearchSubmit(link) {
-			setLastMapState({ mapStyle: this.currentMapStyle })
+			setLastMapState({ mapStyle: this.mapState.mapStyle })
 			const fragments = []
-			fragments.push('style=' + encodeURIComponent(this.currentMapStyle))
+			fragments.push('style=' + encodeURIComponent(this.mapState.mapStyle))
 			const finalLink = link + '#' + fragments.join('&')
 			this.$el.dispatchEvent(new CustomEvent('submit', { detail: finalLink, bubbles: true }))
 		},
-		onMapStateChange(e) {
-			if (e.centerLat !== undefined && e.centerLng !== undefined) {
-				this.currentCenter = {
-					lat: parseFloat(e.centerLat.toFixed(6)),
-					lon: parseFloat(e.centerLng.toFixed(6)),
-				}
-			}
-			if (e.zoom !== undefined) {
-				this.currentZoom = Math.floor(e.zoom)
-			}
-			if (e.pitch !== undefined) {
-				this.currentPitch = e.pitch
-			}
-			if (e.bearing !== undefined) {
-				this.currentBearing = e.bearing
-			}
-			if (e.mapStyle !== undefined) {
-				this.currentMapStyle = e.mapStyle
-			}
-			if ([true, false].includes(e.terrain)) {
-				this.currentMapTerrain = e.terrain
-			}
-			if ([true, false].includes(e.globe)) {
-				this.currentMapGlobe = e.globe
-			}
+		onUpdateCenter(center) {
+			this.mapState.lat = center.lat
+			this.mapState.lon = center.lng
 		},
 	},
 }

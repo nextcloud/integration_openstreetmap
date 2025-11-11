@@ -12,6 +12,22 @@ export const mapVectorImages = {
 	marker_green: 'mapIcons/marker-green.svg',
 }
 
+export const linkTypes = {
+	osm: {
+		id: 'osm',
+		label: t('integration_openstreetmap', 'OpenStreetMap'),
+	},
+	osmand: {
+		id: 'osmand',
+		label: t('integration_openstreetmap', 'OsmAnd'),
+	},
+	google: {
+		id: 'google',
+		label: t('integration_openstreetmap', 'Google maps'),
+	},
+}
+export const linkTypesArray = Object.keys(linkTypes).map(typeId => linkTypes[typeId])
+
 export const routingProfiles = {
 	car: {
 		id: 'routed-car',
@@ -58,6 +74,12 @@ export const routingLinkTypes = {
 	},
 }
 
+export const routingLinkTypesArray = Object.values(routingLinkTypes)
+
+export function shortenCoordinate(coordinate) {
+	return parseFloat(coordinate.toFixed(6))
+}
+
 export function getRoutingLink(
 	waypoints, profile = routingProfiles.car, linkTypeId = routingLinkTypes.osrm_org.id,
 	terrain = false, globe = true, style = 'street',
@@ -73,30 +95,30 @@ export function getRoutingLink(
 	const queryParams = []
 	if (linkTypeId === null || linkTypeId === routingLinkTypes.osrm_org.id) {
 		link = 'https://map.project-osrm.org/'
-		queryParams.push(...waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
+		queryParams.push(...waypoints.map(w => `loc=${shortenCoordinate(w[1])}%2C${shortenCoordinate(w[0])}`))
 		queryParams.push('srv=' + selectedProfile.srv)
 	} else if (linkTypeId === routingLinkTypes.osrm_osm_de.id) {
 		link = 'https://routing.openstreetmap.de/'
-		queryParams.push(...waypoints.map(w => `loc=${w[1]}%2C${w[0]}`))
+		queryParams.push(...waypoints.map(w => `loc=${shortenCoordinate(w[1])}%2C${shortenCoordinate(w[0])}`))
 		queryParams.push('srv=' + selectedProfile.srv)
 	} else if (linkTypeId === routingLinkTypes.graphhopper_com.id) {
 		link = 'https://graphhopper.com/maps/'
-		queryParams.push(...waypoints.map(w => `point=${w[1]}%2C${w[0]}`))
+		queryParams.push(...waypoints.map(w => `point=${shortenCoordinate(w[1])}%2C${shortenCoordinate(w[0])}`))
 		queryParams.push('profile=' + selectedProfile.ghpProfile)
 	} else if (linkTypeId === routingLinkTypes.osmand_net.id) {
 		link = 'https://osmand.net/map/navigate/'
 		const startW = waypoints[0]
 		const endW = waypoints[waypoints.length - 1]
-		queryParams.push(`start=${startW[1]},${startW[0]}`)
-		queryParams.push(`end=${endW[1]},${endW[0]}`)
+		queryParams.push(`start=${shortenCoordinate(startW[1])},${shortenCoordinate(startW[0])}`)
+		queryParams.push(`end=${shortenCoordinate(endW[1])},${shortenCoordinate(endW[0])}`)
 		if (waypoints.length > 2) {
 			const vias = waypoints.slice(1, waypoints.length - 1)
-			queryParams.push('via=' + vias.map(v => `${v[1]},${v[0]}`).join(';'))
+			queryParams.push('via=' + vias.map(v => `${shortenCoordinate(v[1])},${shortenCoordinate(v[0])}`).join(';'))
 		}
 		queryParams.push('profile=' + selectedProfile.osmandProfile)
 		const centerLat = waypoints.map(w => w[1]).reduce((acc, e) => acc + e, 0) / waypoints.length
 		const centerLon = waypoints.map(w => w[0]).reduce((acc, e) => acc + e, 0) / waypoints.length
-		fragments.push(`14/${centerLat}/${centerLon}`)
+		fragments.push(`14/${shortenCoordinate(centerLat)}/${shortenCoordinate(centerLon)}`)
 	}
 
 	if (terrain) {
