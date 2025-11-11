@@ -55,7 +55,7 @@ export default {
 		},
 		useGlobe: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 		bbox: {
 			type: Object,
@@ -101,7 +101,6 @@ export default {
 
 	emits: [
 		'line-click',
-		'map-state-change',
 		'map-bounds-change',
 	],
 
@@ -161,6 +160,7 @@ export default {
 			})
 			this.globeControl.updateGlobeIcon(newValue)
 		},
+		/*
 		pitch(newValue) {
 			this.map.setPitch(newValue)
 		},
@@ -170,6 +170,7 @@ export default {
 		mapStyle(newValue) {
 			console.debug('mapStyle changed', newValue)
 		},
+		*/
 	},
 
 	mounted() {
@@ -190,7 +191,7 @@ export default {
 			}
 			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
 			const restoredStyleObj = this.styles[restoredStyleKey]
-			this.$emit('map-state-change', { mapStyle: restoredStyleKey })
+			this.$emit('update:mapStyle', restoredStyleKey)
 
 			const mapOptions = {
 				container: this.$refs.mapContainer,
@@ -266,7 +267,6 @@ export default {
 			// custom tile control
 			const tileControl = new TileControl({ styles: this.styles, selectedKey: restoredStyleKey })
 			tileControl.on('changeStyle', (key) => {
-				this.$emit('map-state-change', { mapStyle: key })
 				this.$emit('update:mapStyle', key)
 			})
 			this.map.addControl(tileControl, 'top-right')
@@ -347,7 +347,7 @@ export default {
 		toggleGlobe() {
 			this.myUseGlobe = !this.myUseGlobe
 			console.debug('toggleGlobe', this.myUseGlobe)
-			this.$emit('map-state-change', { globe: this.myUseGlobe })
+			this.$emit('update:useGlobe', this.myUseGlobe)
 			this.map.setProjection({
 				type: this.myUseGlobe ? 'globe' : 'mercator',
 			})
@@ -364,7 +364,6 @@ export default {
 		toggleTerrain() {
 			this.myUseTerrain = !this.myUseTerrain
 			this.$emit('update:useTerrain', this.myUseTerrain)
-			this.$emit('map-state-change', { terrain: this.myUseTerrain })
 			if (this.myUseTerrain) {
 				this.enableTerrain()
 			} else {
@@ -406,13 +405,10 @@ export default {
 		},
 		emitMapState() {
 			const { lng, lat } = this.map.getCenter()
-			this.$emit('map-state-change', {
-				centerLng: lng,
-				centerLat: lat,
-				zoom: this.map.getZoom(),
-				pitch: this.map.getPitch(),
-				bearing: this.map.getBearing(),
-			})
+			this.$emit('update:center', { lat, lng })
+			this.$emit('update:zoom', this.map.getZoom())
+			this.$emit('update:pitch', this.map.getPitch())
+			this.$emit('update:bearing', this.map.getBearing())
 		},
 		emitMapBounds() {
 			const bounds = this.map.getBounds()
