@@ -38,7 +38,7 @@
 		"npm": "^9.0.0"
 	},
 	"dependencies": {
-		"@maplibre/maplibre-gl-directions": "^0.8.0",
+		"@maplibre/maplibre-gl-directions": "^0.9.0",
 		"@maplibre/maplibre-gl-geocoder": "^1.5.0",
 		"@nextcloud/auth": "^2.0.0",
 		"@nextcloud/axios": "^2.0.0",
