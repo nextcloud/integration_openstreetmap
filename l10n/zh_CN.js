@@ -1,6 +1,7 @@
 OC.L10N.register(
     "integration_openstreetmap",
     {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "错误的HTTP方法",
     "Bad credentials" : "错误的凭据",
     "Connected accounts" : "关联账号",
