@@ -31,16 +31,16 @@
 				</strong>
 			</a>
 			<MaplibreMap
-				class="location--map"
-				scrolling="no"
+				:map-style="richObject.style"
 				:bbox="bbox"
-				:center="mapCenter"
-				:zoom="zoom"
-				:pitch="pitch"
-				:bearing="bearing"
-				:map-style="style"
-				:use-terrain="useTerrain"
-				:use-globe="useGlobe">
+				:center="richObject.map_center"
+				:zoom="richObject.zoom"
+				:pitch="richObject.pitch"
+				:bearing="richObject.bearing"
+				:use-terrain="richObject.terrain"
+				:use-globe="richObject.globe"
+				class="location--map"
+				scrolling="no">
 				<template #default="{ map }">
 					<VMarker v-if="markerCoords"
 						:map="map"
@@ -103,27 +103,6 @@ export default {
 				east: bb[3],
 				west: bb[2],
 			}
-		},
-		zoom() {
-			return this.richObject.zoom
-		},
-		pitch() {
-			return this.richObject.pitch
-		},
-		bearing() {
-			return this.richObject.bearing
-		},
-		style() {
-			return this.richObject.style ?? undefined
-		},
-		useTerrain() {
-			return this.richObject.terrain ?? undefined
-		},
-		useGlobe() {
-			return this.richObject.globe ?? undefined
-		},
-		mapCenter() {
-			return this.richObject.map_center
 		},
 		markerCoords() {
 			return this.richObject.marker_coordinates

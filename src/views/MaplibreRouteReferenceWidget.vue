@@ -79,17 +79,16 @@
 				</div>
 			</div>
 			<MaplibreMap
-				class="route--map"
-				scrolling="no"
+				:map-style="richObject.style"
 				:bbox="bbox"
-				:center="mapCenter"
-				:zoom="zoom"
-				:pitch="pitch"
-				:bearing="bearing"
-				:map-style="style"
-				:use-terrain="useTerrain"
-				:use-globe="useGlobe"
-				@line-click="onRouteClicked">
+				:center="richObject.map_center"
+				:zoom="richObject.zoom"
+				:pitch="richObject.pitch"
+				:bearing="richObject.bearing"
+				:use-terrain="richObject.terrain"
+				:use-globe="richObject.globe"
+				class="route--map"
+				scrolling="no">
 				<template #default="{ map }">
 					<DirectionsPlugin v-if="editing"
 						:map="map"
@@ -247,27 +246,6 @@ export default {
 				east: lons.reduce((acc, val) => Math.max(acc, val)),
 				west: lons.reduce((acc, val) => Math.min(acc, val)),
 			}
-		},
-		zoom() {
-			return this.richObject.zoom
-		},
-		pitch() {
-			return this.richObject.pitch
-		},
-		bearing() {
-			return this.richObject.bearing
-		},
-		style() {
-			return this.richObject.style ?? undefined
-		},
-		useTerrain() {
-			return this.richObject.terrain ?? undefined
-		},
-		useGlobe() {
-			return this.richObject.globe ?? undefined
-		},
-		mapCenter() {
-			return this.richObject.map_center
 		},
 		currentRoutingLink() {
 			if (!this.editing) {

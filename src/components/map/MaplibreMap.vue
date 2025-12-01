@@ -20,7 +20,7 @@
 <script>
 import maplibregl, {
 	Map, NavigationControl, ScaleControl, GeolocateControl,
-	FullscreenControl, TerrainControl,
+	FullscreenControl,
 } from 'maplibre-gl'
 import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
@@ -31,7 +31,7 @@ import {
 	getRasterTileServers,
 	getVectorStyles,
 } from '../../tileServers.js'
-import { MousePositionControl, TileControl, GlobeControl } from '../../mapControls.js'
+import { MousePositionControl, TileControl, GlobeControl, TerrainControl } from '../../mapControls.js'
 import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
 
 import '../../../css/maplibre.scss'
@@ -49,9 +49,13 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		terrainScale: {
+			type: Number,
+			default: 2.5,
+		},
 		useGlobe: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 		bbox: {
 			type: Object,
@@ -96,8 +100,13 @@ export default {
 	},
 
 	emits: [
-		'line-click',
-		'map-state-change',
+		'update:center',
+		'update:zoom',
+		'update:pitch',
+		'update:bearing',
+		'update:mapStyle',
+		'update:useTerrain',
+		'update:useGlobe',
 		'map-bounds-change',
 	],
 
@@ -108,6 +117,7 @@ export default {
 			mapLoaded: false,
 			mousePositionControl: null,
 			scaleControl: null,
+			myUseTerrain: this.useTerrain,
 			terrainControl: null,
 			globeControl: null,
 			myUseGlobe: this.useGlobe,
@@ -132,25 +142,41 @@ export default {
 			this.scaleControl?.setUnit(newValue)
 		},
 		useTerrain(newValue) {
-			if (newValue) {
-				this.terrainControl._toggleTerrain()
-			} else {
-				this.map.setTerrain()
+			console.debug('watch useterrain', newValue, this.myUseTerrain)
+			// ignore if the internal state is already the same as the changing prop
+			if (this.myUseTerrain === newValue) {
+				return
+			}
+			this.myUseTerrain = newValue
+			this.toggleTerrain()
+		},
+		terrainScale(newValue) {
+			console.debug('watch terrain scale', newValue)
+			if (this.myUseTerrain) {
+				this.enableTerrain()
 			}
 		},
 		useGlobe(newValue) {
+			if (this.myUseGlobe === newValue) {
+				return
+			}
 			this.myUseGlobe = newValue
 			this.map.setProjection({
 				type: newValue ? 'globe' : 'mercator',
 			})
 			this.globeControl.updateGlobeIcon(newValue)
 		},
+		/*
 		pitch(newValue) {
 			this.map.setPitch(newValue)
 		},
 		bearing(newValue) {
 			this.map.setBearing(newValue)
 		},
+		mapStyle(newValue) {
+			console.debug('mapStyle changed', newValue)
+		},
+		*/
 	},
 
 	mounted() {
@@ -171,7 +197,7 @@ export default {
 			}
 			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
 			const restoredStyleObj = this.styles[restoredStyleKey]
-			this.$emit('map-state-change', { mapStyle: restoredStyleKey })
+			this.$emit('update:mapStyle', restoredStyleKey)
 
 			const mapOptions = {
 				container: this.$refs.mapContainer,
@@ -247,35 +273,33 @@ export default {
 			// custom tile control
 			const tileControl = new TileControl({ styles: this.styles, selectedKey: restoredStyleKey })
 			tileControl.on('changeStyle', (key) => {
-				this.$emit('map-state-change', { mapStyle: key })
-				const mapStyleObj = this.styles[key]
-				this.map.setMaxZoom(mapStyleObj.maxzoom ? (mapStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM)
-
-				// if we change the tile/style provider => redraw layers
-				this.reRenderLayersAndTerrain()
+				this.$emit('update:mapStyle', key)
 			})
 			this.map.addControl(tileControl, 'top-right')
 			this.map.addControl(fullscreenControl, 'top-right')
-			this.terrainControl = new TerrainControl({
-				source: 'terrain',
-				exaggeration: 2.5,
-			})
+
+			this.terrainControl = new TerrainControl()
+			this.terrainControl.on('toggleTerrain', this.toggleTerrain)
 			this.map.addControl(this.terrainControl, 'top-right')
-			this.terrainControl._terrainButton.addEventListener('click', () => {
-				this.$emit('map-state-change', { terrain: !!this.map.getTerrain() })
-			})
 
 			this.globeControl = new GlobeControl()
 			this.globeControl.on('toggleGlobe', this.toggleGlobe)
 			this.map.addControl(this.globeControl, 'top-right')
-			if (this.myUseGlobe) {
-				this.globeControl.updateGlobeIcon(true)
-			}
 
 			this.map.on('style.load', () => {
 				this.map.setProjection({
 					type: this.myUseGlobe ? 'globe' : 'mercator',
 				})
+
+				// max zoom
+				const styleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
+				const mapStyleObj = this.styles[styleKey]
+				const maxZoom = mapStyleObj.maxzoom ? (mapStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM
+				console.debug('apply max ZOOM', maxZoom, mapStyleObj)
+				this.map.setMaxZoom(maxZoom)
+
+				// if we change the tile/style provider => redraw layers
+				this.reRenderLayersAndTerrain()
 			})
 
 			this.handleMapEvents()
@@ -283,10 +307,8 @@ export default {
 			this.map.on('load', () => {
 				this.loadImages()
 
-				this.addTerrainSource()
-				if (this.useTerrain) {
-					this.terrainControl._toggleTerrain()
-				}
+				this.terrainControl.updateTerrainIcon(this.myUseTerrain)
+				this.globeControl.updateGlobeIcon(this.myUseGlobe)
 
 				setTimeout(() => {
 					this.emitMapState()
@@ -331,7 +353,7 @@ export default {
 		toggleGlobe() {
 			this.myUseGlobe = !this.myUseGlobe
 			console.debug('toggleGlobe', this.myUseGlobe)
-			this.$emit('map-state-change', { globe: this.myUseGlobe })
+			this.$emit('update:useGlobe', this.myUseGlobe)
 			this.map.setProjection({
 				type: this.myUseGlobe ? 'globe' : 'mercator',
 			})
@@ -340,30 +362,41 @@ export default {
 		reRenderLayersAndTerrain() {
 			// re render the layers
 			this.mapLoaded = false
-			setTimeout(() => {
-				this.$nextTick(() => {
-					this.loadImages()
-				})
-			}, 500)
-
-			// add the terrain
-			setTimeout(() => {
-				this.$nextTick(() => {
-					// terrain is not disabled anymore by maplibre when switching tile layers
-					// it is still needed to add the source as it goes away when switching from a vector to a raster one
-					this.addTerrainSource()
-				})
-			}, 500)
+			this.loadImages()
+			if (this.myUseTerrain) {
+				this.enableTerrain()
+			}
+		},
+		toggleTerrain() {
+			this.myUseTerrain = !this.myUseTerrain
+			this.$emit('update:useTerrain', this.myUseTerrain)
+			if (this.myUseTerrain) {
+				this.enableTerrain()
+			} else {
+				this.disableTerrain()
+			}
+			this.terrainControl.updateTerrainIcon(this.myUseTerrain)
+		},
+		enableTerrain() {
+			this.addTerrainSource()
+			this.map.setTerrain({
+				source: 'terrain',
+				exaggeration: this.terrainScale,
+			})
+		},
+		disableTerrain() {
+			this.map.setTerrain()
 		},
 		addTerrainSource() {
-			const apiKey = this.apiKeys.maptiler_api_key
-			if (!this.map.getSource('terrain')) {
-				this.map.addSource('terrain', {
-					type: 'raster-dem',
-					// url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
-					url: generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey),
-				})
+			if (this.map.getSource('terrain')) {
+				return
 			}
+			const apiKey = this.apiKeys.maptiler_api_key
+			this.map.addSource('terrain', {
+				type: 'raster-dem',
+				// url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
+				url: generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey),
+			})
 		},
 		handleMapEvents() {
 			this.map.on('moveend', () => {
@@ -378,13 +411,10 @@ export default {
 		},
 		emitMapState() {
 			const { lng, lat } = this.map.getCenter()
-			this.$emit('map-state-change', {
-				centerLng: lng,
-				centerLat: lat,
-				zoom: this.map.getZoom(),
-				pitch: this.map.getPitch(),
-				bearing: this.map.getBearing(),
-			})
+			this.$emit('update:center', { lat, lng })
+			this.$emit('update:zoom', this.map.getZoom())
+			this.$emit('update:pitch', this.map.getPitch())
+			this.$emit('update:bearing', this.map.getBearing())
 		},
 		emitMapBounds() {
 			const bounds = this.map.getBounds()

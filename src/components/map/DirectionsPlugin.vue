@@ -90,7 +90,7 @@ export default {
 			})
 			this.directions.on('fetchroutesend', (event) => {
 				console.debug('[osm] fetch route', event.data)
-				this.$emit('route-fetch', event.data.routes)
+				this.$emit('route-fetch', event.data.directions.routes)
 			})
 			console.debug('[osm] directions init', this.directions)
 			if (this.waypointsBackup.length === 0 && this.initialWaypoints.length > 0) {
