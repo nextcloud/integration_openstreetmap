@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Routen-Link kopieren",
     "Unknown distance" : "Unbekannte Entfernung",
     "Unknown duration" : "Unbekannte Dauer",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Maps",
     "Include marker" : "Markierung einfügen",
     "Generate location link" : "Standortlink generieren",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google Maps",
     "By car" : "Mit dem Auto",
     "By bike" : "Mit dem Rad",
     "By foot" : "Zu Fuß"

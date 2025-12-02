@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Zkopírovat směrovací odkaz",
     "Unknown distance" : "Neznámá vzdálenost",
     "Unknown duration" : "Neznámá doba trvání",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Mapy Google",
     "Include marker" : "Včetně popisovače",
     "Generate location link" : "Vytvořit odkaz na umístění",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Mapy Google",
     "By car" : "Autem",
     "By bike" : "Na kole",
     "By foot" : "Pěšky"

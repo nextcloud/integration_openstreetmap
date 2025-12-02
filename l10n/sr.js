@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Копирај линк за смер",
     "Unknown distance" : "Непознато растојање",
     "Unknown duration" : "Непознато трајање",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google мапе",
     "Include marker" : "Укључи и маркер",
     "Generate location link" : "Генериши линк на локацију",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google мапе",
     "By car" : "Аутом",
     "By bike" : "Бициклом",
     "By foot" : "Пешице"

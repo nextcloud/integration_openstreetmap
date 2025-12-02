@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Αντιγραφή συνδέσμου κατεύθυνσης",
     "Unknown distance" : "Άγνωστη απόσταση",
     "Unknown duration" : "Άγνωστη διάρκεια",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
     "Include marker" : "Συμπερίληψη δείκτη",
     "Generate location link" : "Δημιουργία συνδέσμου τοποθεσίας",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google maps",
     "By car" : "Με αυτοκίνητο",
     "By bike" : "Με ποδήλατο",
     "By foot" : "Με τα πόδια"

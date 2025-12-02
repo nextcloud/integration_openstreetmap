@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Kopeeri suuna link",
     "Unknown distance" : "Teadmata vahemaa",
     "Unknown duration" : "Teadmata kestus",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
     "Include marker" : "Kaasa kaardimarker",
     "Generate location link" : "Koosta asukoha link",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google maps",
     "By car" : "Autoga",
     "By bike" : "Jalgrattaga",
     "By foot" : "Jalgsi"

@@ -23,9 +23,9 @@ OC.L10N.register(
     "Search with Nominatim to get an OpenStreetMap link" : "Keresés a Nominatimmal egy OpenStreetMap hivatkozás készítéséhez",
     "Link type" : "Hivatkozás típusa",
     "Link could not be copied to clipboard" : "A hivatkozást nem sikerült a vágólapra másolni",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Térkép",
     "Include marker" : "Jelölő hozzáadása",
-    "Generate location link" : "Helyinformációs hivatkozás létrehozása"
+    "Generate location link" : "Helyinformációs hivatkozás létrehozása",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google Térkép"
 },
 "nplurals=2; plural=(n != 1);");

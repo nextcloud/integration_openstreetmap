@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Скопіювати посилання на напрямок",
     "Unknown distance" : "Невідома відстань",
     "Unknown duration" : "Невідома тривалість",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Карти Google",
     "Include marker" : "Включити маркер",
     "Generate location link" : "Згенеруйте посилання на місцезнаходження",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Карти Google",
     "By car" : "На машині",
     "By bike" : "На велосипеді",
     "By foot" : "Пішки"

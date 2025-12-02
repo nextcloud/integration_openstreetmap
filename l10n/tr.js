@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Yönlendirme bağlantısını kopyala",
     "Unknown distance" : "Uzaklık bilinmiyor",
     "Unknown duration" : "Süre bilinmiyor",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google haritalar",
     "Include marker" : "İşaretleyici eklensin",
     "Generate location link" : "Konum bağlantısı oluştur",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google haritalar",
     "By car" : "Otomobil",
     "By bike" : "Bisiklet",
     "By foot" : "Yürüyüş"

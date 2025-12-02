@@ -36,10 +36,10 @@ OC.L10N.register(
     "Copy direction link" : "يۆنىلىش ئۇلانمىسىنى كۆچۈرۈڭ",
     "Unknown distance" : "نامەلۇم ئارىلىق",
     "Unknown duration" : "نامەلۇم ۋاقتى",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google خەرىتىسى",
     "Include marker" : "بەلگىنى ئۆز ئىچىگە ئالىدۇ",
     "Generate location link" : "ئورۇن ئۇلىنىشى ھاسىل قىلىڭ",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google خەرىتىسى",
     "By car" : "ماشىنا بىلەن",
     "By bike" : "ۋېلىسىپىت بىلەن",
     "By foot" : "پىيادە"

@@ -36,10 +36,10 @@ OC.L10N.register(
     "Copy direction link" : "Kopírovať odkaz na trasu",
     "Unknown distance" : "Neznáma vzdialenosť",
     "Unknown duration" : "Neznáme trvanie",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Mapy Google",
     "Include marker" : "Vrátane popisovača",
     "Generate location link" : "Vygenerovať odkaz na miesto",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Mapy Google",
     "By car" : "Autom",
     "By bike" : "Na bicykli",
     "By foot" : "Pešo"

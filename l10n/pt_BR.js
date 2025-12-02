@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Copiar link de direções",
     "Unknown distance" : "Distância desconhecida",
     "Unknown duration" : "Duração desconhecida",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google Maps",
     "Include marker" : "Incluir marcador",
     "Generate location link" : "Gerar link de localização",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google Maps",
     "By car" : "De carro",
     "By bike" : "De bicicleta",
     "By foot" : "A pé"

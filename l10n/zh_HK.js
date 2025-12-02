@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "複製方向連結",
     "Unknown distance" : "距離不詳",
     "Unknown duration" : "持續時間不詳",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google 地圖",
     "Include marker" : "包含標記",
     "Generate location link" : "產生位置連結",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google 地圖",
     "By car" : "開車",
     "By bike" : "騎腳踏車",
     "By foot" : "步行"

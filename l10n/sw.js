@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Nakili kiungo cha mwelekeo",
     "Unknown distance" : "Umbali usiojulikana",
     "Unknown duration" : "Muda usiojulikana",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Ramani za Google",
     "Include marker" : "Jumuisha alama",
     "Generate location link" : "Tengeneza kiungo cha eneo",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Ramani za Google",
     "By car" : "Kwa gari",
     "By bike" : "Kwa baiskeli",
     "By foot" : "Kwa miguu"

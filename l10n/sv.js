@@ -33,10 +33,10 @@ OC.L10N.register(
     "Copy direction link" : "Kopiera länk till vägbeskrivning",
     "Unknown distance" : "Okänd sträcka",
     "Unknown duration" : "Okänd tid",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
     "Include marker" : "Inkludera markör",
     "Generate location link" : "Skapa platslänk",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google maps",
     "By car" : "Med bil",
     "By bike" : "Med cykel",
     "By foot" : "Till fots"

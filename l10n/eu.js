@@ -37,10 +37,10 @@ OC.L10N.register(
     "Copy direction link" : "Kopiatu norabidearen esteka",
     "Unknown distance" : "Distantzia ezezaguna",
     "Unknown duration" : "Iraupen ezezaguna",
-    "OsmAnd" : "OsmAnd",
-    "Google maps" : "Google maps",
     "Include marker" : "Gehitu markatzailea",
     "Generate location link" : "Sortu kokapen-esteka",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google maps",
     "By car" : "Autoz",
     "By bike" : "Bizikletaz",
     "By foot" : "Oinez"
