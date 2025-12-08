@@ -18,16 +18,18 @@
 					<KeyIcon :size="20" />
 				</template>
 			</NcTextField>
-			<NcCheckboxRadioSwitch
-				:model-value="state.search_location_enabled"
-				@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
-				{{ t('integration_openstreetmap', 'Enable searching for locations') }}
-			</NcCheckboxRadioSwitch>
-			<NcCheckboxRadioSwitch
-				:model-value="state.proxy_osm"
-				@update:model-value="onCheckboxChanged($event, 'proxy_osm')">
-				{{ t('integration_openstreetmap', 'Proxy map tiles/vectors requests via Nextcloud') }}
-			</NcCheckboxRadioSwitch>
+			<NcFormBox>
+				<NcFormBoxSwitch
+					:model-value="state.search_location_enabled"
+					@update:model-value="onCheckboxChanged($event, 'search_location_enabled')">
+					{{ t('integration_openstreetmap', 'Enable searching for locations') }}
+				</NcFormBoxSwitch>
+				<NcFormBoxSwitch
+					:model-value="state.proxy_osm"
+					@update:model-value="onCheckboxChanged($event, 'proxy_osm')">
+					{{ t('integration_openstreetmap', 'Proxy map tiles/vectors requests via Nextcloud') }}
+				</NcFormBoxSwitch>
+			</NcFormBox>
 		</div>
 	</div>
 </template>
@@ -37,8 +39,9 @@ import KeyIcon from 'vue-material-design-icons/Key.vue'
 
 import OsmIcon from './icons/OsmIcon.vue'
 
-import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
+import NcFormBox from '@nextcloud/vue/components/NcFormBox'
+import NcFormBoxSwitch from '@nextcloud/vue/components/NcFormBoxSwitch'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
@@ -55,8 +58,9 @@ export default {
 	components: {
 		OsmIcon,
 		KeyIcon,
-		NcCheckboxRadioSwitch,
 		NcTextField,
+		NcFormBox,
+		NcFormBoxSwitch,
 	},
 
 	props: [],
@@ -119,6 +123,10 @@ export default {
 #osm_prefs {
 	#osm-content {
 		margin: 16px 0 0 40px;
+		max-width: 800px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
 	}
 	h2 {
 		display: flex;
@@ -127,10 +135,6 @@ export default {
 		.icon {
 			margin-right: 8px;
 		}
-	}
-
-	.input {
-		width: 400px;
 	}
 }
 </style>
