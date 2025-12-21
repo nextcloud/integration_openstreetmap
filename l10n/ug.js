@@ -17,6 +17,7 @@ OC.L10N.register(
     "Enable searching for locations" : "ئورۇن ئىزدەشنى قوزغىتىڭ",
     "Proxy map tiles/vectors requests via Nextcloud" : "ۋاكالەتچى خەرىتە كاھىشلىرى / ۋېكتورلار Nextcloud ئارقىلىق تەلەپ قىلىدۇ",
     "Warning, everything you type in the Unified Search menu will be sent to OpenStreetMap's Nominatim service." : "ئاگاھلاندۇرۇش ، بىرلىككە كەلگەن ئىزدەش تىزىملىكىدە يازغانلىرىڭىزنىڭ ھەممىسى OpenStreetMap نىڭ Nominatim مۇلازىمىتىگە ئەۋەتىلىدۇ.",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "بىر باشقۇرغۇچى OpenStreetMap بىرلەشمە ئىزدەش تەمىنلىگۈچىنى چەكلىدى",
     "Enable OpenStreetMap link previews" : "OpenStreetMap ئۇلىنىش ئالدىن كۆرۈشنى قوزغىتىڭ",
     "Prefer simple OpenStreetMap frame" : "ئاددىي OpenStreetMap رامكىسىنى تاللاڭ",
     "Enable navigation link" : "يول باشلاش ئۇلانمىسىنى قوزغىتىڭ",
