@@ -1,6 +1,6 @@
-import CarIcon from 'vue-material-design-icons/Car.vue'
+import CarOutlineIcon from 'vue-material-design-icons/CarOutline.vue'
 import WalkIcon from 'vue-material-design-icons/Walk.vue'
-import BicycleIcon from 'vue-material-design-icons/Bicycle.vue'
+import BikeIcon from 'vue-material-design-icons/Bike.vue'
 
 import { Map } from 'maplibre-gl'
 import axios from '@nextcloud/axios'
@@ -35,7 +35,7 @@ export const routingProfiles = {
 		srv: 0,
 		ghpProfile: 'car',
 		osmandProfile: 'car',
-		icon: CarIcon,
+		icon: CarOutlineIcon,
 	},
 	bike: {
 		id: 'routed-bike',
@@ -43,7 +43,7 @@ export const routingProfiles = {
 		srv: 1,
 		ghpProfile: 'bike',
 		osmandProfile: 'bicycle',
-		icon: BicycleIcon,
+		icon: BikeIcon,
 	},
 	foot: {
 		id: 'routed-foot',

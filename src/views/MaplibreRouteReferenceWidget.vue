@@ -46,7 +46,7 @@
 						{{ editing ? t('integration_openstreetmap', 'Cancel edition') : t('integration_openstreetmap', 'Edit route') }}
 						<template #icon>
 							<CloseIcon v-if="editing" />
-							<PencilIcon v-else />
+							<PencilOutlineIcon v-else />
 						</template>
 					</NcButton>
 					<NcButton v-if="editing && currentRoutingLink"
@@ -116,7 +116,7 @@
 
 <script>
 import CloseIcon from 'vue-material-design-icons/Close.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import ClipboardCheckOutlineIcon from 'vue-material-design-icons/ClipboardCheckOutline.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
 
@@ -150,7 +150,7 @@ export default {
 		MarkerIcon,
 		MaplibreMap,
 		LinestringCollection,
-		PencilIcon,
+		PencilOutlineIcon,
 		CloseIcon,
 		ClipboardCheckOutlineIcon,
 		ClipboardTextOutlineIcon,
