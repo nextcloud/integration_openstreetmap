@@ -15,7 +15,7 @@
 				@update:model-value="onInput"
 				@trailing-button-click="state.maptiler_api_key = '' ; onInput()">
 				<template #icon>
-					<KeyIcon :size="20" />
+					<KeyOutlineIcon :size="20" />
 				</template>
 			</NcTextField>
 			<NcFormBox>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import KeyIcon from 'vue-material-design-icons/Key.vue'
+import KeyOutlineIcon from 'vue-material-design-icons/KeyOutline.vue'
 
 import OsmIcon from './icons/OsmIcon.vue'
 
@@ -57,7 +57,7 @@ export default {
 
 	components: {
 		OsmIcon,
-		KeyIcon,
+		KeyOutlineIcon,
 		NcTextField,
 		NcFormBox,
 		NcFormBoxSwitch,
