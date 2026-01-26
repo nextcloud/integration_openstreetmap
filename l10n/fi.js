@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "OpenStreetMap" : "OpenStreetMap",
     "Map location (by OpenStreetMap)" : "Kartan sijainti (OpenStreetMapin toimesta)",
+    "Map directions (by OSRM)" : "Suuntaohjeet (OSRM:ltä)",
     "OpenStreetMap locations" : "OpenStreetMap-sijainnit",
     "Bad HTTP method" : "Virheellinen HTTP-metodi",
     "Bad credentials" : "Virheelliset kirjautumistiedot",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "Enable searching for locations" : "Käytä sijaintien etsimistä",
     "Enable OpenStreetMap link previews" : "Käytä OpenStreetMap-linkkien esikatselua",
     "Enable navigation link" : "Näytä navigointipalkissa",
+    "Routing profile" : "Reititysprofiili",
     "Search on the map" : "Etsi kartalta",
     "Search with Nominatim to get an OpenStreetMap link" : "Etsi Nominatimilla saadaksesi OpenStreetMap-linkin",
     "Click on the map to set the start location" : "Napsauta karttaa lisätäksesi aloitussijainnin",
