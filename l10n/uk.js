@@ -31,7 +31,7 @@ OC.L10N.register(
     "Duration: {duration}" : "Тривалість: {duration}",
     "Link type" : "Тип посилання",
     "Generate direction link" : "Згенеруйте посилання на напрямок",
-    "Link could not be copied to clipboard" : "Посилання не вдалося скопіювати в буфер обміну",
+    "Link could not be copied to clipboard" : "Посилання не вдалося скопіювати до буфера обміну",
     "Cancel edition" : "Скасувати відредаговане",
     "Edit route" : "Редагувати маршрут",
     "Copy direction link" : "Скопіювати посилання на напрямок",
