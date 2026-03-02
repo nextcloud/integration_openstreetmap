@@ -8,4 +8,4 @@ js/
 node_modules
 .php*cache
 
-/vendor/
+vendor/
