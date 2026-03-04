@@ -5,8 +5,8 @@
       <clover outputFile="./clover.xml"/>
     </report>
   </coverage>
-  <testsuite name="OpenStreetMap integration App Tests">
-    <directory suffix="Test.php">.</directory>
+  <testsuite name="OpenStreetMap integration Unit Tests">
+    <directory suffix="Test.php">./unit</directory>
   </testsuite>
   <!-- filters for code coverage -->
   <logging>

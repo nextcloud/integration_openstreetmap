@@ -109,6 +109,10 @@ class OsmAPIService {
 	}
 
 	/**
+	 * Get location info from OSM id and type
+	 * Example location ID: 87515
+	 * Example location type: relation
+	 *
 	 * @param string $userId
 	 * @param int $locationId
 	 * @param string $locationType
@@ -140,6 +144,7 @@ class OsmAPIService {
 
 	/**
 	 * Search items
+	 * Example query string: "montcuq"
 	 *
 	 * @param string $userId
 	 * @param string $query
@@ -171,6 +176,11 @@ class OsmAPIService {
 	}
 
 	/**
+	 * Get location info from coordinates
+	 * Example coordinates:
+	 * lat: 44.3383486
+	 * lon: 1.2086886
+	 *
 	 * @param string $userId
 	 * @param float $lat
 	 * @param float $lon
@@ -179,7 +189,7 @@ class OsmAPIService {
 	 */
 	public function geocode(string $userId, float $lat, float $lon, bool $includePolygon = true): array {
 		// example:
-		// curl https://nominatim.openstreetmap.org/reverse?format=json&lat=47.931&lon=24.829&addressdetails=1&polygon_geojson=1
+		// curl https://nominatim.openstreetmap.org/reverse?format=json&lat=44.3383486&lon=1.2086886&addressdetails=1&polygon_geojson=1
 		$params = [
 			'format' => 'json',
 			'lat' => $lat,
