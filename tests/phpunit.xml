@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="bootstrap.php" timeoutForSmallTests="900" timeoutForMediumTests="900" timeoutForLargeTests="900" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd" cacheDirectory=".phpunit.cache">
-  <coverage>
-    <report>
-      <clover outputFile="./clover.xml"/>
-    </report>
-  </coverage>
+<phpunit
+  bootstrap="bootstrap.php"
+  timeoutForSmallTests="900"
+  timeoutForMediumTests="900"
+  timeoutForLargeTests="900"
+  displayDetailsOnTestsThatTriggerNotices="true"
+  displayDetailsOnTestsThatTriggerWarnings="true"
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnPhpunitNotices="true"
+  displayDetailsOnPhpunitDeprecations="true"
+  cacheDirectory=".phpunit.cache">
   <testsuite name="OpenStreetMap integration Unit Tests">
     <directory suffix="Test.php">./unit</directory>
   </testsuite>
-  <!-- filters for code coverage -->
-  <logging>
-    <!-- and this is where your report will be written -->
-  </logging>
   <source>
     <include>
       <directory suffix=".php">../appinfo</directory>
