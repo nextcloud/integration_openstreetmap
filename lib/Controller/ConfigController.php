@@ -18,8 +18,8 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
-use OCP\IConfig;
 
 use OCP\IRequest;
 use OCP\PreConditionNotMetException;
@@ -29,7 +29,7 @@ class ConfigController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private IConfig $config,
+		private IUserConfig $userConfig,
 		private IAppConfig $appConfig,
 		private ?string $userId,
 	) {
@@ -44,7 +44,7 @@ class ConfigController extends Controller {
 	#[NoAdminRequired]
 	public function setConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
-			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
+			$this->userConfig->setValueString($this->userId, Application::APP_ID, $key, $value);
 		}
 		return new DataResponse('');
 	}

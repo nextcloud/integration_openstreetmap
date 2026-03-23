@@ -27,7 +27,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Collaboration\Reference\RenderReferenceEvent;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
 use OCP\IL10N;
 use OCP\INavigationManager;
 use OCP\IURLGenerator;
@@ -43,13 +43,9 @@ class Application extends App implements IBootstrap {
 	public const DEFAULT_MAPTILER_API_KEY = 'get_your_own_OpIi9ZULNHzrESv6T2vL';
 	public const DEFAULT_SEARCH_LOCATION_ENABLED_VALUE = '0';
 	public const DEFAULT_PROXY_OSM_VALUE = '1';
-	private IConfig $config;
 
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
-
-		$container = $this->getContainer();
-		$this->config = $container->query(IConfig::class);
 	}
 
 	public function register(IRegistrationContext $context): void {
@@ -71,13 +67,13 @@ class Application extends App implements IBootstrap {
 		$context->injectFn(Closure::fromCallable([$this, 'registerNavigation']));
 	}
 
-	public function registerNavigation(IUserSession $userSession): void {
+	public function registerNavigation(IUserSession $userSession, IUserConfig $userConfig): void {
 		$user = $userSession->getUser();
 		if ($user !== null) {
 			$userId = $user->getUID();
 			$container = $this->getContainer();
 
-			if ($this->config->getUserValue($userId, self::APP_ID, 'navigation_enabled', '0') === '1') {
+			if ($userConfig->getValueString($userId, self::APP_ID, 'navigation_enabled', '0') === '1') {
 				$l10n = $container->get(IL10N::class);
 				$navName = $l10n->t('OpenStreetMap');
 				$container->get(INavigationManager::class)->add(function () use ($container, $navName) {

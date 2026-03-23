@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="bootstrap.php" timeoutForSmallTests="900" timeoutForMediumTests="900" timeoutForLargeTests="900" cacheDirectory=".phpunit.cache">
-  <coverage>
-    <include>
-      <directory suffix=".php">../appinfo</directory>
-      <directory suffix=".php">../lib</directory>
-    </include>
-  </coverage>
+<phpunit
+  bootstrap="bootstrap.php"
+  timeoutForSmallTests="900"
+  timeoutForMediumTests="900"
+  timeoutForLargeTests="900"
+  displayDetailsOnTestsThatTriggerNotices="true"
+  displayDetailsOnTestsThatTriggerWarnings="true"
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnPhpunitNotices="true"
+  displayDetailsOnPhpunitDeprecations="true"
+  cacheDirectory=".phpunit.cache">
   <testsuite name="OpenStreetMap integration Integration Tests">
     <directory suffix="Test.php">./integration</directory>
   </testsuite>

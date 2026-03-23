@@ -2,23 +2,19 @@
 
 namespace OCA\Osm\Tests;
 
-use OC\Http\Client\ClientService;
-use OC\L10N\L10N;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
-use Psr\Log\LoggerInterface;
+use OCP\Server;
 use Test\TestCase;
 
 class OsmAPIServiceTest extends TestCase {
 
+	private OsmAPIService $service;
+
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->logger = $this->createMock(LoggerInterface::class);
-		$this->l10n = $this->createMock(L10N::class);
-		$this->clientService = $this->createMock(ClientService::class);
-
-		$this->service = new OsmAPIService($this->logger, $this->l10n, $this->clientService);
+		$this->service = Server::get(OsmAPIService::class);
 	}
 
 	public function testDummy() {
