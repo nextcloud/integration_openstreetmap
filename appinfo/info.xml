@@ -6,7 +6,7 @@
 	<description><![CDATA[OpenStreetMap integration provides a search provider for locations, a reference
 provider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker
 component to quickly insert a location link by searching or selecting a point on an (awesome) interactive map.]]></description>
-	<version>3.0.0</version>
+	<version>4.0.0</version>
 	<licence>agpl</licence>
 	<author>Julien Veyssier</author>
 	<namespace>Osm</namespace>
@@ -21,7 +21,7 @@ component to quickly insert a location link by searching or selecting a point on
 	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot3.jpg</screenshot>
 	<screenshot>https://github.com/nextcloud/integration_openstreetmap/raw/main/img/screenshot4.jpg</screenshot>
 	<dependencies>
-		<nextcloud min-version="32" max-version="33"/>
+		<nextcloud min-version="33" max-version="34"/>
 	</dependencies>
 	<settings>
 		<admin>OCA\Osm\Settings\Admin</admin>

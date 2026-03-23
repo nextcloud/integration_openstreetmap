@@ -31,8 +31,8 @@ use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
+use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
-use OCP\IConfig;
 
 use OCP\IURLGenerator;
 
@@ -42,7 +42,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 
 	public function __construct(
 		private OsmAPIService $osmAPIService,
-		private IConfig $config,
+		private IUserConfig $userConfig,
 		private IAppConfig $appConfig,
 		private IURLGenerator $urlGenerator,
 		private IReferenceManager $referenceManager,
@@ -57,7 +57,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 	 */
 	public function matchReference(string $referenceText): bool {
 		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
-		$userLinkPreviewEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$userLinkPreviewEnabled = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;
 		}

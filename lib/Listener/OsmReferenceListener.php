@@ -26,10 +26,10 @@ namespace OCA\Osm\Listener;
 use OCA\Osm\AppInfo\Application;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\Collaboration\Reference\RenderReferenceEvent;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IAppConfig;
-use OCP\IConfig;
 use OCP\Util;
 
 /**
@@ -38,7 +38,7 @@ use OCP\Util;
 class OsmReferenceListener implements IEventListener {
 
 	public function __construct(
-		private IConfig $config,
+		private IUserConfig $userConfig,
 		private IAppConfig $appConfig,
 		private IInitialState $initialState,
 		private ?string $userId,
@@ -56,20 +56,20 @@ class OsmReferenceListener implements IEventListener {
 		];
 		$this->initialState->provideInitialState('api-keys', $userConfig);
 
-		$preferSimpleOsmIframe = $this->config->getUserValue($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
+		$preferSimpleOsmIframe = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
 		$proxyMapRequests = $this->appConfig->getValueString(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
 		$this->initialState->provideInitialState('proxy-map-requests', $proxyMapRequests);
 
-		$lastLat = $this->config->getUserValue($this->userId, Application::APP_ID, 'lat');
-		$lastLon = $this->config->getUserValue($this->userId, Application::APP_ID, 'lon');
-		$lastZoom = $this->config->getUserValue($this->userId, Application::APP_ID, 'zoom');
-		$lastPitch = $this->config->getUserValue($this->userId, Application::APP_ID, 'pitch');
-		$lastBearing = $this->config->getUserValue($this->userId, Application::APP_ID, 'bearing');
-		$lastMapStyle = $this->config->getUserValue($this->userId, Application::APP_ID, 'mapStyle');
-		$lastTerrain = $this->config->getUserValue($this->userId, Application::APP_ID, 'terrain');
-		$lastGlobe = $this->config->getUserValue($this->userId, Application::APP_ID, 'globe');
-		$lastLinkType = $this->config->getUserValue($this->userId, Application::APP_ID, 'linkType');
+		$lastLat = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'lat');
+		$lastLon = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'lon');
+		$lastZoom = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'zoom');
+		$lastPitch = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'pitch');
+		$lastBearing = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'bearing');
+		$lastMapStyle = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'mapStyle');
+		$lastTerrain = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'terrain');
+		$lastGlobe = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'globe');
+		$lastLinkType = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'linkType');
 		if ($lastLat !== '' && $lastLon !== '' && $lastZoom !== ''
 			&& $lastPitch !== '' && $lastBearing !== '' && $lastMapStyle !== '') {
 			$this->initialState->provideInitialState('last-map-state', [

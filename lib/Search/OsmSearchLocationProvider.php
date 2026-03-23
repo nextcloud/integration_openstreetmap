@@ -27,8 +27,8 @@ namespace OCA\Osm\Search;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCP\App\IAppManager;
+use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -43,7 +43,7 @@ class OsmSearchLocationProvider implements IProvider, IExternalProvider {
 	public function __construct(
 		private IAppManager $appManager,
 		private IL10N $l10n,
-		private IConfig $config,
+		private IUserConfig $userConfig,
 		private IAppConfig $appConfig,
 		private IURLGenerator $urlGenerator,
 		private OsmAPIService $osmAPIService,
@@ -94,7 +94,7 @@ class OsmSearchLocationProvider implements IProvider, IExternalProvider {
 
 		if (!$requestedFromSmartPicker) {
 			$adminSearchLocationEnabled = $this->appConfig->getValueString(Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
-			$searchLocationEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
+			$searchLocationEnabled = $this->userConfig->getValueString($user->getUID(), Application::APP_ID, 'search_location_enabled', Application::DEFAULT_SEARCH_LOCATION_ENABLED_VALUE) === '1';
 			if (!$adminSearchLocationEnabled || !$searchLocationEnabled) {
 				return SearchResult::paginated($this->getName(), [], 0);
 			}
