@@ -11,6 +11,15 @@ use Test\TestCase;
 
 class OsmAPIServiceTest extends TestCase {
 
+	/** @var MockObject|LoggerInterface */
+	private $logger;
+	/** @var MockObject|L10N */
+	private $l10n;
+	/** @var MockObject|ClientService */
+	private $clientService;
+
+	private OsmAPIService $service;
+
 	public function setUp(): void {
 		parent::setUp();
 
