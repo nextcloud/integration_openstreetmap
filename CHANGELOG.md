@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 4.0.0 – 2026-03-26
+
+### Added
+
+- Add simple integration test making requests to Nominatim @julien-nc [#50](https://github.com/nextcloud/integration_openstreetmap/pull/50)
+
+### Changed
+
+- Start refactoring the map component, allow `v-model` on map state props, update the directions plugin for breaking changes, and refresh npm/composer tooling @julien-nc [#27](https://github.com/nextcloud/integration_openstreetmap/pull/27)
+- Switch to outlined icons @julien-nc [#29](https://github.com/nextcloud/integration_openstreetmap/pull/29)
+- Modernize settings @julien-nc [#28](https://github.com/nextcloud/integration_openstreetmap/pull/28)
+- Switch from `psalm/phar` to `vimeo/psalm` and update composer dependencies @julien-nc [#49](https://github.com/nextcloud/integration_openstreetmap/pull/49)
+- Bump supported Nextcloud version to 34, replace `IConfig` with `IUserConfig`, move to PHPUnit 13, align PHP versions in tooling, and display PHPUnit deprecations, warnings, and notices @julien-nc [#59](https://github.com/nextcloud/integration_openstreetmap/pull/59)
+- Update npm and composer dependencies @julien-nc
+
+### Fixed
+
+- Fix getting headers of HTTP responses in the backend @julien-nc
+
 ## 3.0.0 – 2025-11-03
 
 ### Added
