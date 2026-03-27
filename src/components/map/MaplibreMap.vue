@@ -79,7 +79,7 @@ export default {
 		},
 		mapStyle: {
 			type: String,
-			default: 'streets',
+			default: 'osmRaster',
 		},
 		area: {
 			type: Object,
@@ -192,11 +192,16 @@ export default {
 		initMap() {
 			const apiKey = this.apiKeys.maptiler_api_key
 			// tile servers and styles
+			const vectorStyles = apiKey ? getVectorStyles(apiKey) : {}
 			this.styles = {
-				...getVectorStyles(apiKey),
+				...vectorStyles,
 				...getRasterTileServers(apiKey),
 			}
-			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
+			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle)
+				? this.mapStyle
+				: apiKey
+					? 'streets'
+					: 'osmRaster'
 			const restoredStyleObj = this.styles[restoredStyleKey]
 			this.$emit('update:mapStyle', restoredStyleKey)
 
