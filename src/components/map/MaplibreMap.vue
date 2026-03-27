@@ -122,6 +122,7 @@ export default {
 			globeControl: null,
 			myUseGlobe: this.useGlobe,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
+			proxyMapRequests: loadState('integration_openstreetmap', 'proxy-map-requests', false),
 			maptilerLogoUrl: loadState('integration_openstreetmap', 'proxy-map-requests', false)
 				? generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg')
 				: 'https://api.maptiler.com/resources/logo.svg',
@@ -129,6 +130,9 @@ export default {
 	},
 
 	computed: {
+		hasMaptilerApiKey() {
+			return !!this.apiKeys?.maptiler_api_key
+		},
 	},
 
 	watch: {
@@ -284,9 +288,11 @@ export default {
 			this.map.addControl(tileControl, 'top-right')
 			this.map.addControl(fullscreenControl, 'top-right')
 
-			this.terrainControl = new TerrainControl()
-			this.terrainControl.on('toggleTerrain', this.toggleTerrain)
-			this.map.addControl(this.terrainControl, 'top-right')
+			if (this.hasMaptilerApiKey) {
+				this.terrainControl = new TerrainControl()
+				this.terrainControl.on('toggleTerrain', this.toggleTerrain)
+				this.map.addControl(this.terrainControl, 'top-right')
+			}
 
 			this.globeControl = new GlobeControl()
 			this.globeControl.on('toggleGlobe', this.toggleGlobe)
@@ -313,7 +319,9 @@ export default {
 			this.map.on('load', () => {
 				this.loadImages()
 
-				this.terrainControl.updateTerrainIcon(this.myUseTerrain)
+				if (this.hasMaptilerApiKey) {
+					this.terrainControl.updateTerrainIcon(this.myUseTerrain)
+				}
 				this.globeControl.updateGlobeIcon(this.myUseGlobe)
 
 				setTimeout(() => {
@@ -369,11 +377,14 @@ export default {
 			// re render the layers
 			this.mapLoaded = false
 			this.loadImages()
-			if (this.myUseTerrain) {
+			if (this.hasMaptilerApiKey && this.myUseTerrain) {
 				this.enableTerrain()
 			}
 		},
 		toggleTerrain() {
+			if (!this.hasMaptilerApiKey) {
+				return
+			}
 			this.myUseTerrain = !this.myUseTerrain
 			this.$emit('update:useTerrain', this.myUseTerrain)
 			if (this.myUseTerrain) {
@@ -384,6 +395,9 @@ export default {
 			this.terrainControl.updateTerrainIcon(this.myUseTerrain)
 		},
 		enableTerrain() {
+			if (!this.hasMaptilerApiKey) {
+				return
+			}
 			this.addTerrainSource()
 			this.map.setTerrain({
 				source: 'terrain',
@@ -391,17 +405,24 @@ export default {
 			})
 		},
 		disableTerrain() {
+			if (!this.hasMaptilerApiKey) {
+				return
+			}
 			this.map.setTerrain()
 		},
 		addTerrainSource() {
+			if (!this.hasMaptilerApiKey) {
+				return
+			}
 			if (this.map.getSource('terrain')) {
 				return
 			}
 			const apiKey = this.apiKeys.maptiler_api_key
 			this.map.addSource('terrain', {
 				type: 'raster-dem',
-				// url: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
-				url: generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey),
+				url: this.proxyMapRequests
+					? generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey)
+					: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
 			})
 		},
 		handleMapEvents() {
