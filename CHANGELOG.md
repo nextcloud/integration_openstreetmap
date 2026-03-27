@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 4.1.0 – 2026-03-27
+
+### Changed
+
+- All the reference providers now implement IPublicReferenceProvider
+- Remove default maptiler key
+
+### Fixed
+
+- Do not proxy on public pages
+- Add required csp when proxy is disabled (we access OSM/MapTiler directly)
+- Do not query user config with IUserConfig in public contexts (listeners) @julien-nc [#61](https://github.com/nextcloud/integration_openstreetmap/pull/61)
+- Remove unused userId in OsmAPIService
+- Do not save map state in public pages
+- Proxy maptiler logo URL only if needed
+- Always fallback to the osmRaster style when no key is set, do not add vector styles when no key is set
+- Hide all terrain stuff if no api key set
+- Add referer header in map requests now enforced by OSM
+
 ## 4.0.1 – 2026-03-26
 
 ### Added
