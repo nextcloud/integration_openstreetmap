@@ -87,7 +87,9 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 	 */
 	public function matchReference(string $referenceText): bool {
 		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
-		$userLinkPreviewEnabled = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$userLinkPreviewEnabled = $this->userId === null
+			? true
+			: $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;
 		}

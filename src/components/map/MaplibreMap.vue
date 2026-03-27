@@ -122,8 +122,9 @@ export default {
 			globeControl: null,
 			myUseGlobe: this.useGlobe,
 			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
-			// https://api.maptiler.com/resources/logo.svg
-			maptilerLogoUrl: generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg'),
+			maptilerLogoUrl: loadState('integration_openstreetmap', 'proxy-map-requests', false)
+				? generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg')
+				: 'https://api.maptiler.com/resources/logo.svg',
 		}
 	},
 

@@ -57,7 +57,9 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 	 */
 	public function matchReference(string $referenceText): bool {
 		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
-		$userLinkPreviewEnabled = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$userLinkPreviewEnabled = $this->userId === null
+			? true
+			: $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;
 		}
@@ -72,7 +74,7 @@ class GoogleMapsReferenceProvider implements IReferenceProvider {
 		if ($this->matchReference($referenceText)) {
 			$coords = $this->getCoordinates($referenceText);
 			if ($coords !== null) {
-				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon'], false);
+				$pointInfo = $this->osmAPIService->geocode($coords['lat'], $coords['lon'], false);
 				if (!isset($pointInfo['error'])) {
 					$pointInfo['url'] = $referenceText;
 					$reference = new Reference($referenceText);

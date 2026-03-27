@@ -39,6 +39,7 @@ class CSPListener implements IEventListener {
 	public function __construct(
 		private IRequest $request,
 		private IAppConfig $appConfig,
+		private ?string $userId,
 	) {
 	}
 
@@ -56,7 +57,10 @@ class CSPListener implements IEventListener {
 			->addAllowedFrameDomain('https://www.openstreetmap.org')
 			->addAllowedImageDomain('https://*.tile.openstreetmap.org');
 
-		$proxyOsm = $this->appConfig->getValueString(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
+		// we do not proxy on public pages
+		$proxyOsm = $this->userId === null
+			? false
+			: $this->appConfig->getValueString(Application::APP_ID, 'proxy_osm', Application::DEFAULT_PROXY_OSM_VALUE) === '1';
 		if (!$proxyOsm) {
 			$policy
 				->addAllowedConnectDomain('https://*.openstreetmap.org')

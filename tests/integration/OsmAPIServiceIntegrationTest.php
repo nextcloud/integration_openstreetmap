@@ -24,7 +24,7 @@ class OsmAPIServiceIntegrationTest extends TestCase {
 	 * that the response can be consumed by reference providers without crashing.
 	 */
 	public function testGeocode(): void {
-		$result = $this->service->geocode('integration-test', 44.3383486, 1.2086886, false);
+		$result = $this->service->geocode(44.3383486, 1.2086886, false);
 
 		$this->assertIsArray($result);
 		$this->assertArrayNotHasKey('error', $result, json_encode($result));
@@ -53,7 +53,7 @@ class OsmAPIServiceIntegrationTest extends TestCase {
 	 * checks that entries contain the fields used by OsmSearchLocationProvider.
 	 */
 	public function testSearchLocation(): void {
-		$result = $this->service->searchLocation('integration-test', 'montcuq', 'json', [
+		$result = $this->service->searchLocation('montcuq', 'json', [
 			'addressdetails' => 1,
 			'extratags' => 1,
 			'namedetails' => 1,
@@ -86,7 +86,7 @@ class OsmAPIServiceIntegrationTest extends TestCase {
 	 * checks that the returned data can be used by OsmLocationReferenceProvider.
 	 */
 	public function testGetLocationInfo(): void {
-		$result = $this->service->getLocationInfo('integration-test', 87515, 'relation');
+		$result = $this->service->getLocationInfo(87515, 'relation');
 
 		$this->assertNotNull($result);
 		$this->assertArrayNotHasKey('error', $result, json_encode($result));
