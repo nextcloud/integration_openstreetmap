@@ -1,5 +1,6 @@
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { linkTypes, routingLinkTypes } from './mapUtils.js'
 
@@ -24,6 +25,12 @@ export function getLastMapState() {
 }
 
 export function setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }) {
+	// in public pages
+	const currentUser = getCurrentUser()
+	if (currentUser === null) {
+		return
+	}
+
 	const state = { lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }
 	Object.keys(state).forEach(k => {
 		if (state[k] !== undefined) {

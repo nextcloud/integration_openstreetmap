@@ -62,7 +62,7 @@ class OsmAPIController extends OCSController {
 			'namedetails' => $namedetails,
 			'extratags' => $extratags,
 		];
-		$searchResults = $this->osmAPIService->searchLocation($this->userId, $q, $rformat, $extraParams, 0, $limit);
+		$searchResults = $this->osmAPIService->searchLocation($q, $rformat, $extraParams, 0, $limit);
 		if (isset($searchResults['error'])) {
 			return new DataResponse('', Http::STATUS_BAD_REQUEST);
 		}

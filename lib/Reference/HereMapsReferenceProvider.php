@@ -25,6 +25,7 @@ namespace OCA\Osm\Reference;
 
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
+use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
@@ -35,7 +36,7 @@ use OCP\IAppConfig;
 
 use OCP\IURLGenerator;
 
-class HereMapsReferenceProvider implements IReferenceProvider {
+class HereMapsReferenceProvider implements IReferenceProvider, IPublicReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -55,12 +56,18 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 	 */
 	public function matchReference(string $referenceText): bool {
 		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
-		$userLinkPreviewEnabled = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$userLinkPreviewEnabled = $this->userId === null
+			? true
+			: $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;
 		}
 
 		return $this->getCoordinates($referenceText) !== null;
+	}
+
+	public function resolveReferencePublic(string $referenceText, string $sharingToken): ?IReference {
+		return $this->resolveReference($referenceText);
 	}
 
 	/**
@@ -70,7 +77,7 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 		if ($this->matchReference($referenceText)) {
 			$coords = $this->getCoordinates($referenceText);
 			if ($coords !== null) {
-				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon'], false);
+				$pointInfo = $this->osmAPIService->geocode($coords['lat'], $coords['lon'], false);
 				if (!isset($pointInfo['error'])) {
 					$pointInfo['url'] = $referenceText;
 					$reference = new Reference($referenceText);
@@ -171,6 +178,13 @@ class HereMapsReferenceProvider implements IReferenceProvider {
 	 */
 	public function getCacheKey(string $referenceId): ?string {
 		return $referenceId;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCacheKeyPublic(string $referenceId, string $sharingToken): ?string {
+		return null;
 	}
 
 	/**

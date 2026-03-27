@@ -113,12 +113,11 @@ class OsmAPIService {
 	 * Example location ID: 87515
 	 * Example location type: relation
 	 *
-	 * @param string $userId
 	 * @param int $locationId
 	 * @param string $locationType
 	 * @return array|null
 	 */
-	public function getLocationInfo(string $userId, int $locationId, string $locationType): ?array {
+	public function getLocationInfo(int $locationId, string $locationType): ?array {
 		// example:
 		// curl https://nominatim.openstreetmap.org/lookup?osm_ids=R87515&format=json&addressdetails=1&extratags=1&namedetails=1&polygon_geojson=1
 		$prefix = $locationType === 'relation'
@@ -134,7 +133,7 @@ class OsmAPIService {
 			'namedetails' => 1,
 			'polygon_geojson' => 1,
 		];
-		$result = $this->request($userId, 'lookup', $params);
+		$result = $this->request('lookup', $params);
 		if (count($result) === 1) {
 			return $result[0];
 		}
@@ -146,7 +145,6 @@ class OsmAPIService {
 	 * Search items
 	 * Example query string: "montcuq"
 	 *
-	 * @param string $userId
 	 * @param string $query
 	 * @param string $format
 	 * @param array $extraParams
@@ -154,7 +152,7 @@ class OsmAPIService {
 	 * @param int $limit
 	 * @return array request result
 	 */
-	public function searchLocation(string $userId, string $query, string $format, array $extraParams = [],
+	public function searchLocation(string $query, string $format, array $extraParams = [],
 		int $offset = 0, int $limit = 5): array {
 		// no pagination...
 		$limitParam = $offset + $limit;
@@ -168,7 +166,7 @@ class OsmAPIService {
 				$params[$k] = $v;
 			}
 		}
-		$result = $this->request($userId, 'search', $params);
+		$result = $this->request('search', $params);
 		if (!isset($result['error'])) {
 			return array_slice($result, $offset, $limit);
 		}
@@ -181,13 +179,12 @@ class OsmAPIService {
 	 * lat: 44.3383486
 	 * lon: 1.2086886
 	 *
-	 * @param string $userId
 	 * @param float $lat
 	 * @param float $lon
 	 * @param bool $includePolygon
 	 * @return array
 	 */
-	public function geocode(string $userId, float $lat, float $lon, bool $includePolygon = true): array {
+	public function geocode(float $lat, float $lon, bool $includePolygon = true): array {
 		// example:
 		// curl https://nominatim.openstreetmap.org/reverse?format=json&lat=44.3383486&lon=1.2086886&addressdetails=1&polygon_geojson=1
 		$params = [
@@ -199,20 +196,19 @@ class OsmAPIService {
 		if ($includePolygon) {
 			$params['polygon_geojson'] = 1;
 		}
-		return $this->request($userId, 'reverse', $params);
+		return $this->request('reverse', $params);
 	}
 
 	/**
 	 * Make an HTTP request to the Osm API
 	 *
-	 * @param string|null $userId
 	 * @param string $endPoint The path to reach in nominatim
 	 * @param array $params Query parameters (key/val pairs)
 	 * @param string $method HTTP query method
 	 * @param bool $rawResponse
 	 * @return array decoded request result or error
 	 */
-	public function request(?string $userId, string $endPoint, array $params = [], string $method = 'GET', bool $rawResponse = false): array {
+	public function request(string $endPoint, array $params = [], string $method = 'GET', bool $rawResponse = false): array {
 		try {
 			$url = 'https://nominatim.openstreetmap.org/' . $endPoint;
 			$options = [

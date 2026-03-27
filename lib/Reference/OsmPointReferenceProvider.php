@@ -27,6 +27,7 @@ use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\Service\UtilsService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
+use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
@@ -38,7 +39,7 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
+class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider, IPublicReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -97,12 +98,18 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	 */
 	public function matchReference(string $referenceText): bool {
 		$adminLinkPreviewEnabled = $this->appConfig->getValueString(Application::APP_ID, 'link_preview_enabled', '1') === '1';
-		$userLinkPreviewEnabled = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$userLinkPreviewEnabled = $this->userId === null
+			? true
+			: $this->userConfig->getValueString($this->userId, Application::APP_ID, 'link_preview_enabled', '1') === '1';
 		if (!$adminLinkPreviewEnabled || !$userLinkPreviewEnabled) {
 			return false;
 		}
 
 		return $this->getCoordinates($referenceText) !== null;
+	}
+
+	public function resolveReferencePublic(string $referenceText, string $sharingToken): ?IReference {
+		return $this->resolveReference($referenceText);
 	}
 
 	/**
@@ -112,10 +119,9 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		if ($this->matchReference($referenceText)) {
 			$coords = $this->getCoordinates($referenceText);
 			if (isset($coords['markerLat'], $coords['markerLon'])) {
-				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['markerLat'], $coords['markerLon']);
+				$pointInfo = $this->osmAPIService->geocode($coords['markerLat'], $coords['markerLon']);
 			} else {
 				// do not geocode if no marker, the widget will simply show the map centered correctly
-				//				$pointInfo = $this->osmAPIService->geocode($this->userId, $coords['lat'], $coords['lon']);
 				$pointInfo = [];
 			}
 			if (!isset($pointInfo['error'])) {
@@ -283,8 +289,6 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	}
 
 	/**
-	 * We use the userId here because when connecting/disconnecting from the GitHub account,
-	 * we want to invalidate all the user cache and this is only possible with the cache prefix
 	 * @inheritDoc
 	 */
 	public function getCachePrefix(string $referenceId): string {
@@ -297,6 +301,13 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	 */
 	public function getCacheKey(string $referenceId): ?string {
 		return $referenceId;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCacheKeyPublic(string $referenceId, string $sharingToken): ?string {
+		return null;
 	}
 
 	/**

@@ -105,7 +105,7 @@ class OsmSearchLocationProvider implements IProvider, IExternalProvider {
 			'extratags' => 1,
 			'namedetails' => 1,
 		];
-		$searchResult = $this->osmAPIService->searchLocation($user->getUID(), $term, 'json', $extraParams, $offset, $limit);
+		$searchResult = $this->osmAPIService->searchLocation($term, 'json', $extraParams, $offset, $limit);
 		if (isset($searchResult['error'])) {
 			$items = [];
 		} else {

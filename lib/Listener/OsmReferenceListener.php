@@ -50,11 +50,24 @@ class OsmReferenceListener implements IEventListener {
 			return;
 		}
 
-		$maptilerApiKey = $this->appConfig->getValueString(Application::APP_ID, 'maptiler_api_key', Application::DEFAULT_MAPTILER_API_KEY) ?: Application::DEFAULT_MAPTILER_API_KEY;
+		$maptilerApiKey = $this->appConfig->getValueString(Application::APP_ID, 'maptiler_api_key');
 		$userConfig = [
 			'maptiler_api_key' => $maptilerApiKey,
 		];
 		$this->initialState->provideInitialState('api-keys', $userConfig);
+
+		// public pages
+		if ($this->userId === null) {
+			$this->initialState->provideInitialState('prefer-osm-frame', false);
+			$this->initialState->provideInitialState('proxy-map-requests', false);
+			if ($maptilerApiKey === '') {
+				$this->initialState->provideInitialState('last-map-state', [
+					'mapStyle' => 'osmRaster',
+				]);
+			}
+			Util::addScript(Application::APP_ID, Application::APP_ID . '-referenceLocation');
+			return;
+		}
 
 		$preferSimpleOsmIframe = $this->userConfig->getValueString($this->userId, Application::APP_ID, 'prefer_simple_osm_iframe', '0') === '1';
 		$this->initialState->provideInitialState('prefer-osm-frame', $preferSimpleOsmIframe);
