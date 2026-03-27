@@ -26,6 +26,7 @@ namespace OCA\Osm\Reference;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\RoutingService;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
+use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\LinkReferenceProvider;
@@ -36,7 +37,7 @@ use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 
-class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
+class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider implements IPublicReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_route';
 
@@ -95,6 +96,10 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 		}
 
 		return $this->getLinkInfo($referenceText) !== null;
+	}
+
+	public function resolveReferencePublic(string $referenceText, string $sharingToken): ?IReference {
+		return $this->resolveReference($referenceText);
 	}
 
 	/**
@@ -321,6 +326,13 @@ class OsmRouteReferenceProvider extends ADiscoverableReferenceProvider {
 	 */
 	public function getCacheKey(string $referenceId): ?string {
 		return $referenceId;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCacheKeyPublic(string $referenceId, string $sharingToken): ?string {
+		return null;
 	}
 
 	/**

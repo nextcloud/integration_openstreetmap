@@ -24,6 +24,7 @@
 namespace OCA\Osm\Reference;
 
 use OCA\Osm\AppInfo\Application;
+use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
@@ -32,7 +33,7 @@ use OCP\Collaboration\Reference\Reference;
 use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
 
-class BingReferenceProvider implements IReferenceProvider {
+class BingReferenceProvider implements IReferenceProvider, IPublicReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -58,6 +59,10 @@ class BingReferenceProvider implements IReferenceProvider {
 		}
 
 		return $this->getCoordinates($referenceText) !== null;
+	}
+
+	public function resolveReferencePublic(string $referenceText, string $sharingToken): ?IReference {
+		return $this->resolveReference($referenceText);
 	}
 
 	/**
@@ -152,6 +157,13 @@ class BingReferenceProvider implements IReferenceProvider {
 	 */
 	public function getCacheKey(string $referenceId): ?string {
 		return $referenceId;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCacheKeyPublic(string $referenceId, string $sharingToken): ?string {
+		return null;
 	}
 
 	/**

@@ -26,6 +26,7 @@ namespace OCA\Osm\Reference;
 use OCA\Osm\AppInfo\Application;
 use OCA\Osm\Service\OsmAPIService;
 use OCA\Osm\Service\UtilsService;
+use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\Collaboration\Reference\IReferenceProvider;
@@ -36,7 +37,7 @@ use OCP\IAppConfig;
 
 use OCP\IURLGenerator;
 
-class OsmLocationReferenceProvider implements IReferenceProvider {
+class OsmLocationReferenceProvider implements IReferenceProvider, IPublicReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_location';
 
@@ -65,6 +66,10 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 		}
 
 		return $this->getCoordinates($referenceText) !== null || $this->getLocationTypeId($referenceText) !== null;
+	}
+
+	public function resolveReferencePublic(string $referenceText, string $sharingToken): ?IReference {
+		return $this->resolveReference($referenceText);
 	}
 
 	/**
@@ -185,6 +190,13 @@ class OsmLocationReferenceProvider implements IReferenceProvider {
 	 */
 	public function getCacheKey(string $referenceId): ?string {
 		return $referenceId;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getCacheKeyPublic(string $referenceId, string $sharingToken): ?string {
+		return null;
 	}
 
 	/**
