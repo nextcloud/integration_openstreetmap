@@ -2,6 +2,7 @@
 	<NcSelect
 		:model-value="value"
 		:options="profileList"
+		:clearable="false"
 		:aria-label-combobox="t('integration_openstreetmap', 'Routing profile')"
 		:placeholder="t('integration_openstreetmap', 'Routing profile')"
 		@update:model-value="$emit('update:value', $event)">

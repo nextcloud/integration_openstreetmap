@@ -36,10 +36,14 @@
 			</template>
 		</MaplibreMap>
 		<div class="footer">
+			<label for="extension-select">
+				{{ t('integration_openstreetmap', 'Link type') }}
+			</label>
 			<NcSelect
 				class="type-select"
 				:model-value="selectedLinkType"
 				:options="linkTypesArray"
+				:clearable="false"
 				:aria-label-combobox="t('integration_openstreetmap', 'Link type')"
 				:placeholder="t('integration_openstreetmap', 'Link type')"
 				input-id="extension-select"
@@ -57,7 +61,7 @@
 				@click="onMapSubmit">
 				{{ t('integration_openstreetmap', 'Generate location link') }}
 				<template #icon>
-					<ArrowRightIcon />
+					<ArrowRightIcon :size="20" />
 				</template>
 			</NcButton>
 		</div>

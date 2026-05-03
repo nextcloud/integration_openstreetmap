@@ -45,16 +45,16 @@
 					<NcButton @click="editing = !editing">
 						{{ editing ? t('integration_openstreetmap', 'Cancel edition') : t('integration_openstreetmap', 'Edit route') }}
 						<template #icon>
-							<CloseIcon v-if="editing" />
-							<PencilOutlineIcon v-else />
+							<CloseIcon v-if="editing" :size="20" />
+							<PencilOutlineIcon v-else :size="20" />
 						</template>
 					</NcButton>
 					<NcButton v-if="editing && currentRoutingLink"
 						@click="copyRoutingLink">
 						{{ t('integration_openstreetmap', 'Copy direction link') }}
 						<template #icon>
-							<ClipboardCheckOutlineIcon v-if="copied" fill-color="green" />
-							<ClipboardTextOutlineIcon v-else />
+							<ClipboardCheckOutlineIcon v-if="copied" style="color: var(--color-text-success);" :size="20" />
+							<ClipboardTextOutlineIcon v-else :size="20" />
 						</template>
 					</NcButton>
 					<span v-if="!editing && profileDisplayName" class="profile">
@@ -353,6 +353,7 @@ export default {
 
 		&--info {
 			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
 			gap: 10px;
 			.profile {
