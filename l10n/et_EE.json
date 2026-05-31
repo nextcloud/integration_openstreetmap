@@ -9,7 +9,7 @@
     "OpenStreetMap integration" : "OpenStreetMapi lõiming",
     "Integration of OpenStreetMap" : "OpenStreetMapi veebiteenuse lõiming",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "OpenStreetMapi lõiming võimaldab kasutada asukohaotsingut\neri teenuste asukohalinkide tuvastajat (OpenStreetMap, Google maps..) ja\nlingivalijat, mis otsides või valides punkti (ägedal) interaktiivsel kaardil, oskab kiiresti sisestada asukoha linki.",
-    "OpenStreetMap options saved" : "OpenStreetMap eelistused on salvestatud",
+    "OpenStreetMap options saved" : "OpenStreetMapi eelistused on salvestatud",
     "Failed to save OpenStreetMap options" : "OpenStreetMapi eelistuste salvestamine ei õnnestunud",
     "Maptiler API key" : "Maptileri API võti",
     "Enable searching for locations" : "Kasuta asukohtade otsingut",
