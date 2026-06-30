@@ -1,11 +1,23 @@
 OC.L10N.register(
     "integration_openstreetmap",
     {
+    "OpenStreetMap" : "OpenStreetMap",
     "Bad HTTP method" : "Método HTTP incorreto",
     "Bad credentials" : "Credenciais inválidas",
     "Connected accounts" : "Contas conectadas",
+    "Integration of OpenStreetMap" : "Integração do OpenStreetMap",
+    "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "A integração OpenStreetMap oferece um provedor de pesquisa de localizações, um provedor de referência para renderizar links de localizações de vários serviços de mapas (OpenStreetMap, Google Maps...) e um componente seletor de links personalizado para inserir rapidamente um link de localização pesquisando ou selecionando um ponto em um mapa interativo (incrível).",
+    "Enable searching for locations" : "Ativar pesquisa de locais",
+    "An administrator has disabled the OpenStreetMap Unified Search provider" : "Um administrador desativou o provedor de Pesquisa Unificada do OpenStreetMap",
+    "Enable navigation link" : "Ativar link de navegação",
+    "Search with Nominatim to get an OpenStreetMap link" : "Pesquise com o Nominatim para obter um link do OpenStreetMap",
     "Click on the map to add waypoints. Click on waypoints to delete them. Waypoints can be dragged." : "Clique no mapa para adicionar pontos de referência. Clique neles para excluí-los. Eles também podem ser arrastados.",
+    "Duration: {duration}" : "Duração: {duration}",
     "Link could not be copied to clipboard" : "Não foi possível copiar o link para a área de transferência",
-    "OsmAnd" : "OsmAnd"
+    "Cancel edition" : "Cancelar edição",
+    "Unknown distance" : "Distância desconhecida",
+    "OsmAnd" : "OsmAnd",
+    "Google maps" : "Google Maps",
+    "By foot" : "A pé"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
