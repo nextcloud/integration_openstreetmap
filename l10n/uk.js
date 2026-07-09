@@ -34,7 +34,7 @@ OC.L10N.register(
     "Link could not be copied to clipboard" : "Посилання не вдалося скопіювати до буфера обміну",
     "Cancel edition" : "Скасувати відредаговане",
     "Edit route" : "Редагувати маршрут",
-    "Copy direction link" : "Скопіювати посилання на напрямок",
+    "Copy direction link" : "Копіювати посилання на напрямок",
     "Unknown distance" : "Невідома відстань",
     "Unknown duration" : "Невідома тривалість",
     "Include marker" : "Включити маркер",
