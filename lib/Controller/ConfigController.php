@@ -20,7 +20,6 @@ use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
-
 use OCP\IRequest;
 use OCP\PreConditionNotMetException;
 

@@ -22,7 +22,6 @@ use OCA\Osm\Reference\OsmPointReferenceProvider;
 use OCA\Osm\Reference\OsmRouteReferenceProvider;
 use OCA\Osm\Search\OsmSearchLocationProvider;
 use OCP\AppFramework\App;
-
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
@@ -31,7 +30,6 @@ use OCP\Config\IUserConfig;
 use OCP\IL10N;
 use OCP\INavigationManager;
 use OCP\IURLGenerator;
-
 use OCP\IUserSession;
 use OCP\Security\CSP\AddContentSecurityPolicyEvent;
 

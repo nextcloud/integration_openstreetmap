@@ -36,7 +36,6 @@ use OCP\Collaboration\Reference\Reference;
 use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
 use OCP\IL10N;
-
 use OCP\IURLGenerator;
 
 class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider, IPublicReferenceProvider {

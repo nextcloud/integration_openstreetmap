@@ -23,7 +23,6 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\OCSController;
-
 use OCP\IRequest;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -110,7 +109,6 @@ class OsmAPIController extends OCSController {
 			return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
 		}
 	}
-
 
 	/**
 	 * @param string $profile
