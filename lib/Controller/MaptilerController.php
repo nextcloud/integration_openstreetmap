@@ -21,7 +21,6 @@ use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
-
 use OCP\IRequest;
 use Psr\Log\LoggerInterface;
 use Throwable;
