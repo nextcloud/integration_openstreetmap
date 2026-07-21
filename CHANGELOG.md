@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 4.2.0 – 2026-07-21
+
+### Changed
+
+- Bump max NC version to 35 @julien-nc
+- Polish UI, smaller button icons, make NcSelect non-clearable @julien-nc
+- Update dependencies @julien-nc [#80](https://github.com/nextcloud/integration_openstreetmap/pull/80)
+- Update npm and composer dependencies @julien-nc
+
 ## 4.1.0 – 2026-03-27
 
 ### Changed
