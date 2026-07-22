@@ -181,6 +181,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 	private function getCoordinates(string $url): ?array {
 		// link examples:
 		// https://www.openstreetmap.org/#map=5/47.931/24.829
+		// https://www.openstreetmap.org/?mlat=47.931&mlon=24.829
 		// https://www.openstreetmap.org/?mlat=44.7240&mlon=4.6374#map=13/44.7240/4.6374
 		// https://osm.org/go/0IpWx-
 		// https://osmand.net/map#17/43.61599/3.87524
@@ -188,26 +189,41 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 		// https://osm.org/?mlat=52.51629&mlon=13.37755&zoom=12
 		// https://omaps.app/IyqbLiFkiD
 		// https://omaps.app/IyqbLiFkiD/Etang_de_Thau
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+.\d+)/i', $url, $matches);
-		if (count($matches) > 3) {
-			$result = [
-				'zoom' => (int)$matches[1],
-				'lat' => (float)$matches[2],
-				'lon' => (float)$matches[3],
-			];
-			return $this->getFragmentInfo($url, $result);
-		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\/\?mlat=(-?\d+\.\d+)&mlon=(-?\d+\.\d+)#map=(\d+)\/(-?\d+\.\d+)\/(-?\d+.\d+)/i', $url, $matches);
-		if (count($matches) > 5) {
+		$globalMatch = preg_match('/^(?:https?:\/\/)?(?:www\.)?openstreetmap\.org\//i', $url, $matches);
+		if ($globalMatch === 1 && count($matches) > 0) {
 			$result = [
-				'zoom' => (int)$matches[3],
-				'lat' => (float)$matches[4],
-				'lon' => (float)$matches[5],
-				'markerLat' => (float)$matches[1],
-				'markerLon' => (float)$matches[2],
+				'zoom' => 12,
 			];
-			return $this->getFragmentInfo($url, $result);
+			// GET params
+			$getParamsStr = parse_url($url, PHP_URL_QUERY);
+			parse_str($getParamsStr ?? '', $getParams);
+			if (isset($getParams['mlat'], $getParams['mlon'])) {
+				$result['lat'] = (float)$getParams['mlat'];
+				$result['lon'] = (float)$getParams['mlon'];
+				$result['markerLat'] = (float)$getParams['mlat'];
+				$result['markerLon'] = (float)$getParams['mlon'];
+			}
+
+			// fragments
+			$fragment = parse_url($url, PHP_URL_FRAGMENT);
+			parse_str($fragment ?? '', $params);
+			if (isset($params['map'])) {
+				$mapParam = $params['map'];
+				preg_match('/^(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $mapParam, $matches);
+				if (count($matches) > 2) {
+					$result['zoom'] = (int)$matches[1];
+					$result['lat'] = (float)$matches[2];
+					$result['lon'] = (float)$matches[3];
+					if (!isset($result['markerLat']) && !isset($result['markerLon'])) {
+						$result['markerLat'] = (float)$matches[2];
+						$result['markerLon'] = (float)$matches[3];
+					}
+				}
+			}
+			if (isset($result['lat'], $result['lon'])) {
+				return $this->getFragmentInfo($url, $result);
+			}
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?omaps\.app\/([0-9a-zA-Z]+)(\/[^\/]+)?$/i', $url, $matches);
@@ -225,26 +241,40 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 			return $this->utilsService->decodeOsmShortLink($encodedCoords);
 		}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?\?pin=(-?\d+\.\d+),(-?\d+\.\d+)#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
-		if (count($matches) > 5) {
+		$globalMatch  = preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map/i', $url, $matches);
+		if ($globalMatch === 1 && count($matches) > 0) {
 			$result = [
-				'zoom' => (int)$matches[3],
-				'lat' => (float)$matches[4],
-				'lon' => (float)$matches[5],
-				'markerLat' => (float)$matches[1],
-				'markerLon' => (float)$matches[2],
+				'zoom' => 12,
 			];
-			return $this->getFragmentInfo($url, $result);
-		}
+			// GET params
+			$getParamsStr = parse_url($url, PHP_URL_QUERY);
+			parse_str($getParamsStr ?? '', $getParams);
+			if (isset($getParams['pin'])) {
+				$pinParam = $getParams['pin'];
+				preg_match('/^(-?\d+\.\d+),(-?\d+\.\d+)/i', $pinParam, $matches);
+				if (count($matches) > 2) {
+					$result['lat'] = (float)$matches[1];
+					$result['lon'] = (float)$matches[2];
+					$result['markerLat'] = (float)$matches[1];
+					$result['markerLon'] = (float)$matches[2];
+				}
+			}
 
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map\/?#(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $url, $matches);
-		if (count($matches) > 3) {
-			$result = [
-				'zoom' => (int)$matches[1],
-				'lat' => (float)$matches[2],
-				'lon' => (float)$matches[3],
-			];
-			return $this->getFragmentInfo($url, $result);
+			// fragments
+			$fragment = parse_url($url, PHP_URL_FRAGMENT);
+			preg_match('/^(\d+)\/(-?\d+\.\d+)\/(-?\d+\.\d+)/i', $fragment ?? '', $matches);
+			if (count($matches) > 2) {
+				$result['zoom'] = (int)$matches[1];
+				$result['lat'] = (float)$matches[2];
+				$result['lon'] = (float)$matches[3];
+				if (!isset($result['markerLat']) && !isset($result['markerLon'])) {
+					$result['markerLat'] = (float)$matches[2];
+					$result['markerLon'] = (float)$matches[3];
+				}
+			}
+			if (isset($result['lat'], $result['lon'])) {
+				return $this->getFragmentInfo($url, $result);
+			}
 		}
 
 		preg_match('/^(?:https?:\/\/)?(?:www\.)?osm\.org\/\?mlat=(-?\d+\.\d+)&mlon=(-?\d+\.\d+)&zoom=(\d+)$/i', $url, $matches);
