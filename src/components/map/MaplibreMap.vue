@@ -469,6 +469,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss">
 @import 'maplibre-gl/dist/maplibre-gl.css';
 </style>

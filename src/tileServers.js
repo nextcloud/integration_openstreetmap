@@ -14,11 +14,11 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyMapRequests
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}',
-						]
+								generateUrl('/apps/integration_openstreetmap/tiles/osm/') + '{x}/{y}/{z}',
+							]
 						: [
-							'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-						],
+								'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+							],
 					tileSize: 256,
 					attribution: 'Map data &copy; 2013 <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 				},
@@ -43,11 +43,11 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyMapRequests
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/esri-topo/') + '{x}/{y}/{z}',
-						]
+								generateUrl('/apps/integration_openstreetmap/tiles/esri-topo/') + '{x}/{y}/{z}',
+							]
 						: [
-							'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-						],
+								'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+							],
 					tileSize: 256,
 					attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, '
 						+ 'TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ord'
@@ -75,11 +75,11 @@ export function getRasterTileServers(apiKey) {
 					type: 'raster',
 					tiles: proxyMapRequests
 						? [
-							generateUrl('/apps/integration_openstreetmap/tiles/watercolor/') + '{x}/{y}/{z}',
-						]
+								generateUrl('/apps/integration_openstreetmap/tiles/watercolor/') + '{x}/{y}/{z}',
+							]
 						: [
-							'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
-						],
+								'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
+							],
 					tileSize: 256,
 					attribution: 'Map tiles by <a href="https://stamen.com">Stamen Design</a>'
 						+ ', under <a href="https://creativecommons.org/license'

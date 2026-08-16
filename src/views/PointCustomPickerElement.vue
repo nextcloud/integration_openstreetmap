@@ -12,7 +12,7 @@
 		<span v-else>
 			…
 		</span-->
-		<NcSearch ref="url-input"
+		<NcSearch
 			class="generic-search"
 			:provider="provider"
 			:show-empty-content="false"

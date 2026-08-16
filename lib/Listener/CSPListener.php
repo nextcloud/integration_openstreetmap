@@ -56,7 +56,10 @@ class CSPListener implements IEventListener {
 		$policy = new EmptyContentSecurityPolicy();
 		$policy
 			->addAllowedFrameDomain('https://www.openstreetmap.org')
-			->addAllowedImageDomain('https://*.tile.openstreetmap.org');
+			->addAllowedImageDomain('https://*.tile.openstreetmap.org')
+			// maplibre-gl
+			->addAllowedWorkerSrcDomain("'self'")
+			->addAllowedWorkerSrcDomain('blob:');
 
 		// we do not proxy on public pages
 		$proxyOsm = $this->userId === null
