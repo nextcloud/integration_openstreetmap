@@ -18,12 +18,17 @@
 </template>
 
 <script>
-import maplibregl, {
+import { markRaw } from 'vue'
+import * as maplibregl from 'maplibre-gl'
+import {
 	Map, NavigationControl, ScaleControl, GeolocateControl,
-	FullscreenControl,
+	FullscreenControl, setWorkerUrl,
 } from 'maplibre-gl'
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder'
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
+
+setWorkerUrl(workerUrl)
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
@@ -226,7 +231,7 @@ export default {
 					}
 				},
 			}
-			this.map = new Map(mapOptions)
+			this.map = markRaw(new Map(mapOptions))
 			if (this.bbox) {
 				const nsew = this.bbox
 				this.map.fitBounds([[nsew.west, nsew.north], [nsew.east, nsew.south]], {
