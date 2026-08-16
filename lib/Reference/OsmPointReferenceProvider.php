@@ -241,7 +241,7 @@ class OsmPointReferenceProvider extends ADiscoverableReferenceProvider implement
 			return $this->utilsService->decodeOsmShortLink($encodedCoords);
 		}
 
-		$globalMatch  = preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map/i', $url, $matches);
+		$globalMatch = preg_match('/^(?:https?:\/\/)?(?:www\.)?osmand\.net\/map/i', $url, $matches);
 		if ($globalMatch === 1 && count($matches) > 0) {
 			$result = [
 				'zoom' => 12,
