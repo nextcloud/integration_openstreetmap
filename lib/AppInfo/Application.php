@@ -11,6 +11,7 @@
 namespace OCA\Osm\AppInfo;
 
 use Closure;
+use OCA\Osm\Listener\BeforeTemplateRenderedListener;
 use OCA\Osm\Listener\CSPListener;
 use OCA\Osm\Listener\OsmReferenceListener;
 use OCA\Osm\Reference\BingReferenceProvider;
@@ -25,6 +26,7 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\AppFramework\Http\Events\BeforeTemplateRenderedEvent;
 use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\Config\IUserConfig;
 use OCP\IL10N;
@@ -58,6 +60,7 @@ class Application extends App implements IBootstrap {
 
 		$context->registerEventListener(RenderReferenceEvent::class, OsmReferenceListener::class);
 		$context->registerEventListener(AddContentSecurityPolicyEvent::class, CSPListener::class);
+		$context->registerEventListener(BeforeTemplateRenderedEvent::class, BeforeTemplateRenderedListener::class);
 	}
 
 	public function boot(IBootContext $context): void {

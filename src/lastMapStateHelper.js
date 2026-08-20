@@ -16,11 +16,11 @@ export function getLastMapState() {
 		pitch: 0,
 		bearing: 0,
 		mapStyle: undefined,
-		terrain: false,
-		globe: false,
 		linkType: linkTypes.osm.id,
 		routingLinkType: routingLinkTypes.osrm_org.id,
 		...window._osm_last_map_state,
+		terrain: window._osm_last_map_state.terrain === '1',
+		globe: window._osm_last_map_state.globe === '1',
 	}
 }
 

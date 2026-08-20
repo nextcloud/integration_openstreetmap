@@ -12,6 +12,7 @@ export default createAppConfig({
 	personalSettings: 'src/personalSettings.js',
 	adminSettings: 'src/adminSettings.js',
 	referenceLocation: 'src/referenceLocation.js',
+	ocaTools: 'src/ocaTools.js',
 }, {
 	config: {
 		css: {
