@@ -12,7 +12,7 @@ OC.L10N.register(
     "Integration of OpenStreetMap" : "Integrácia pre OpenStreetMap",
     "OpenStreetMap integration provides a search provider for locations, a reference\nprovider to render location links from various map services (OpenStreetMap, Google maps...) and a custom link picker\ncomponent to quickly insert a location link by searching or selecting a point on an (awesome) interactive map." : "Integrácia OpenStreetMap poskytuje poskytovateľa vyhľadávania miest, referencie\nposkytovateľa pre vykresľovanie odkazov na umiestnenie z rôznych mapových služieb (OpenStreetMap, Google maps...) a vlastný výber odkazov\nkomponentu pre rýchle vloženie odkazu na umiestnenie vyhľadávaním alebo výberom bodu na (úžasnej) interaktívnej mape.",
     "OpenStreetMap options saved" : "Nastavenia OpenStreetMap boli uložené",
-    "Failed to save OpenStreetMap options" : "Nepodarlo sa uložiť nastavenia OpenStreetMap",
+    "Failed to save OpenStreetMap options" : "Nepodarilo sa uložiť nastavenia OpenStreetMap",
     "Maptiler API key" : "Kľúč Maptiler API",
     "Enable searching for locations" : "Povoliť vyhľadávanie umiestnení",
     "Proxy map tiles/vectors requests via Nextcloud" : "Sprostredkovať požiadavky na dlaždice/vektory máp cez Nextcloud",
