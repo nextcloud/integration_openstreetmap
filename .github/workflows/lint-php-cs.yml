@@ -49,7 +49,7 @@ jobs:
 
       #- name: Set up php${{ steps.versions.outputs.php-available }}
       - name: Set up php8.3
-        uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # v2.31.1
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
         with:
           #php-version: ${{ steps.versions.outputs.php-available }}
           php-version: 8.3
