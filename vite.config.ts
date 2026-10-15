@@ -38,6 +38,13 @@ export default createAppConfig({
 				}
 			},
 		},
+		worker: {
+			rollupOptions: {
+				output: {
+					entryFileNames: 'js/[name]-[hash].js',
+				},
+			},
+		},
 	},
 	inlineCSS: { relativeCSSInjection: true },
 	minify: isProduction,
