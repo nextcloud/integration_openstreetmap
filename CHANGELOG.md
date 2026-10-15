@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 4.3.0 – 2026-10-15
+
+### Changed
+
+- Support NC 36 @julien-nc
+- Migrate to MapLibre 6 and make maplibre-gl-directions compatible with MapLibre 6 @julien-nc [#84](https://github.com/nextcloud/integration_openstreetmap/pull/84)
+- Update eslint config to non-flat, fix all eslint issues @julien-nc
+
+### Fixed
+
+- More robust parsing of https://www.openstreetmap.org and https://osmand.net/map URLs in the reference widget @julien-nc
+
 ## 4.2.0 – 2026-07-21
 
 ### Changed
