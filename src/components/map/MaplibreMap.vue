@@ -35,6 +35,7 @@ import { generateUrl, imagePath } from '@nextcloud/router'
 import {
 	getRasterTileServers,
 	getVectorStyles,
+	getOpenFreeMapStyles,
 } from '../../tileServers.js'
 import { MousePositionControl, TileControl, GlobeControl, TerrainControl } from '../../mapControls.js'
 import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
@@ -120,6 +121,7 @@ export default {
 			map: null,
 			styles: {},
 			mapLoaded: false,
+			defaultStyleKey: 'openfreemapLiberty',
 			mousePositionControl: null,
 			scaleControl: null,
 			myUseTerrain: this.useTerrain,
@@ -200,17 +202,19 @@ export default {
 	methods: {
 		initMap() {
 			const apiKey = this.apiKeys.maptiler_api_key
+			// default vector style, available without any API key
+			this.defaultStyleKey = apiKey ? 'streets' : 'openfreemapLiberty'
 			// tile servers and styles
 			const vectorStyles = apiKey ? getVectorStyles(apiKey) : {}
 			this.styles = {
+				// always available, no API key required
+				...getOpenFreeMapStyles(),
 				...vectorStyles,
 				...getRasterTileServers(apiKey),
 			}
 			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle)
 				? this.mapStyle
-				: apiKey
-					? 'streets'
-					: 'osmRaster'
+				: this.defaultStyleKey
 			const restoredStyleObj = this.styles[restoredStyleKey]
 			this.$emit('update:mapStyle', restoredStyleKey)
 
@@ -315,7 +319,7 @@ export default {
 				})
 
 				// max zoom
-				const styleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : 'streets'
+				const styleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : this.defaultStyleKey
 				const mapStyleObj = this.styles[styleKey]
 				const maxZoom = mapStyleObj.maxzoom ? (mapStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM
 				console.debug('apply max ZOOM', maxZoom, mapStyleObj)

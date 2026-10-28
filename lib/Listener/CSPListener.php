@@ -71,6 +71,7 @@ class CSPListener implements IEventListener {
 				->addAllowedConnectDomain('https://server.arcgisonline.com')
 				->addAllowedConnectDomain('https://stamen-tiles.a.ssl.fastly.net')
 				->addAllowedConnectDomain('https://api.maptiler.com')
+				->addAllowedConnectDomain('https://tiles.openfreemap.org')
 				->addAllowedImageDomain('https://api.maptiler.com');
 		}
 		$event->addPolicy($policy);

@@ -29,7 +29,7 @@ class MaptilerService {
 	}
 
 	private function getReplacementUrl(): string {
-		$replacementUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.maptiler.getMapTilerStyle', ['version' => 'aaa']);
+		$replacementUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.map.getMapTilerStyle', ['version' => 'aaa']);
 		return str_replace('/maptiler/maps/aaa/style.json', '/maptiler', $replacementUrl);
 	}
 
@@ -126,8 +126,11 @@ class MaptilerService {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getMapTilerTile(string $version, int $x, int $y, int $z, string $ext, ?string $key = null): array {
-		$url = 'https://api.maptiler.com/tiles/' . $version . '/' . strval($z) . '/' . strval($x) . '/' . strval($y) . '.' . $ext;
+	public function getMapTilerTile(string $version, int $x, int $y, int $z, string $ext = '', ?string $key = null): array {
+		$url = 'https://api.maptiler.com/tiles/' . $version . '/' . strval($z) . '/' . strval($x) . '/' . strval($y);
+		if ($ext !== '') {
+			$url .= '.' . $ext;
+		}
 		if ($key !== null) {
 			$url .= '?key=' . $key;
 		}
