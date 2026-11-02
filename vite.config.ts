@@ -33,8 +33,6 @@ export default createAppConfig({
 					moduleSideEffects: false,
 					// Optimize property access
 					propertyReadSideEffects: false,
-					// Remove unused imports
-					tryCatchDeoptimization: false
 				}
 			},
 		},
