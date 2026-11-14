@@ -48,6 +48,7 @@
 			<template #default="{ map }">
 				<DirectionsPlugin
 					:map="map"
+					:api-url="osrmRouteUrl"
 					:profile="selectedProfileId"
 					@waypoint-change="onWaypointChange"
 					@route-fetch="onRouteFetched" />
@@ -88,11 +89,12 @@ import HelpCircleOutlineIcon from 'vue-material-design-icons/HelpCircleOutline.v
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 
-import MaplibreMap from '../components/map/MaplibreMap.vue'
-import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
+import MaplibreMap from '../components/AppMaplibreMap.vue'
+import DirectionsPlugin from '../map/DirectionsPlugin.vue'
 import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
 
 import moment from '@nextcloud/moment'
+import { generateUrl } from '@nextcloud/router'
 
 import { getLastMapState, setLastMapState } from '../lastMapStateHelper.js'
 import { routingProfiles, routingLinkTypes, routingLinkTypesArray, getRoutingLink } from '../mapUtils.js'
@@ -137,6 +139,9 @@ export default {
 	},
 
 	computed: {
+		osrmRouteUrl() {
+			return generateUrl('/apps/integration_openstreetmap/osrm/route')
+		},
 		mapCenter() {
 			if (this.mapState?.lat && this.mapState?.lon) {
 				return {

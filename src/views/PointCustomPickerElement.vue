@@ -75,8 +75,8 @@ import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwit
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 
-import MaplibreMap from '../components/map/MaplibreMap.vue'
-import VMarker from '../components/map/VMarker.vue'
+import MaplibreMap from '../components/AppMaplibreMap.vue'
+import VMarker from '../map/VMarker.vue'
 
 import { getProvider, NcSearch } from '@nextcloud/vue/components/NcRichText'
 

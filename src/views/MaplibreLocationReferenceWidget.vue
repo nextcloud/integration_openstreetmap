@@ -57,9 +57,9 @@
 </template>
 
 <script>
-import MaplibreMap from '../components/map/MaplibreMap.vue'
-import VMarker from '../components/map/VMarker.vue'
-import PolygonFill from '../components/map/PolygonFill.vue'
+import MaplibreMap from '../components/AppMaplibreMap.vue'
+import VMarker from '../map/VMarker.vue'
+import PolygonFill from '../map/PolygonFill.vue'
 
 export default {
 	name: 'MaplibreLocationReferenceWidget',

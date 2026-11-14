@@ -1,8 +1,6 @@
 <script>
 import MapLibreGlDirections, { layersFactory } from '@maplibre/maplibre-gl-directions'
 
-import { generateUrl } from '@nextcloud/router'
-
 export default {
 	name: 'DirectionsPlugin',
 
@@ -12,6 +10,11 @@ export default {
 	props: {
 		map: {
 			type: Object,
+			required: true,
+		},
+		// routing API endpoint following the OSRM API format
+		apiUrl: {
+			type: String,
 			required: true,
 		},
 		profile: {
@@ -69,7 +72,7 @@ export default {
 				this.initLayers()
 			}
 			this.directions = new MapLibreGlDirections(this.map, {
-				api: generateUrl('/apps/integration_openstreetmap/osrm/route'),
+				api: this.apiUrl,
 				profile: this.profile,
 				requestOptions: {
 					alternatives: 'true',

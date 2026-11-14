@@ -92,6 +92,7 @@
 				<template #default="{ map }">
 					<DirectionsPlugin v-if="editing"
 						:map="map"
+						:api-url="osrmRouteUrl"
 						:profile="selectedRoutingProfile?.id ?? undefined"
 						:initial-waypoints="richObject.queryPoints.map(p => [p[1], p[0]])"
 						@waypoint-change="onWaypointChange"
@@ -126,15 +127,16 @@ import MarkerGreenIcon from '../components/icons/MarkerGreenIcon.vue'
 
 import NcButton from '@nextcloud/vue/components/NcButton'
 
-import MaplibreMap from '../components/map/MaplibreMap.vue'
-import DirectionsPlugin from '../components/map/DirectionsPlugin.vue'
+import MaplibreMap from '../components/AppMaplibreMap.vue'
+import DirectionsPlugin from '../map/DirectionsPlugin.vue'
 import RoutingProfilePicker from '../components/RoutingProfileSelect.vue'
-import LinestringCollection from '../components/map/LinestringCollection.vue'
-import VMarker from '../components/map/VMarker.vue'
+import LinestringCollection from '../map/LinestringCollection.vue'
+import VMarker from '../map/VMarker.vue'
 
 import { routingProfiles, getRoutingLink } from '../mapUtils.js'
 
 import moment from '@nextcloud/moment'
+import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
 export default {
@@ -183,6 +185,9 @@ export default {
 	},
 
 	computed: {
+		osrmRouteUrl() {
+			return generateUrl('/apps/integration_openstreetmap/osrm/route')
+		},
 		routeGeojsons() {
 			return this.richObject.routes.map(r => r.geojson)
 		},

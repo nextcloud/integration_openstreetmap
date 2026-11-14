@@ -1,7 +1,14 @@
+<!--
+  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <template>
 	<div class="map-wrapper">
-		<a href="https://www.maptiler.com" class="watermark" :class="{ padded: showMousePositionControl }">
-			<img :src="maptilerLogoUrl"
+		<a v-if="watermarkUrl"
+			href="https://www.maptiler.com"
+			class="watermark"
+			:class="{ padded: showMousePositionControl }">
+			<img :src="watermarkUrl"
 				alt="MapTiler logo">
 		</a>
 		<div
@@ -30,19 +37,20 @@ import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css'
 
 setWorkerUrl(workerUrl)
 
-import { loadState } from '@nextcloud/initial-state'
-import { generateUrl, imagePath } from '@nextcloud/router'
 import {
 	getRasterTileServers,
 	getVectorStyles,
 	getOpenFreeMapStyles,
-} from '../../tileServers.js'
-import { MousePositionControl, TileControl, GlobeControl, TerrainControl } from '../../mapControls.js'
-import { maplibreForwardGeocode, mapVectorImages } from '../../mapUtils.js'
+} from './tileServers.js'
+import { MousePositionControl, TileControl, GlobeControl, TerrainControl } from './mapControls.js'
+import { forwardGeocodeNominatim } from './nominatimGeocoder.js'
+import { defaultMapImages } from './mapImages.js'
 
-import '../../../css/maplibre.scss'
+import '../../css/maplibre.scss'
 
 const DEFAULT_MAP_MAX_ZOOM = 22
+const DEFAULT_MAPTILER_TERRAIN_URL = 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key='
+const DEFAULT_MAPTILER_LOGO_URL = 'https://api.maptiler.com/resources/logo.svg'
 
 export default {
 	name: 'MaplibreMap',
@@ -51,6 +59,38 @@ export default {
 	},
 
 	props: {
+		// MapTiler API key, required for the MapTiler vector styles and the terrain
+		maptilerApiKey: {
+			type: String,
+			default: null,
+		},
+		// optional style override, { styleKey: { title, uri|style, maxzoom? } }
+		// merged over the default direct tile servers
+		styles: {
+			type: Object,
+			default: null,
+		},
+		// optional map images override, { imageKey: url }
+		// merged over the default built-in images
+		images: {
+			type: Object,
+			default: null,
+		},
+		// optional geocoder override, { forwardGeocode, placeholder }
+		geocoderOptions: {
+			type: Object,
+			default: null,
+		},
+		// optional terrain tiles.json URL override
+		terrainTilesUrl: {
+			type: String,
+			default: null,
+		},
+		// optional MapTiler logo URL override, the watermark is hidden when null
+		logoUrl: {
+			type: String,
+			default: null,
+		},
 		useTerrain: {
 			type: Boolean,
 			default: false,
@@ -87,10 +127,6 @@ export default {
 			type: String,
 			default: 'osmRaster',
 		},
-		area: {
-			type: Object,
-			default: null,
-		},
 		unit: {
 			type: String,
 			default: 'metric',
@@ -119,7 +155,7 @@ export default {
 	data() {
 		return {
 			map: null,
-			styles: {},
+			myStyles: {},
 			mapLoaded: false,
 			defaultStyleKey: 'openfreemapLiberty',
 			mousePositionControl: null,
@@ -128,17 +164,15 @@ export default {
 			terrainControl: null,
 			globeControl: null,
 			myUseGlobe: this.useGlobe,
-			apiKeys: loadState('integration_openstreetmap', 'api-keys'),
-			proxyMapRequests: loadState('integration_openstreetmap', 'proxy-map-requests', false),
-			maptilerLogoUrl: loadState('integration_openstreetmap', 'proxy-map-requests', false)
-				? generateUrl('/apps/integration_openstreetmap/maptiler/resources/logo.svg')
-				: 'https://api.maptiler.com/resources/logo.svg',
 		}
 	},
 
 	computed: {
 		hasMaptilerApiKey() {
-			return !!this.apiKeys?.maptiler_api_key
+			return !!this.maptilerApiKey
+		},
+		watermarkUrl() {
+			return this.logoUrl ?? (this.hasMaptilerApiKey ? DEFAULT_MAPTILER_LOGO_URL : null)
 		},
 	},
 
@@ -178,17 +212,6 @@ export default {
 			})
 			this.globeControl.updateGlobeIcon(newValue)
 		},
-		/*
-		pitch(newValue) {
-			this.map.setPitch(newValue)
-		},
-		bearing(newValue) {
-			this.map.setBearing(newValue)
-		},
-		mapStyle(newValue) {
-			console.debug('mapStyle changed', newValue)
-		},
-		*/
 	},
 
 	mounted() {
@@ -201,16 +224,17 @@ export default {
 
 	methods: {
 		initMap() {
-			const apiKey = this.apiKeys.maptiler_api_key
+			const apiKey = this.maptilerApiKey
 			// default vector style, available without any API key
 			this.defaultStyleKey = apiKey ? 'streets' : 'openfreemapLiberty'
 			// tile servers and styles
 			const vectorStyles = apiKey ? getVectorStyles(apiKey) : {}
-			this.styles = {
+			this.myStyles = {
 				// always available, no API key required
 				...getOpenFreeMapStyles(),
 				...vectorStyles,
 				...getRasterTileServers(apiKey),
+				...(this.styles ?? {}),
 			}
 			const restoredStyleKey = Object.keys(this.styles).includes(this.mapStyle)
 				? this.mapStyle
@@ -221,11 +245,6 @@ export default {
 			const mapOptions = {
 				container: this.$refs.mapContainer,
 				style: restoredStyleObj.uri ? restoredStyleObj.uri : restoredStyleObj,
-				// center: centerLngLat,
-				// zoom: this.settings.zoom ?? 1,
-				// pitch: this.settings.pitch ?? 0,
-				// bearing: this.settings.bearing ?? 0,
-				// bounds,
 				maxPitch: 75,
 				maxZoom: restoredStyleObj.maxzoom ? (restoredStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM,
 				transformRequest: (url, resourceType) => {
@@ -259,10 +278,14 @@ export default {
 			const navigationControl = new NavigationControl({ visualizePitch: true })
 			this.scaleControl = new ScaleControl({ unit: this.unit })
 
+			const geocoderOptions = this.geocoderOptions ?? {
+				forwardGeocode: forwardGeocodeNominatim,
+				placeholder: 'Search',
+			}
 			this.map.addControl(
-				new MaplibreGeocoder({ forwardGeocode: maplibreForwardGeocode }, {
+				new MaplibreGeocoder({ forwardGeocode: geocoderOptions.forwardGeocode }, {
 					maplibregl,
-					placeholder: t('integration_openstreetmap', 'Search on the map'),
+					placeholder: geocoderOptions.placeholder,
 					minLength: 4,
 					debounceSearch: 400,
 					popup: true,
@@ -296,7 +319,7 @@ export default {
 			}
 
 			// custom tile control
-			const tileControl = new TileControl({ styles: this.styles, selectedKey: restoredStyleKey })
+			const tileControl = new TileControl({ styles: this.myStyles, selectedKey: restoredStyleKey })
 			tileControl.on('changeStyle', (key) => {
 				this.$emit('update:mapStyle', key)
 			})
@@ -319,8 +342,8 @@ export default {
 				})
 
 				// max zoom
-				const styleKey = Object.keys(this.styles).includes(this.mapStyle) ? this.mapStyle : this.defaultStyleKey
-				const mapStyleObj = this.styles[styleKey]
+				const styleKey = Object.keys(this.myStyles).includes(this.mapStyle) ? this.mapStyle : this.defaultStyleKey
+				const mapStyleObj = this.myStyles[styleKey]
 				const maxZoom = mapStyleObj.maxzoom ? (mapStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM
 				console.debug('apply max ZOOM', maxZoom, mapStyleObj)
 				this.map.setMaxZoom(maxZoom)
@@ -346,14 +369,15 @@ export default {
 			})
 		},
 		loadImages() {
+			const mapImages = { ...defaultMapImages, ...(this.images ?? {}) }
 			// this is needed when switching between vector and raster tile servers, the image is sometimes not removed
-			for (const imgKey in mapVectorImages) {
+			for (const imgKey in mapImages) {
 				if (this.map.hasImage(imgKey)) {
 					this.map.removeImage(imgKey)
 				}
 			}
-			const loadImagePromises = Object.keys(mapVectorImages).map((k) => {
-				return this.loadVectorImage(k)
+			const loadImagePromises = Object.keys(mapImages).map((k) => {
+				return this.loadVectorImage(k, mapImages[k])
 			})
 			Promise.allSettled(loadImagePromises)
 				.then((promises) => {
@@ -366,7 +390,7 @@ export default {
 					})
 				})
 		},
-		loadVectorImage(imgKey) {
+		loadVectorImage(imgKey, src) {
 			return new Promise((resolve, reject) => {
 				const svgIcon = new Image(41, 41)
 				svgIcon.onload = () => {
@@ -376,7 +400,7 @@ export default {
 				svgIcon.onerror = () => {
 					reject(new Error('Failed to load ' + imgKey))
 				}
-				svgIcon.src = imagePath('integration_openstreetmap', mapVectorImages[imgKey])
+				svgIcon.src = src
 			})
 		},
 		toggleGlobe() {
@@ -432,12 +456,11 @@ export default {
 			if (this.map.getSource('terrain')) {
 				return
 			}
-			const apiKey = this.apiKeys.maptiler_api_key
+			const url = this.terrainTilesUrl
+				?? (DEFAULT_MAPTILER_TERRAIN_URL + this.maptilerApiKey)
 			this.map.addSource('terrain', {
 				type: 'raster-dem',
-				url: this.proxyMapRequests
-					? generateUrl('/apps/integration_openstreetmap/maptiler/tiles/terrain-rgb-v2/tiles.json?key=' + apiKey)
-					: 'https://api.maptiler.com/tiles/terrain-rgb/tiles.json?key=' + apiKey,
+				url,
 			})
 		},
 		handleMapEvents() {
