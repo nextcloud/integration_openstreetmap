@@ -8,7 +8,32 @@
 
 name: Lint stylelint
 
-on: pull_request
+on:
+  push:
+    branches: [ main, test ]
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'appinfo/info.xml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'stylelint.config.*'
+      - '**.js'
+      - '**.ts'
+      - '**.vue'
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'appinfo/info.xml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'stylelint.config.*'
+      - '**.js'
+      - '**.ts'
+      - '**.vue'
 
 permissions:
   contents: read
