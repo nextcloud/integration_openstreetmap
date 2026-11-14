@@ -61,8 +61,10 @@ export default {
 		},
 		geocoderOptions() {
 			return {
-				forwardGeocode: maplibreForwardGeocode,
 				placeholder: t('integration_openstreetmap', 'Search on the map'),
+				// only proxy the search when requested,
+				// otherwise the built-in direct Nominatim geocoder is used
+				...(this.proxyMapRequests ? { forwardGeocode: maplibreForwardGeocode } : {}),
 			}
 		},
 	},

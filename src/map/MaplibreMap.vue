@@ -76,7 +76,8 @@ export default {
 			type: Object,
 			default: null,
 		},
-		// optional geocoder override, { forwardGeocode, placeholder }
+		// optional geocoder options, { forwardGeocode?, placeholder? }
+		// missing entries fall back to the built-in direct Nominatim geocoder
 		geocoderOptions: {
 			type: Object,
 			default: null,
@@ -135,6 +136,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		showSearchControl: {
+			type: Boolean,
+			default: true,
+		},
 		allMoveEvents: {
 			type: Boolean,
 			default: false,
@@ -160,6 +165,7 @@ export default {
 			defaultStyleKey: 'openfreemapLiberty',
 			mousePositionControl: null,
 			scaleControl: null,
+			geocoderControl: null,
 			myUseTerrain: this.useTerrain,
 			terrainControl: null,
 			globeControl: null,
@@ -182,6 +188,19 @@ export default {
 				this.map.addControl(this.mousePositionControl, 'bottom-left')
 			} else {
 				this.map.removeControl(this.mousePositionControl)
+			}
+		},
+		showSearchControl(newValue) {
+			if (!this.map) {
+				return
+			}
+			if (newValue) {
+				if (!this.geocoderControl) {
+					this.createGeocoder()
+				}
+				this.map.addControl(this.geocoderControl, 'top-left')
+			} else {
+				this.map.removeControl(this.geocoderControl)
 			}
 		},
 		unit(newValue) {
@@ -223,6 +242,26 @@ export default {
 	},
 
 	methods: {
+		createGeocoder() {
+			const geocoderOptions = this.geocoderOptions ?? {}
+			this.geocoderControl = new MaplibreGeocoder(
+				{ forwardGeocode: geocoderOptions.forwardGeocode ?? forwardGeocodeNominatim },
+				{
+					maplibregl,
+					placeholder: geocoderOptions.placeholder ?? 'Search',
+					minLength: 4,
+					debounceSearch: 400,
+					popup: true,
+					showResultsWhileTyping: true,
+					flyTo: {
+						pitch: 0,
+						animate: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+							? false
+							: undefined,
+					},
+				},
+			)
+		},
 		initMap() {
 			const apiKey = this.maptilerApiKey
 			// default vector style, available without any API key
@@ -278,27 +317,10 @@ export default {
 			const navigationControl = new NavigationControl({ visualizePitch: true })
 			this.scaleControl = new ScaleControl({ unit: this.unit })
 
-			const geocoderOptions = this.geocoderOptions ?? {
-				forwardGeocode: forwardGeocodeNominatim,
-				placeholder: 'Search',
+			if (this.showSearchControl) {
+				this.createGeocoder()
+				this.map.addControl(this.geocoderControl, 'top-left')
 			}
-			this.map.addControl(
-				new MaplibreGeocoder({ forwardGeocode: geocoderOptions.forwardGeocode }, {
-					maplibregl,
-					placeholder: geocoderOptions.placeholder,
-					minLength: 4,
-					debounceSearch: 400,
-					popup: true,
-					showResultsWhileTyping: true,
-					flyTo: {
-						pitch: 0,
-						animate: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-							? false
-							: undefined,
-					},
-				}),
-				'top-left',
-			)
 
 			const geolocateControl = new GeolocateControl({
 				trackUserLocation: true,
