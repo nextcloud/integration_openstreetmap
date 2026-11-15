@@ -119,21 +119,12 @@ export default {
 		},
 		onMouseEnter(e) {
 			this.map.getCanvas().style.cursor = 'pointer'
-			if (this.map.getLayer(this.layerId)) {
-				this.map.setPaintProperty(this.layerId, 'line-width', this.lineWidth * 1.7)
-				// this.map.setPaintProperty(this.layerId, 'line-color', 'red')
-			}
-			if (this.map.getLayer(this.borderLayerId)) {
-				this.map.setPaintProperty(this.borderLayerId, 'line-width', (this.lineWidth * 0.3) * 1.7)
-				this.map.setPaintProperty(this.borderLayerId, 'line-gap-width', this.lineWidth * 1.7)
-			}
 			if (this.geojson.popupContent) {
 				this.showPopup(e.lngLat, false)
 			}
 		},
 		onMouseLeave() {
 			this.map.getCanvas().style.cursor = ''
-			this.setNormalLineWidth()
 			if (this.popup) {
 				this.popup.remove()
 				this.popup = null
