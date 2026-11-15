@@ -1,3 +1,20 @@
+import { AttributionControl } from 'maplibre-gl'
+
+/**
+ * Attribution control that starts collapsed into the info button.
+ * MapLibre's compact mode renders expanded and only collapses once the map is
+ * dragged, so the "shown" state class is removed right after the control is
+ * added. That yields the same collapsed state the control reaches on drag, and
+ * toggling with the button keeps working as usual.
+ */
+export class CollapsedAttributionControl extends AttributionControl {
+	onAdd(map) {
+		const container = super.onAdd(map)
+		container.classList.remove('maplibregl-compact-show')
+		return container
+	}
+}
+
 export class MousePositionControl {
 	constructor(options) {
 		this.options = options

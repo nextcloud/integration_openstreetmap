@@ -42,7 +42,7 @@ import {
 	getVectorStyles,
 	getOpenFreeMapStyles,
 } from './tileServers.js'
-import { MousePositionControl, TileControl, GlobeControl, TerrainControl } from './mapControls.js'
+import { MousePositionControl, TileControl, GlobeControl, TerrainControl, CollapsedAttributionControl } from './mapControls.js'
 import { forwardGeocodeNominatim } from './nominatimGeocoder.js'
 import { defaultMapImages } from './mapImages.js'
 
@@ -296,6 +296,8 @@ export default {
 				container: this.$refs.mapContainer,
 				style: restoredStyleObj.uri ? restoredStyleObj.uri : restoredStyleObj,
 				maxPitch: 75,
+				// added manually below, so it can start collapsed
+				attributionControl: false,
 				maxZoom: restoredStyleObj.maxzoom ? (restoredStyleObj.maxzoom - 0.01) : DEFAULT_MAP_MAX_ZOOM,
 				transformRequest: (url, resourceType) => {
 					return {
@@ -305,6 +307,8 @@ export default {
 				},
 			}
 			this.map = markRaw(new Map(mapOptions))
+			// attribution, collapsed into the info button by default
+			this.map.addControl(new CollapsedAttributionControl())
 			if (this.bbox) {
 				const nsew = this.bbox
 				this.map.fitBounds([[nsew.west, nsew.north], [nsew.east, nsew.south]], {
