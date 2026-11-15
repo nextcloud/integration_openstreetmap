@@ -126,7 +126,7 @@ export default {
 		},
 		mapStyle: {
 			type: String,
-			default: 'osmRaster',
+			default: undefined,
 		},
 		unit: {
 			type: String,
