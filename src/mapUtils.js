@@ -77,6 +77,7 @@ export function shortenCoordinate(coordinate) {
 export function getRoutingLink(
 	waypoints, profile = routingProfiles.car, linkTypeId = routingLinkTypes.osrm_org.id,
 	terrain = false, globe = true, style = 'street',
+	pitch = 0, bearing = 0,
 ) {
 	if (waypoints === null || waypoints.length < 2) {
 		return null
@@ -123,6 +124,12 @@ export function getRoutingLink(
 	}
 	if (style !== 'streets') {
 		fragments.push('style=' + encodeURIComponent(style))
+	}
+	if (parseInt(pitch) !== 0) {
+		fragments.push('pitch=' + parseInt(pitch))
+	}
+	if (parseInt(bearing) !== 0) {
+		fragments.push('bearing=' + parseInt(bearing))
 	}
 
 	if (queryParams.length > 0) {

@@ -175,6 +175,7 @@ export default {
 			const link = getRoutingLink(
 				this.waypoints, this.selectedProfile, this.selectedRoutingLinkTypeId,
 				this.mapState.terrain, this.mapState.globe, this.mapState.mapStyle,
+				this.mapState.pitch, this.mapState.bearing,
 			)
 			console.debug('[osm] current link', link)
 			return link

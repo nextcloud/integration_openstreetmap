@@ -256,7 +256,16 @@ export default {
 			if (!this.editing) {
 				return
 			}
-			return getRoutingLink(this.editingWaypoints, this.selectedRoutingProfile, this.richObject.type)
+			return getRoutingLink(
+				this.editingWaypoints,
+				this.selectedRoutingProfile,
+				this.richObject.type,
+				this.richObject.terrain ?? false,
+				this.richObject.globe ?? false,
+				this.richObject.style ?? 'streets',
+				this.richObject.pitch ?? 0,
+				this.richObject.bearing ?? 0,
+			)
 		},
 	},
 
