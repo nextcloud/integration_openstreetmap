@@ -7,5 +7,5 @@ js/
 .*.sw*
 node_modules
 .php*cache
-
+/.playwright*
 vendor/
