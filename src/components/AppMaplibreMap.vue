@@ -53,11 +53,11 @@ export default {
 		styles() {
 			return getStyles(this.maptilerApiKey, this.proxyMapRequests)
 		},
-		logoUrl() {
-			return getMaptilerLogoUrl(this.proxyMapRequests)
-		},
 		terrainTilesUrl() {
 			return getTerrainTilesUrl(this.maptilerApiKey, this.proxyMapRequests)
+		},
+		logoUrl() {
+			return getMaptilerLogoUrl(this.proxyMapRequests)
 		},
 		geocoderOptions() {
 			return {

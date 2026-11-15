@@ -109,22 +109,28 @@ export function getVectorStyles(apiKey) {
 	return {
 		streets: {
 			title: 'Streets',
+			// MapTiler requires their logo to be displayed when their tiles are used
+			maptiler: true,
 			uri: 'https://api.maptiler.com/maps/streets/style.json?key=' + apiKey,
 		},
 		satellite: {
 			title: 'Satellite',
+			maptiler: true,
 			uri: 'https://api.maptiler.com/maps/hybrid/style.json?key=' + apiKey,
 		},
 		outdoor: {
 			title: 'Outdoor',
+			maptiler: true,
 			uri: 'https://api.maptiler.com/maps/outdoor/style.json?key=' + apiKey,
 		},
 		osm: {
 			title: 'OpenStreetMap',
+			maptiler: true,
 			uri: 'https://api.maptiler.com/maps/openstreetmap/style.json?key=' + apiKey,
 		},
 		dark: {
 			title: 'Dark',
+			maptiler: true,
 			uri: 'https://api.maptiler.com/maps/streets-dark/style.json?key=' + apiKey,
 		},
 	}

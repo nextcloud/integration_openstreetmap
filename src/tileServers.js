@@ -40,22 +40,27 @@ export function getVectorStyles(apiKey, proxyMapRequests) {
 	return {
 		streets: {
 			title: 'Streets',
+			maptiler: true,
 			uri: generateUrl('/apps/integration_openstreetmap/maptiler/maps/streets-v2/style.json?key=' + apiKey),
 		},
 		satellite: {
 			title: 'Satellite',
+			maptiler: true,
 			uri: generateUrl('/apps/integration_openstreetmap/maptiler/maps/hybrid/style.json?key=' + apiKey),
 		},
 		outdoor: {
 			title: 'Outdoor',
+			maptiler: true,
 			uri: generateUrl('/apps/integration_openstreetmap/maptiler/maps/outdoor-v2/style.json?key=' + apiKey),
 		},
 		osm: {
 			title: 'OpenStreetMap',
+			maptiler: true,
 			uri: generateUrl('/apps/integration_openstreetmap/maptiler/maps/openstreetmap/style.json?key=' + apiKey),
 		},
 		dark: {
 			title: 'Dark',
+			maptiler: true,
 			uri: generateUrl('/apps/integration_openstreetmap/maptiler/maps/streets-dark/style.json?key=' + apiKey),
 		},
 	}

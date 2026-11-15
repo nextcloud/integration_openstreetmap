@@ -4,7 +4,7 @@
 -->
 <template>
 	<div class="map-wrapper">
-		<a v-if="watermarkUrl"
+		<a v-if="showWatermark"
 			href="https://www.maptiler.com"
 			class="watermark"
 			:class="{ padded: showMousePositionControl }">
@@ -87,7 +87,7 @@ export default {
 			type: String,
 			default: null,
 		},
-		// optional MapTiler logo URL override, the watermark is hidden when null
+		// optional MapTiler logo URL override, only used when a MapTiler style is selected
 		logoUrl: {
 			type: String,
 			default: null,
@@ -165,6 +165,7 @@ export default {
 		return {
 			map: null,
 			myStyles: {},
+			myStyleKey: null,
 			mapLoaded: false,
 			defaultStyleKey: 'openfreemapLiberty',
 			mousePositionControl: null,
@@ -182,7 +183,12 @@ export default {
 			return !!this.maptilerApiKey
 		},
 		watermarkUrl() {
-			return this.logoUrl ?? (this.hasMaptilerApiKey ? DEFAULT_MAPTILER_LOGO_URL : null)
+			return this.logoUrl ?? DEFAULT_MAPTILER_LOGO_URL
+		},
+		showWatermark() {
+			// MapTiler requires their logo when their tiles are used,
+			// the logo styles are the ones tagged with `maptiler`
+			return !!this.myStyles[this.myStyleKey]?.maptiler
 		},
 	},
 
@@ -290,6 +296,7 @@ export default {
 				? this.mapStyle
 				: this.defaultStyleKey
 			const restoredStyleObj = this.styles[restoredStyleKey]
+			this.myStyleKey = restoredStyleKey
 			this.$emit('update:mapStyle', restoredStyleKey)
 
 			const mapOptions = {
@@ -358,6 +365,7 @@ export default {
 			// custom tile control
 			const tileControl = new TileControl({ styles: this.myStyles, selectedKey: restoredStyleKey })
 			tileControl.on('changeStyle', (key) => {
+				this.myStyleKey = key
 				this.$emit('update:mapStyle', key)
 			})
 			this.map.addControl(tileControl, 'top-right')
