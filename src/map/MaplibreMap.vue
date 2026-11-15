@@ -104,6 +104,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		useSky: {
+			type: Boolean,
+			default: true,
+		},
 		bbox: {
 			type: Object,
 			default: null,
@@ -230,6 +234,13 @@ export default {
 				type: newValue ? 'globe' : 'mercator',
 			})
 			this.globeControl.updateGlobeIcon(newValue)
+		},
+		useSky(newValue) {
+			if (newValue) {
+				this.setSky()
+			} else {
+				this.map.setSky(undefined)
+			}
 		},
 	},
 
@@ -363,6 +374,10 @@ export default {
 					type: this.myUseGlobe ? 'globe' : 'mercator',
 				})
 
+				if (this.useSky) {
+					this.setSky()
+				}
+
 				// max zoom
 				const styleKey = Object.keys(this.myStyles).includes(this.mapStyle) ? this.mapStyle : this.defaultStyleKey
 				const mapStyleObj = this.myStyles[styleKey]
@@ -433,6 +448,18 @@ export default {
 				type: this.myUseGlobe ? 'globe' : 'mercator',
 			})
 			this.globeControl.updateGlobeIcon(this.myUseGlobe)
+		},
+		setSky() {
+			// https://maplibre.org/maplibre-style-spec/sky/
+			this.map.setSky({
+				'sky-color': '#199EF3',
+				'sky-horizon-blend': 0.5,
+				'horizon-color': '#ffffff',
+				'horizon-fog-blend': 0.5,
+				'fog-color': '#0000ff',
+				'fog-ground-blend': 0.5,
+				'atmosphere-blend': 0,
+			})
 		},
 		reRenderLayersAndTerrain() {
 			// re render the layers
