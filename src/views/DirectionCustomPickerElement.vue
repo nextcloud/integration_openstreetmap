@@ -243,8 +243,8 @@ export default {
 			const pitch = this.mapState.pitch
 			const bearing = this.mapState.bearing ? parseFloat(this.mapState.bearing.toFixed(2)) : this.mapState.bearing
 			const mapStyle = this.mapState.mapStyle
-			const terrain = this.mapState.terrain ? '1' : ''
-			const globe = this.mapState.globe ? '1' : ''
+			const terrain = this.mapState.terrain
+			const globe = this.mapState.globe
 			const routingLinkType = this.selectedRoutingLinkTypeId
 			setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, routingLinkType })
 			this.$el.dispatchEvent(new CustomEvent('submit', { detail: this.currentLink, bubbles: true }))

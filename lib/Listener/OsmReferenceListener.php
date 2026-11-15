@@ -92,8 +92,8 @@ class OsmReferenceListener implements IEventListener {
 				'pitch' => (float)$lastPitch,
 				'bearing' => (float)$lastBearing,
 				'mapStyle' => $lastMapStyle,
-				'terrain' => $lastTerrain,
-				'globe' => $lastGlobe,
+				'terrain' => $lastTerrain === '1',
+				'globe' => $lastGlobe === '1',
 				'linkType' => $lastLinkType,
 			]);
 		}

@@ -9,7 +9,7 @@ if (!window._osm_last_map_state) {
 }
 
 export function getLastMapState() {
-	return {
+	const state = {
 		lat: 20,
 		lon: -40,
 		zoom: 2,
@@ -22,6 +22,33 @@ export function getLastMapState() {
 		routingLinkType: routingLinkTypes.osrm_org.id,
 		...window._osm_last_map_state,
 	}
+	// the user config stores terrain/globe as '1' / '' strings and an empty
+	// string would be cast to true by boolean props, so use real booleans
+	state.terrain = toBoolean(state.terrain)
+	state.globe = toBoolean(state.globe)
+	return state
+}
+
+/**
+ * @param {boolean|string|undefined} value the value to normalize
+ * @return {boolean|undefined} true when enabled, undefined when value is undefined
+ */
+function toBoolean(value) {
+	if (value === undefined) {
+		return undefined
+	}
+	return value === true || value === '1'
+}
+
+/**
+ * @param {boolean|undefined} value the boolean value to store
+ * @return {string|undefined} '1' or '' for the user config storage, undefined when value is undefined
+ */
+function toStoredString(value) {
+	if (value === undefined) {
+		return undefined
+	}
+	return value ? '1' : ''
 }
 
 export function setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }) {
@@ -31,14 +58,22 @@ export function setLastMapState({ lat, lon, zoom, pitch, bearing, mapStyle, terr
 		return
 	}
 
-	const state = { lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType }
+	const state = {
+		lat, lon, zoom, pitch, bearing, mapStyle, linkType, routingLinkType,
+		terrain: toBoolean(terrain),
+		globe: toBoolean(globe),
+	}
 	Object.keys(state).forEach(k => {
 		if (state[k] !== undefined) {
 			window._osm_last_map_state[k] = state[k]
 		}
 	})
 	const req = {
-		values: { lat, lon, zoom, pitch, bearing, mapStyle, terrain, globe, linkType, routingLinkType },
+		values: {
+			lat, lon, zoom, pitch, bearing, mapStyle, linkType, routingLinkType,
+			terrain: toStoredString(state.terrain),
+			globe: toStoredString(state.globe),
+		},
 	}
 	const url = generateUrl('/apps/integration_openstreetmap/config')
 	axios.put(url, req).then((response) => {
