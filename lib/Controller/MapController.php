@@ -166,6 +166,29 @@ class MapController extends Controller {
 	}
 
 	/**
+	 * @param string $name
+	 * @param string $ext
+	 * @return Response
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function getMapTilerNamedSpriteNoSize(string $name, string $ext): Response {
+		return $this->getMapTilerNamedSprite($name, $ext);
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $ext
+	 * @param string $size
+	 * @return Response
+	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	public function getMapTilerNamedSprite(string $name, string $ext, string $size = ''): Response {
+		return $this->getMapTilerSprite($name, $ext, $size, true);
+	}
+
+	/**
 	 * @param string $version
 	 * @param string $ext
 	 * @param string $size
@@ -173,13 +196,13 @@ class MapController extends Controller {
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
-	public function getMapTilerSprite(string $version, string $ext, string $size = ''): Response {
+	public function getMapTilerSprite(string $version, string $ext, string $size = '', bool $isNamedSprite = false): Response {
 		try {
 			if ($ext === 'json') {
-				$sprite = $this->maptilerService->getMapTilerSpriteJson($version, $size);
+				$sprite = $this->maptilerService->getMapTilerSpriteJson($version, $size, $isNamedSprite);
 				$response = new JSONResponse($sprite);
 			} else {
-				$sprite = $this->maptilerService->getMapTilerSpriteImage($version, $size, $ext);
+				$sprite = $this->maptilerService->getMapTilerSpriteImage($version, $size, $ext, $isNamedSprite);
 				$response = new DataDisplayResponse(
 					$sprite['body'],
 					Http::STATUS_OK,
